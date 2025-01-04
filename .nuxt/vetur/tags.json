@@ -1,0 +1,14 @@
+{
+  "Header": {
+    "description": "Auto imported from components/Header.vue"
+  },
+  "Prizes": {
+    "description": "Auto imported from components/Prizes.vue"
+  },
+  "ProjectsSection": {
+    "description": "Auto imported from components/ProjectsSection.vue"
+  },
+  "Home": {
+    "description": "Auto imported from components/home.vue"
+  }
+}

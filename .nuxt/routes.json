@@ -1,0 +1,30 @@
+[
+  {
+    "name": "about",
+    "path": "/about",
+    "component": "/Users/milindranjan/Desktop/Work/Academics/JRDArchitects/pages/about.vue",
+    "chunkName": "pages/about",
+    "_name": "_0e6b3e9f"
+  },
+  {
+    "name": "contact",
+    "path": "/contact",
+    "component": "/Users/milindranjan/Desktop/Work/Academics/JRDArchitects/pages/contact.vue",
+    "chunkName": "pages/contact",
+    "_name": "_2312e732"
+  },
+  {
+    "name": "projects",
+    "path": "/projects",
+    "component": "/Users/milindranjan/Desktop/Work/Academics/JRDArchitects/pages/projects.vue",
+    "chunkName": "pages/projects",
+    "_name": "_2ecaecd8"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/milindranjan/Desktop/Work/Academics/JRDArchitects/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_2e231964"
+  }
+]

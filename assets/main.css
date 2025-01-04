@@ -1,0 +1,15 @@
+/* assets/css/main.css */
+body {
+    background-color: #ffffff;  /* Light grey background */
+    color: #333;               /* Dark grey text */
+    font-family: 'Arial', sans-serif; /* Consistent font */
+  }
+  
+  a {
+    color: #0056b3;            /* Standard link color */
+    text-decoration: none;     /* No underline on links */
+  }
+  
+  a:hover {
+    text-decoration: underline; /* Underline on hover for better UX */
+  }
