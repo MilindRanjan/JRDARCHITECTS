@@ -151,7 +151,12 @@ const fadeOutOverlay = () => {
 
 const checkWelcomeOverlay = () => {
   if (sessionStorage.getItem('welcomeShown')) {
-    fadeOut.value = true;
+    fadeOut.value = true; // If already shown, skip the overlay
+  } else {
+    // Automatically fade out after 2 seconds
+    setTimeout(() => {
+      fadeOutOverlay();
+    }, 2000);
   }
 };
 
@@ -182,7 +187,6 @@ const handleSubmit = async () => {
 onMounted(() => {
   checkWelcomeOverlay();
 });
-
 </script>
 
 <style scoped>
