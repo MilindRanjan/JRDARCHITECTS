@@ -2,7 +2,7 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
   router: {
-    base: '/JRDArchitect/', // Change 'repo' to your actual repository name
+    base: '/', // Set this to '/' for root deployment
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -53,6 +53,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    publicPath: '/_nuxt/' // Cloudflare requires a correct publicPath
+    publicPath: '/_nuxt/', // Required for Cloudflare
   }
 }
