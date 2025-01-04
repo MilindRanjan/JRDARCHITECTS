@@ -1,8 +1,10 @@
 <template>
+  
   <div>
     <!-- Welcome Overlay -->
     <transition name="fade">
       <div v-if="!fadeOut" class="welcome-overlay" @click="fadeOutOverlay">
+        <!-- Ensure entire div is clickable by moving @click here -->
         <img src="/logo.jpeg" alt="Company Logo" class="logo">
         <h1 class="company-name">JRD Architects</h1>
       </div>
@@ -185,13 +187,14 @@ onMounted(() => {
 
 <style scoped>
 /* Welcome Overlay Styles */
+
 .welcome-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: #FFF;
   display: flex;
   flex-direction: column;
   align-items: center;
