@@ -5,6 +5,9 @@
   "Prizes": {
     "description": "Auto imported from components/Prizes.vue"
   },
+  "ProjectModal": {
+    "description": "Auto imported from components/ProjectModal.vue"
+  },
   "ProjectsSection": {
     "description": "Auto imported from components/ProjectsSection.vue"
   },

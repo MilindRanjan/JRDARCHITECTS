@@ -1,46 +1,83 @@
 <template>
   <div>
+    <!-- Header -->
     <Header 
       :categories="categories" 
       @filter-category="filterProjects"
     />
     
-    <div class="filter-container mt-20">
-      <button 
-        v-for="category in categories" 
-        :key="category" 
-        :class="{ active: selectedCategory === category }"
-        @click="filterProjects(category)"
-      >
-        {{ category }}
-      </button>
-    </div>
-    
-    <div class="projects-container">
-      <div class="project-images">
-        <div 
-          v-for="project in filteredProjects" 
-          :key="project.id" 
-          class="project-item"
+    <!-- Filter Section -->
+    <div class="container mx-auto px-4 mt-20"> <!-- Added margin-top -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12">
+        <button
+          v-for="category in categories"
+          :key="category"
+          @click="filterProjects(category)"
+          :class="[
+            'px-6 py-2 rounded-full transition-all duration-300',
+            selectedCategory === category
+              ? 'bg-black text-white shadow-lg'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ]"
         >
-          <img :src="project.image" :alt="project.name">
-          <p>{{ project.name }}</p>
+          {{ category }}
+        </button>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20">
+        <div
+          v-for="project in filteredProjects"
+          :key="project.id"
+          class="group cursor-pointer overflow-hidden border-0 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-white rounded-lg"
+          @click="viewProjectDetails(project)"
+        >
+          <div class="relative aspect-video overflow-hidden">
+            <img
+              :src="project.image"
+              :alt="project.name"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-start justify-between">
+              <h3 class="text-xl font-semibold text-gray-900">
+                {{ project.name }}
+              </h3>
+              <span class="inline-block px-3 py-1 text-xs font-medium bg-black text-white rounded-full">
+                {{ project.category }}
+              </span>
+            </div>
+            <p class="mt-3 text-gray-600 text-sm">
+              {{ project.description }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Project Modal -->
+    <ProjectModal
+      v-if="showModal"
+      :project="selectedProject"
+      @close="showModal = false"
+    />
   </div>
 </template>
 
 <script>
-import Header from '../components/Header.vue'; // Import your Header component
+import ProjectModal from '../components/ProjectModal.vue'
 
 export default {
   components: {
-    Header,
+    ProjectModal
   },
   data() {
     return {
       selectedCategory: 'All',
+      showModal: false,
+      selectedProject: null,
       categories: ['All', 'RESIDENTIAL', 'COMMERCIAL', 'INSTITUTIONAL', 'INTERIORS', 'LANDSCAPE'],
       projects: [
         {
@@ -99,73 +136,68 @@ export default {
           description: 'Panoramic residential project',
           category: 'RESIDENTIAL',
         },
-      ],
-    };
+      ]
+    }
   },
   computed: {
     filteredProjects() {
       if (this.selectedCategory === 'All') {
-        return this.projects;
+        return this.projects
       }
-      return this.projects.filter((project) => project.category === this.selectedCategory);
-    },
+      return this.projects.filter(project => project.category === this.selectedCategory)
+    }
   },
   methods: {
     filterProjects(category) {
-      this.selectedCategory = category;
+      this.selectedCategory = category
     },
-  },
-};
+    viewProjectDetails(project) {
+      this.selectedProject = project
+      this.showModal = true
+    }
+  }
+}
 </script>
 
-<style>
-.filter-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+<style scoped>
+/* Base Transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
 }
 
-.filter-container button {
-  margin: 0 10px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #f0f0f0;
-  color: #333;
-  transition: background-color 0.3s ease;
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
-.filter-container button.active {
-  background-color: #007bff;
-  color: white;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.projects-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-.project-images {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
 }
 
-.project-item {
-  text-align: center;
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
-.project-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
-}
-
-.project-item:hover img {
-  transform: scale(1.05);
+/* Print Styles */
+@media print {
+  .filter-container {
+    display: none;
+  }
+  
+  .project-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
 }
 </style>
