@@ -203,7 +203,7 @@ onMounted(() => {
   cursor: pointer;
   opacity: 1;
   transform: scale(1);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: none;
 }
 h2 {
   text-align: center;
@@ -228,7 +228,7 @@ h2 {
 /* Fade Transition */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .fade-enter {
@@ -329,5 +329,14 @@ h2 {
 }
 .contact-fab:hover {
   background-color: #0056b3;
+}
+@media (max-width: 768px) {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.6s ease;
+  }
+  .fade-enter, .fade-leave-to {
+    transform: none;
+  }
 }
 </style>
