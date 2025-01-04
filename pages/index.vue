@@ -1,18 +1,9 @@
 <template>
   
   <div>
-    <!-- Welcome Overlay -->
-    <transition name="fade">
-      <div v-if="!fadeOut" class="welcome-overlay" @click="fadeOutOverlay">
-        <!-- Ensure entire div is clickable by moving @click here -->
-        <img src="/logo.jpeg" alt="Company Logo" class="logo">
-        <h1 class="company-name">JRD Architects</h1>
-      </div>
-    </transition>
-
     <!-- Main Components -->
-    <Header v-if="fadeOut" />
-    <Home v-if="fadeOut" />
+    <Header />
+    <Home />
     <ProjectsSection />
     <Prizes />
     <!-- Floating Contact Button -->
