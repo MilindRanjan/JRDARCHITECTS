@@ -1,3 +1,6 @@
+export { default as Clients } from '../../components/Clients.vue'
+export { default as ContactUs } from '../../components/ContactUs.vue'
+export { default as Footer } from '../../components/Footer.vue'
 export { default as Header } from '../../components/Header.vue'
 export { default as Prizes } from '../../components/Prizes.vue'
 export { default as ProjectModal } from '../../components/ProjectModal.vue'

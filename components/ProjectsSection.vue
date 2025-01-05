@@ -148,13 +148,14 @@ const closeModal = () => {
   max-width: 1800px;
   margin: 0 auto;
   padding: 2rem;
+
 }
 
 .projects-heading {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
   font-size: 2.5rem;
-  font-weight: 600;
+  font-weight: normal;
   color: #1a1a1a;
   letter-spacing: -0.5px;
 }
@@ -344,30 +345,39 @@ const closeModal = () => {
 .modal-details {
   font-size: 0.875rem;
 }
+/* For Mobile View */
 @media screen and (max-width: 768px) {
+  .projects-section {
+    position: relative;
+    padding: 1.5rem 0; /* Space around the section */
+    overflow: hidden; /* Prevent content spillover */
+  }
+  .projects-heading{
+    margin-bottom: 2rem;
+  }
+
   .gallery-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns for two items per row */
-    gap: 1rem; /* Space between the items */
-    padding: 0 1rem; /* Optional padding for mobile view */
-    height: fit-content;
-    /* Ensure height adjusts based on content */
+    grid-template-columns: repeat(2, 1fr); /* Two columns for grid layout */
+    gap: 1rem; /* Space between items */
+    padding: 0 1rem; /* Padding for spacing within the container */
+    height: auto; /* Adjust height based on content */
   }
 
   .project-item {
-    position: static; /* Reset positioning */
-    width: 100%; /* Make the item responsive */
-    height: fit-content;
-    /* Ensure height adjusts to fit content */
+    position: relative; /* Allow dynamic positioning */
+    width: 100%; /* Adjust item width for grid layout */
+    height: auto; /* Ensure it resizes to fit content */
+    margin-bottom: 1rem; /* Add spacing between rows */
   }
 
   .project-image {
-    width: 100%; /* Scale image to fit its container */
-    height: fit-content;/* Maintain aspect ratio */
+    width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
     object-fit: cover; /* Ensure image fits nicely */
   }
 
-  /* Reset individual item positions for mobile view */
+  /* Remove individual item styles for mobile */
   .item-1,
   .item-2,
   .item-3,
@@ -381,8 +391,13 @@ const closeModal = () => {
     right: auto;
     bottom: auto;
   }
-  .project-overlay{
-  display: none;
-} 
+
+  /* Overlay adjustments */
+  .project-overlay {
+    display: none; /* Hide overlay in mobile */
+  }
+  .other-section {
+  margin-bottom: 20rem; /* Space below the section */
+  }
 }
 </style>

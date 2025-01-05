@@ -15,6 +15,9 @@
     <Home v-if="fadeOut" />
     <ProjectsSection />
     <Prizes />
+    <Clients />
+    <ContactUs />
+    <Footer />
     <!-- Floating Contact Button -->
     <button 
       v-if="fadeOut" 
@@ -130,7 +133,7 @@ import Home from '~/components/home.vue';
 import ProjectsSection from '~/components/ProjectsSection.vue';
 import Achievements from '../components/Prizes.vue';
 import Prizes from '../components/Prizes.vue';
-
+import Footer from '../components/Footer.vue';
 const fadeOut = ref(false);
 const showContactForm = ref(false);
 

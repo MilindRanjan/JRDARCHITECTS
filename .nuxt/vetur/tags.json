@@ -1,4 +1,13 @@
 {
+  "Clients": {
+    "description": "Auto imported from components/Clients.vue"
+  },
+  "ContactUs": {
+    "description": "Auto imported from components/ContactUs.vue"
+  },
+  "Footer": {
+    "description": "Auto imported from components/Footer.vue"
+  },
   "Header": {
     "description": "Auto imported from components/Header.vue"
   },

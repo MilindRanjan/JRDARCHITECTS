@@ -25,7 +25,6 @@
       <div class="timeline-container">
         <div class="timeline-item" v-for="achievement in achievements" :key="achievement.year">
           <div class="timeline-content">
-            <div class="timeline-date">{{ achievement.year }}</div>
             <div class="timeline-body">
               <h3>{{ achievement.title }}</h3>
               <p>{{ achievement.description }}</p>
