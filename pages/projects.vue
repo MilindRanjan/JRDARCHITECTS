@@ -67,18 +67,25 @@
 </template>
 
 <script>
-import ProjectModal from '../components/ProjectModal.vue'
+import ProjectModal from '../components/ProjectModal.vue';
 
 export default {
   components: {
-    ProjectModal
+    ProjectModal,
   },
   data() {
     return {
       selectedCategory: 'All',
       showModal: false,
       selectedProject: null,
-      categories: ['All', 'RESIDENTIAL', 'COMMERCIAL', 'INSTITUTIONAL', 'INTERIORS', 'LANDSCAPE'],
+      categories: [
+        'All',
+        'RESIDENTIAL',
+        'COMMERCIAL',
+        'INSTITUTIONAL',
+        'INTERIORS',
+        'LANDSCAPE',
+      ],
       projects: [
         {
           id: 1,
@@ -139,24 +146,42 @@ export default {
       ]
     }
   },
+
   computed: {
     filteredProjects() {
-      if (this.selectedCategory === 'All') {
-        return this.projects
-      }
-      return this.projects.filter(project => project.category === this.selectedCategory)
-    }
+      return this.selectedCategory === 'All'
+        ? this.projects
+        : this.projects.filter(
+            (project) => project.category === this.selectedCategory
+          );
+    },
+  },
+  watch: {
+    '$route.query.category': {
+      immediate: true,
+      handler(newCategory) {
+        this.filterProjects(newCategory || 'All');
+        this.scrollToProjects();
+      },
+    },
   },
   methods: {
     filterProjects(category) {
-      this.selectedCategory = category
+      this.selectedCategory = category;
+    },
+    scrollToProjects() {
+      // Smooth scroll to the projects grid
+      const projectsSection = document.querySelector('.container');
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: 'smooth' });
+      }
     },
     viewProjectDetails(project) {
-      this.selectedProject = project
-      this.showModal = true
-    }
-  }
-}
+      this.selectedProject = project;
+      this.showModal = true;
+    },
+  },
+};
 </script>
 
 <style scoped>
