@@ -1,103 +1,150 @@
-<!-- components/AboutUs.vue -->
+<!-- components/EnhancedProfile.vue -->
 <template>
-  <div>
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
     <Header />
-    <div class="max-w-6xl mx-auto px-4 py-16 bg-white">
-      <h1 class="text-4xl font-bold text-center mb-16 text-gray-900 mt-12">Our Team</h1>
+    
+    <!-- Hero Section -->
+    <div class="relative h-[80vh] overflow-hidden">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div 
-          v-for="member in teamMembers" 
-          :key="member.id"
-          class="group relative bg-white rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
-        >
-          <div class="aspect-w-3 aspect-h-4 mb-6">
-            <img
-              :src="member.image"
-              :alt="member.name"
-              class="w-full h-64 object-cover rounded-t-lg grayscale hover:grayscale-0 transition-all duration-500"
-            />
+      <!-- Main Content -->
+      <div class="relative max-w-7xl mx-auto h-full flex items-center px-4">
+        <div class="grid grid-cols-12 gap-8 items-center w-full">
+          <!-- Text Content -->
+          <div class="col-span-7 space-y-6">
+            <div class="space-y-2">
+              <h4 class="text-lg text-gray-600 tracking-wider">FOUNDER & PRINCIPAL ARCHITECT</h4>
+              <h1 class="text-6xl font-bold text-gray-900 leading-tight">
+                Dr. Venkatesh
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600">
+                  Raman
+                </span>
+              </h1>
+            </div>
+            
+            <p class="text-xl text-gray-700 leading-relaxed max-w-2xl">
+              Transforming architectural visions into reality with over two decades of expertise in
+              creating award-winning residential and commercial spaces.
+            </p>
+            
+            <div class="flex space-x-6">
+              <button 
+  @click="$router.push('/projects')" 
+  class="px-8 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 
+         transform hover:scale-105 transition-all duration-300">
+  View Projects
+</button>
+              <button @click="scrollToSection('experience')"
+                      class="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full 
+                             hover:bg-gray-100 transform hover:scale-105 transition-all duration-300">
+                Experience
+              </button>
+            </div>
           </div>
-
-          <div class="p-6">
-            <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ member.name }}</h2>
-            <p class="text-lg font-medium text-gray-700 mb-4">{{ member.role }}</p>
-            <p class="text-gray-600 mb-6">{{ member.shortDescription }}</p>
-
-            <button
-              v-if="member.education.length > 0"
-              @click="toggleMember(member.id)"
-              class="flex items-center justify-between w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200"
-            >
-              <span class="font-medium text-gray-900">View Full Profile</span>
-              <Icon
-                name="heroicons:chevron-down"
-                class="w-5 h-5 transform transition-transform duration-200"
-                :class="{ 'rotate-180': expandedMembers.includes(member.id) }"
-              />
-            </button>
-
-            <Transition
-              enter-active-class="transition duration-300 ease-out"
-              enter-from-class="transform -translate-y-4 opacity-0"
-              enter-to-class="transform translate-y-0 opacity-100"
-              leave-active-class="transition duration-200 ease-in"
-              leave-from-class="transform translate-y-0 opacity-100"
-              leave-to-class="transform -translate-y-4 opacity-0"
-            >
-              <div v-if="expandedMembers.includes(member.id)" class="mt-6 space-y-6">
-                <div v-if="member.education.length">
-                  <h3 class="text-xl font-bold text-gray-900 mb-4">Education</h3>
-                  <ul class="space-y-2">
-                    <li 
-                      v-for="(edu, index) in member.education" 
-                      :key="index"
-                      class="text-gray-700"
-                    >
-                      <span class="font-medium">{{ edu.year }}</span> - {{ edu.degree }}
-                    </li>
-                  </ul>
-                </div>
-
-                <div v-if="member.experience.length" class="experience-section">
-                  <h3 class="text-xl font-bold text-gray-900 mb-4">Professional Experience</h3>
-                  <div class="spiral-timeline">
-                    <div 
-                      v-for="(exp, index) in member.experience" 
-                      :key="index"
-                      class="timeline-item"
-                      :class="{ 'active': activeExperience === index }"
-                      @mouseenter="activeExperience = index"
-                      @mouseleave="activeExperience = null"
-                    >
-                      <div class="timeline-content">
-                        <div class="timeline-header">
-                          <h4 class="company-name">{{ exp.company }}</h4>
-                          <span class="period">{{ exp.period }}</span>
-                        </div>
-                        <div class="role">{{ exp.role }}</div>
-                        <div class="projects-container" :class="{ 'show': activeExperience === index }">
-                          <h5 class="projects-title">Key Projects:</h5>
-                          <ul class="projects-list">
-                            <li 
-                              v-for="(project, idx) in exp.projects" 
-                              :key="idx"
-                              class="project-item"
-                            >
-                              {{ project }}
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          
+          <!-- Profile Image -->
+          <div class="col-span-5 relative">
+            <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden 
+                        transform hover:scale-105 transition-all duration-500">
+              <img src="/venk.jpeg" alt="Dr. Venkatesh Raman" 
+                   class="absolute inset-0 w-full h-full object-cover object-center" />
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
+            </div>
+            
+            <!-- Floating Stats -->
+            <div class="absolute -left-24 top-1/4 bg-white rounded-xl shadow-xl p-4 
+                        transform hover:scale-110 transition-all duration-300">
+              <div class="text-center">
+                <div class="text-3xl font-bold text-gray-900">20+</div>
+                <div class="text-sm text-gray-600">Years Experience</div>
               </div>
-            </Transition>
+            </div>
+            
+            <div class="absolute -right-12 bottom-1/4 bg-white rounded-xl shadow-xl p-4 
+                        transform hover:scale-110 transition-all duration-300">
+              <div class="text-center">
+                <div class="text-3xl font-bold text-gray-900">50+</div>
+                <div class="text-sm text-gray-600">Major Projects</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Education Timeline -->
+    <section class="py-12 bg-white">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center space-x-8">
+          <div v-for="(edu, index) in education" :key="index"
+               class="flex-1 group">
+            <div class="p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-300">
+              <div class="text-xl font-bold text-gray-900">{{ edu.degree }}</div>
+              <div class="text-gray-600">{{ edu.year }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-4xl font-bold text-gray-900 mb-12">Professional Journey</h2>
+        
+        <!-- 3D Timeline -->
+        <div class="relative">
+          <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-gray-200 via-gray-400 to-gray-200"></div>
+          
+          <div class="space-y-24">
+            <div v-for="(exp, index) in experience" :key="index"
+                 class="relative group">
+              <!-- Experience Card -->
+              <div :class="`flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`">
+                <div class="w-5/12 transform hover:scale-105 transition-all duration-300">
+                  <div class="bg-white rounded-xl shadow-xl p-8 relative">
+                    <!-- Company Info -->
+                    <div class="mb-6">
+                      <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ exp.company }}</h3>
+                      <div class="flex justify-between items-center">
+                        <span class="text-lg text-gray-600">{{ exp.role }}</span>
+                        <span class="px-4 py-1 bg-gray-100 rounded-full text-sm text-gray-700">
+                          {{ exp.period }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- Animated Project List -->
+                    <div class="space-y-3">
+                      <div v-for="(project, pIndex) in exp.projects" 
+                           :key="pIndex"
+                           class="transform transition-all duration-300 hover:translate-x-2">
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100">
+                          <div class="w-2 h-2 bg-gray-400 rounded-full mr-3"></div>
+                          <span class="text-gray-700">{{ project }}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Achievement Indicators -->
+                    <div v-if="exp.achievements" 
+                         class="absolute -right-4 -top-4 w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
+                      <span class="text-sm font-bold text-gray-900">{{ exp.achievements }}★</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Timeline Node -->
+              <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div class="w-6 h-6 bg-white rounded-full border-4 border-gray-400 group-hover:border-gray-900 transition-colors duration-300"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -105,252 +152,80 @@
 import { ref } from 'vue';
 import Header from '~/components/Header.vue';
 
-const expandedMembers = ref([]);
-const activeExperience = ref(null);
+const education = [
+  { year: '2022', degree: 'PhD in Architecture' },
+  { year: '2015', degree: 'Master in Urban & Regional Planning' },
+  { year: '1991', degree: 'Bachelor of Architecture' }
+];
 
-// Team members data remains the same as in your original code
-const teamMembers = ref([
+const experience = [
   {
-    id: 1,
-    name: 'Dr. Venkatesh Raman',
-    role: 'Founder & Architect',
-    image: '/venk.jpeg',
-    shortDescription: 'Principal Architect with over 20 years of experience in architectural design, specializing in residential and commercial projects.',
-    education: [
-      { year: '1991', degree: 'Bachelor of Architecture' },
-      { year: '2015', degree: 'Master in Urban & Regional Planning' },
-      { year: '2022', degree: 'PhD' }
-    ],
-    experience: [
-      {
-        company: 'JRD ARCHITECTS',
-        period: '2000-Present',
-        role: 'Principal Architect & Proprietor',
-        projects: [
-          'VISWA, Ranchi',
-          'Sadaqat Ashram, Patna',
-          'State Guest House, Patna (1st Prize)',
-          'Naveen Chandra Ramgulam, Patna (1st Prize)',
-          'Shri Krishna Nagar Aapartment, Patna (1st Prize)'
-        ]
-      },
-      {
-        company: 'Lall & Associates',
-        period: '1996-2000',
-        role: 'Senior Architect',
-        projects: [
-          'CIPET, Haldia',
-          'CIPET, Hajipur',
-          'POWERGRID Township'
-        ]
-      },
-      {
-        company: 'JAYPEE Group',
-        period: '1992-1996',
-        role: 'Senior Field Architect',
-        projects: [
-          'Jaypee Palace Hotel & Convention Centre, Agra'
-        ]
-      },
-      {
-        company: 'Design-O-Group',
-        period: '1991-1992',
-        role: 'Architect',
-        projects: [
-          'Commercial Complex, Agra'
-        ]
-      }
+    company: 'JRD ARCHITECTS',
+    period: '2000-Present',
+    role: 'Principal Architect & Proprietor',
+    projects: [
+      'VISWA, Ranchi',
+      'Sadaqat Ashram, Patna',
+      'State Guest House, Patna (1st Prize)',
+      'Naveen Chandra Ramgulam, Patna (1st Prize)',
+      'Shri Krishna Nagar Aapartment, Patna (1st Prize)'
     ]
   },
   {
-    id: 2,
-    name: 'Varadraj',
-    role: 'Co-Founder & Interior Designer',
-    image: '/varad.jpeg',
-    shortDescription: 'Creative interior designer with expertise in transforming spaces into beautifully functional environments.',
-    education: [
-      { year: '2023', degree: 'Bachelor of Architecture' }
-    ],
-    experience: [
-      {
-        company: 'Sangath Vastushilpa Consultants',
-        period: '2023-2024',
-        role: 'Architect',
-        projects: [
-          'Shiv Nadar School Chennai',
-          'Anant National University, Ahmedabad',
-          'Banaras Hindu University, Varanasi (Girls Hostel)'
-        ]
-      },
-      {
-        company: 'Arcop Associates',
-        period: '2022',
-        role: 'Intern',
-        projects: [
-          'DLF Independent Floors, Gurugram',
-          'Airtel Bharti, Aerocity, Delhi'
-        ]
-      }
+    company: 'Lall & Associates',
+    period: '1996-2000',
+    role: 'Senior Architect',
+    projects: [
+      'CIPET, Haldia',
+      'CIPET, Hajipur',
+      'POWERGRID Township'
     ]
+  },
+  {
+    company: 'JAYPEE Group',
+    period: '1992-1996',
+    role: 'Senior Field Architect',
+    projects: ['Jaypee Palace Hotel & Convention Centre, Agra']
+  },
+  {
+    company: 'Design-O-Group',
+    period: '1991-1992',
+    role: 'Architect',
+    projects: ['Commercial Complex, Agra']
   }
-]);
-const toggleMember = (id) => {
-  if (expandedMembers.value.includes(id)) {
-    expandedMembers.value = expandedMembers.value.filter(memberId => memberId !== id);
-  } else {
-    expandedMembers.value.push(id);
-  }
+];
+
+const scrollToSection = (sectionId) => {
+  const element = document.getElementById(sectionId);
+  element?.scrollIntoView({ behavior: 'smooth' });
 };
 </script>
 
 <style scoped>
-.aspect-w-3 {
-  position: relative;
-  padding-bottom: calc(4 / 3 * 100%);
+.bg-grid-pattern {
+  background-image: radial-gradient(circle, #000 1px, transparent 1px);
+  background-size: 30px 30px;
 }
 
-.aspect-w-3 > img {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  object-fit: cover;
-  object-position: center;
+/* Add smooth scrolling to the whole page */
+html {
+  scroll-behavior: smooth;
 }
 
-.experience-section {
-  position: relative;
-  padding: 2rem 0;
+/* Custom transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
 }
 
-.spiral-timeline {
-  position: relative;
-  padding-left: 2rem;
-}
-
-.spiral-timeline::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, transparent, #000, transparent);
-}
-
-.timeline-item {
-  position: relative;
-  padding: 1.5rem 0;
-  margin-left: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: -2.5rem;
-  top: 50%;
-  width: 1rem;
-  height: 1rem;
-  background: #fff;
-  border: 2px solid #000;
-  border-radius: 50%;
-  transform: translateY(-50%) scale(0.8);
-  transition: all 0.3s ease;
-}
-
-.timeline-item.active::before {
-  transform: translateY(-50%) scale(1.2);
-  background: #000;
-}
-
-.timeline-content {
-  background: #f8f8f8;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transform: translateX(0);
-  transition: all 0.3s ease;
-}
-
-.timeline-item.active .timeline-content {
-  transform: translateX(0.5rem);
-  background: #f3f4f6;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.timeline-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.company-name {
-  font-weight: bold;
-  color: #1a1a1a;
-  font-size: 1.1rem;
-}
-
-.period {
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.role {
-  color: #4a5568;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-.projects-container {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: all 0.3s ease;
 }
 
-.projects-container.show {
-  opacity: 1;
-  max-height: 500px;
-}
-
-.projects-title {
-  font-weight: 600;
-  color: #2d3748;
-  margin-bottom: 0.5rem;
-}
-
-.projects-list {
-  list-style: none;
-  padding: 0;
-}
-
-.project-item {
-  padding: 0.5rem 0;
-  font-size: 0.95rem;
-  color: #4a5568;
-  position: relative;
-  padding-left: 1rem;
-}
-
-.project-item::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: #000;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.timeline-item {
-  animation: fadeIn 0.5s ease forwards;
-  animation-delay: calc(var(--index) * 0.1s);
+/* Ensure images don't exceed container */
+img {
+  max-width: 100%;
+  height: auto;
 }
 </style>
