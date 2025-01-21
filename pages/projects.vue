@@ -58,16 +58,39 @@
     </div>
 
     <!-- Project Modal -->
-    <ProjectModal
-      v-if="showModal"
-      :project="selectedProject"
-      @close="showModal = false"
+    <ProjectModal 
+    :project="selectedProject"
+    :show="showModal"
+    @close="showModal = false"
+
     />
   </div>
 </template>
 
 <script>
 import ProjectModal from '../components/ProjectModal.vue';
+import { ref } from 'vue';
+
+
+const selectedProject = ref(null);
+
+const showModal = ref(false);
+const handleImageError = (project) => {
+  project.image = ''; // Clear image if it fails to load
+  console.error(`Failed to load image for ${project.name}`);
+};
+
+const openModal = (project) => {
+  selectedProject.value = project; // Show modal with project details
+  showModal.value = true; // Show modal
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+};
+
+const closeModal = () => {
+  selectedProject.value = null; // Hide modal
+  showModal.value = false; // Hide modal
+  document.body.style.overflow = ''; // Re-enable background scrolling
+};
 
 export default {
   components: {

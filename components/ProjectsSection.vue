@@ -10,7 +10,6 @@
         @click="openModal(project)"
       >
         <div class="image-wrapper">
-          <!-- Fallback if image fails to load -->
           <div v-if="!project.image" class="image-placeholder">
             <span>{{ project.name }}</span>
           </div>
@@ -29,39 +28,19 @@
       </div>
     </div>
 
-    <!-- Modal -->
-    <div v-if="selectedProject" class="modal-overlay" @click="closeModal">
-      <div class="modal-content" @click.stop>
-        <button class="modal-close" @click="closeModal">
-          <span class="sr-only">Close</span>
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-        
-        <div class="modal-image-container">
-          <img
-            :src="selectedProject.image"
-            :alt="selectedProject.name"
-            class="modal-image"
-            @error="handleImageError(selectedProject)"
-          />
-        </div>
-        
-        <div class="modal-info">
-          <h2 class="modal-title">{{ selectedProject.name }}</h2>
-          <p class="modal-description">{{ selectedProject.description }}</p>
-          <div class="modal-details">
-            <p>{{ selectedProject.details }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Project Modal -->
+    <ProjectModal 
+    :project="selectedProject"
+    :show="showModal"
+    @close="showModal = false"
+
+    />
   </section>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import ProjectModal from '@/components/ProjectModal.vue'; // Adjust the path as needed
 
 const selectedProject = ref(null);
 
@@ -125,6 +104,7 @@ const projects = ref([
   }
 ]);
 
+
 const handleImageError = (project) => {
   project.image = ''; // Clear image if it fails to load
   console.error(`Failed to load image for ${project.name}`);
@@ -132,11 +112,14 @@ const handleImageError = (project) => {
 
 const openModal = (project) => {
   selectedProject.value = project; // Show modal with project details
+  showModal.value = true; // Show modal
   document.body.style.overflow = 'hidden'; // Prevent background scrolling
 };
 
+const showModal = ref(false);
 const closeModal = () => {
   selectedProject.value = null; // Hide modal
+  showModal.value = false; // Hide modal
   document.body.style.overflow = ''; // Re-enable background scrolling
 };
 
