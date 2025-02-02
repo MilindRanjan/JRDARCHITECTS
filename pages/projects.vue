@@ -86,24 +86,30 @@ export default {
       selectedProject: null,
       categories: [
         'All',
-        'RESIDENTIAL',
+        'HOUSING',
         'COMMERCIAL',
         'INSTITUTIONAL',
-        'INTERIORS',
         'LANDSCAPE',
+        'LIASONING',
+        'NURSING HOME',
       ],
       projects: [
         {
           id: 1,
-          name: 'South Elevation',
-          mainImage: 'Projects/south elevation1.jpg',
+          name: 'Maa Tara Housing',
+          mainImage: 'Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing.jpg',
           additionalImages: [
-            'Projects/south elevation1.jpg',
-            'Projects/south elevation1.jpg',
-            'Projects/south elevation1.jpg'
+            'Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing1.jpg',
+            'Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing2.jpg',
+            'Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing3.jpg',
+            'Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing4.jpg',
+            'Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing5.jpg',
+            'Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing6.jpg',
+            'Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing7.jpg',
+            'Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing8.jpg',
           ],
           description: 'Contemporary architectural design with sustainable elements',
-          category: 'RESIDENTIAL',
+          category: 'HOUSING',
         },
         {
           id: 2,
