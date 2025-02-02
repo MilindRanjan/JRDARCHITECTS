@@ -98,7 +98,7 @@ const projects = ref([
   {
     id: 5,
     name: 'VISWA',
-    mainImage: 'Projects/INSTITUTIONAL/VISWA, Ranchi/1.jpg',
+    mainImage: 'Projects/rear view5.JPG',
     description: 'Stunning rear facade design',
     category: 'INSTITUTIONAL',
   },
