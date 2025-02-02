@@ -59,80 +59,79 @@ const projects = ref([
   },
   {
     id: 2,
-    name: 'Modern Living',
-    mainImage: 'Projects/20140720_163258(2).jpg',
+    name: 'Sadakat Ashram',
+    mainImage: 'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/1.jpg',
     additionalImages: [
-      'Projects/20140720_163258(2).jpg',
-      'Projects/20140720_163258(2).jpg'
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/2.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/3.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/4.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/5.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/6.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/7.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/8.jpg',
     ],
     description: 'Luxurious residential complex with modern amenities',
-    category: 'COMMERCIAL',
-  },
-  {
-    id: 3,
-    name: 'Urban Design',
-    mainImage: 'Projects/ek-bihari3.jpg',
-    additionalImages: [
-      'Projects/ek-bihari3.jpg',
-      'Projects/ek-bihari3.jpg'
-    ],
-    description: 'Urban architectural marvel',
     category: 'INSTITUTIONAL',
   },
   {
+    id: 3,
+    name: 'Seevusagur Ramgulam Chowk',
+          mainImage: 'Projects/LANDSCAPING/Seevusagur Ramgulam Chowk, Exhibition Road, Patna/1.jpg',
+          additionalImages: [
+            'Projects/LANDSCAPING/Seevusagur Ramgulam Chowk, Exhibition Road, Patna/2.jpg',
+            'Projects/LANDSCAPING/Seevusagur Ramgulam Chowk, Exhibition Road, Patna/3.jpg',
+            'Projects/LANDSCAPING/Seevusagur Ramgulam Chowk, Exhibition Road, Patna/4.jpg'
+          ],
+          description: 'Urban architectural marvel',
+          category: 'LANDSCAPE',
+        },
+  {
     id: 4,
-    name: 'Front Pergola',
-    mainImage: 'Projects/front pergola 28 10 24(4).jpg',
+    name: 'Mixed use Project Madhubani',
+    mainImage: 'Projects/COMMERCIAL/Mixed Use Project, Madhubani 1.jpg',
     additionalImages: [
-      'Projects/front pergola 28 10 24(4).jpg',
-      'Projects/front pergola 28 10 24(4).jpg'
+      'Projects/COMMERCIAL/Mixed Use Project, Madhubani.jpg',
     ],
     description: 'Elegant outdoor living space',
-    category: 'INTERIORS',
+    category: 'COMMERCIAL',
   },
   {
     id: 5,
-    name: 'Rear View',
-    mainImage: 'Projects/rear view5.JPG',
-    additionalImages: [
-      'Projects/rear view5.JPG',
-      'Projects/rear view5.JPG'
-    ],
+    name: 'VISWA',
+    mainImage: 'Projects/INSTITUTIONAL/VISWA, Ranchi/1.jpg',
     description: 'Stunning rear facade design',
-    category: 'INTERIORS',
+    category: 'INSTITUTIONAL',
   },
   {
     id: 6,
-    name: 'Modern Facade',
-    mainImage: 'Projects/f1(6).jpg',
-    additionalImages: [
-      'Projects/f1(6).jpg',
-      'Projects/f1(6).jpg'
-    ],
-    description: 'Contemporary facade treatment',
-    category: 'COMMERCIAL',
+    name: 'Sports Complex',
+          mainImage: 'Projects/INSTITUTIONAL/Sports Complex, Government of Bihar/f1.jpg',
+          additionalImages: [
+            'Projects/INSTITUTIONAL/Sports Complex, Government of Bihar/f11.jpg',
+            'Projects/INSTITUTIONAL/Sports Complex, Government of Bihar/f22.jpg'
+          ],
+          description: 'Contemporary facade treatment',
+          category: 'INSTITUTIONAL',
   },
   {
     id: 7,
     name: 'Nursing Home',
-    mainImage: 'Projects/View nursing home TRIM copy7.jpg',
-    additionalImages: [
-      'Projects/View nursing home TRIM copy7.jpg',
-      'Projects/View nursing home TRIM copy7.jpg'
-    ],
+          mainImage: 'Projects/NURSING HOMES/1.jpg',
+          additionalImages: [
+            'Projects/NURSING HOMES/2.jpg',
+            'Projects/NURSING HOMES/3.png',
+            'Projects/NURSING HOMES/4.jpg',
+            'Projects/NURSING HOMES/5.jpg',
+          ],
     description: 'Healthcare facility design',
-    category: 'INSTITUTIONAL',
+      category: 'NURSING HOME',
   },
   {
     id: 8,
-    name: 'Yarpur View',
-    mainImage: 'Projects/yarpur_view (8).jpg',
-    additionalImages: [
-      'Projects/yarpur_view (8).jpg',
-      'Projects/yarpur_view (8).jpg'
-    ],
+    name: 'Apartment, Patna',
+    mainImage: 'Projects/HOUSING/Apartment, Patna.jpg',
     description: 'Panoramic residential project',
-    category: 'RESIDENTIAL',
+    category: 'HOUSING',
   }
 ]);
 

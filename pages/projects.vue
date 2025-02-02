@@ -113,87 +113,134 @@ export default {
         },
         {
           id: 2,
-          name: 'Modern Living',
-          mainImage: 'Projects/20140720_163258(2).jpg',
-          additionalImages: [
-            'Projects/20140720_163258(2).jpg',
-            'Projects/20140720_163258(2).jpg',
-            'Projects/20140720_163258(2).jpg'
-          ],
+          name: 'Sadakat Ashram',
+    mainImage: 'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/1.jpg',
+    additionalImages: [
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/2.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/3.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/4.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/5.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/6.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/7.jpg',
+      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/8.jpg',
+      ],
           description: 'Luxurious residential complex with modern amenities',
-          category: 'COMMERCIAL',
-        },
-        {
-          id: 3,
-          name: 'Urban Design',
-          mainImage: 'Projects/ek-bihari3.jpg',
-          additionalImages: [
-            'Projects/ek-bihari3.jpg',
-            'Projects/ek-bihari3.jpg',
-            'Projects/ek-bihari3.jpg'
-          ],
-          description: 'Urban architectural marvel',
           category: 'INSTITUTIONAL',
         },
         {
-          id: 4,
-          name: 'Front Pergola',
-          mainImage: 'Projects/front pergola 28 10 24(4).jpg',
+          id: 3,
+          name: 'Seevusagur Ramgulam Chowk',
+          mainImage: 'Projects/LANDSCAPING/Seevusagur Ramgulam Chowk, Exhibition Road, Patna/1.jpg',
           additionalImages: [
-            'Projects/ek-bihari3.jpg',
-            'Projects/rear view5.JPG',
-            'Projects/yarpur_view (8).jpg'
+            'Projects/LANDSCAPING/Seevusagur Ramgulam Chowk, Exhibition Road, Patna/2.jpg',
+            'Projects/LANDSCAPING/Seevusagur Ramgulam Chowk, Exhibition Road, Patna/3.jpg',
+            'Projects/LANDSCAPING/Seevusagur Ramgulam Chowk, Exhibition Road, Patna/4.jpg'
           ],
-          description: 'Elegant outdoor living space',
-          category: 'INTERIORS',
-        },
-        {
-          id: 5,
-          name: 'Rear View',
-          mainImage: 'Projects/rear view5.JPG',
-          additionalImages: [
-            'Projects/rear view5.JPG',
-            'Projects/rear view5.JPG',
-            'Projects/rear view5.JPG'
-          ],
-          description: 'Stunning rear facade design',
+          description: 'Urban architectural marvel',
           category: 'LANDSCAPE',
         },
         {
+    id: 4,
+    name: 'Mixed use Project Madhubani',
+    mainImage: 'Projects/COMMERCIAL/Mixed Use Project, Madhubani 1.jpg',
+    additionalImages: [
+      'Projects/COMMERCIAL/Mixed Use Project, Madhubani.jpg',
+    ],
+    description: 'Elegant outdoor living space',
+    category: 'COMMERCIAL',
+  },
+        {
+          id: 5,
+          name: 'VISWA',
+    mainImage: 'Projects/INSTITUTIONAL/VISWA, Ranchi/1.jpg',
+    description: 'Stunning rear facade design',
+    category: 'INSTITUTIONAL',
+  },
+        {
           id: 6,
-          name: 'Modern Facade',
-          mainImage: 'Projects/f1(6).jpg',
+          name: 'Sports Complex',
+          mainImage: 'Projects/INSTITUTIONAL/Sports Complex, Government of Bihar/f1.jpg',
           additionalImages: [
-            'Projects/f1(6).jpg',
-            'Projects/f1(6).jpg',
-            'Projects/f1(6).jpg'
+            'Projects/INSTITUTIONAL/Sports Complex, Government of Bihar/f11.jpg',
+            'Projects/INSTITUTIONAL/Sports Complex, Government of Bihar/f22.jpg'
           ],
           description: 'Contemporary facade treatment',
-          category: 'INTERIORS',
+          category: 'INSTITUTIONAL',
+        },
+        {
+          id: 15,
+          name: 'Police Building',
+          mainImage: 'Projects/LIASONING/police building.png',
+          description: 'Stunning rear facade design',
+          category: 'LIASONING',
         },
         {
           id: 7,
           name: 'Nursing Home',
-          mainImage: 'Projects/View nursing home TRIM copy7.jpg',
+          mainImage: 'Projects/NURSING HOMES/1.jpg',
           additionalImages: [
-            'Projects/View nursing home TRIM copy7.jpg',
-            'Projects/View nursing home TRIM copy7.jpg',
-            'Projects/View nursing home TRIM copy7.jpg'
+            'Projects/NURSING HOMES/2.jpg',
+            'Projects/NURSING HOMES/3.png',
+            'Projects/NURSING HOMES/4.jpg',
+            'Projects/NURSING HOMES/5.jpg',
           ],
-          description: 'Healthcare facility design',
-          category: 'INSTITUTIONAL',
+    description: 'Healthcare facility design',
+      category: 'NURSING HOME',
         },
         {
           id: 8,
-          name: 'Yarpur View',
-          mainImage: 'Projects/yarpur_view (8).jpg',
-          additionalImages: [
-            'Projects/yarpur_view (8).jpg',
-            'Projects/yarpur_view (8).jpg',
-            'Projects/yarpur_view (8).jpg'
-          ],
+          name: 'Apartment, Patna',
+          mainImage: 'Projects/HOUSING/Apartment, Patna.jpg',
           description: 'Panoramic residential project',
-          category: 'RESIDENTIAL',
+          category: 'HOUSING',
+        },
+        {
+          id: 14,
+          name: 'Samrat Ashok Convention Centre',
+          mainImage: 'Projects/LIASONING/samrat ashok cconvention centree.png',
+          description: 'Stunning rear facade design',
+          category: 'LIASONING',
+        },
+
+        {
+          id: 9,
+          name: 'ZP',
+          mainImage: 'Projects/COMMERCIAL/ZP.jpg',
+          additionalImages: [
+            'Projects/COMMERCIAL/ZP2.jpg',
+            'Projects/COMMERCIAL/ZP11.jpg',
+            'Projects/COMMERCIAL/zp beg.jpg',
+          ],
+          description: 'Elegant outdoor living space',
+          category: 'COMMERCIAL',
+        },
+        {
+          id: 13,
+          name: 'IGIMS Hospital',
+          mainImage: 'Projects/LIASONING/IGIMS HOS.png',
+          description: 'Stunning rear facade design',
+          category: 'LIASONING',
+        },
+        {
+          id: 10,
+          name: 'RN Institute of Urology',
+          mainImage: 'Projects/INSTITUTIONAL/RN INTITUTE OF UROLOGY.jpg',
+          description: 'Stunning rear facade design',
+          category: 'INSTITUTIONAL',
+        },
+        {
+          id: 11,
+          name: 'Swaminandan Golumbar',
+          mainImage: 'Projects/LANDSCAPING/Swaminandan Golumbar, Patna.jpg',
+          description: 'Stunning rear facade design',
+          category: 'LANDSCAPE',
+        },
+        {
+          id: 12,
+          name: 'Sardar Patel Bhawan',
+          mainImage: 'Projects/LIASONING/BIHAR POLICE.jpg',
+          description: 'Stunning rear facade design',
+          category: 'LIASONING',
         },
         ]
     }
