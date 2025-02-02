@@ -94,22 +94,23 @@ export default {
   name: 'ProjectModal',
   props: {
     project: {
-      type: Object,
-      required: true,
-      default: () => ({
-        title: '',
-        name: '',
-        images: [],
-        description: '',
-        category: '',
-        status: '',
-        date: null
-      })
-    },
-    show: {
-      type: Boolean,
-      default: false
-    }
+    type: Object,
+    required: true,
+    default: () => ({
+      title: '',
+      name: '',
+      mainImage: '',
+      additionalImages: [],
+      description: '',
+      category: '',
+      status: '',
+      date: null
+    })
+  },
+  show: {
+    type: Boolean,
+    default: false
+  }
   },
   data() {
     return {
@@ -117,17 +118,25 @@ export default {
       currentImageIndex: 0
     }
   },
-  computed: {
-    normalizedImages() {
-      if (!this.project.images) return [this.project.image]
-      return Array.isArray(this.project.images) ? this.project.images : [this.project.images]
-    },
-    currentImage() {
-      return this.normalizedImages[this.currentImageIndex]
-    },
-    hasMultipleImages() {
-      return this.normalizedImages.length > 1
-    },
+    computed: {
+  normalizedImages() {
+    if (!this.project) return [];
+    
+    // Combine mainImage and additionalImages into a single array
+    const images = [
+      this.project.mainImage,
+      ...(this.project.additionalImages || [])
+    ].filter(Boolean); // Remove any null/undefined values
+    
+    console.log('Combined images:', images); // Debug log
+    return images;
+  },
+  currentImage() {
+    return this.normalizedImages[this.currentImageIndex];
+  },
+  hasMultipleImages() {
+    return this.normalizedImages.length > 1;
+  },
     formattedDescription() {
       return this.project.description
         .split('\n')
@@ -204,8 +213,8 @@ export default {
         month: 'long',
         day: 'numeric'
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -216,24 +225,24 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
   animation: fadeIn 0.3s ease-out;
 }
 
 .modal {
-  background: white;
-  border-radius: 20px;
+  background: #fff;
+  border-radius: 16px;
   width: 90%;
   max-width: 900px;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
   transform: translateY(30px);
   opacity: 0;
   transition: all 0.3s ease-out;
@@ -248,20 +257,20 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.75rem 2rem;
-  border-bottom: 1px solid #eaeaea;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .title {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #111827;
+  color: #000;
   margin: 0;
 }
 
 .gallery-container {
-  background: #f9fafb;
-  padding: 2rem;
+  background: #f5f5f5;
+  padding: 1.5rem;
 }
 
 .image-wrapper {
@@ -271,7 +280,7 @@ export default {
   align-items: center;
   min-height: 200px;
   max-height: 500px;
-  background: white;
+  background: #fff;
   border-radius: 12px;
   overflow: hidden;
 }
@@ -296,7 +305,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #f3f4f6 25%, #f9fafb 50%, #f3f4f6 75%);
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -349,11 +358,11 @@ export default {
   padding: 0;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: white;
+  background: #fff;
 }
 
 .thumbnail.active {
-  border-color: #3b82f6;
+  border-color: #000;
 }
 
 .thumbnail img {
@@ -364,11 +373,11 @@ export default {
 }
 
 .modal-content {
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .description {
-  color: #4b5563;
+  color: #333;
   line-height: 1.7;
   font-size: 1.125rem;
   margin-bottom: 2rem;
@@ -395,21 +404,21 @@ export default {
 }
 
 .category-badge {
-  background: #f3f4f6;
-  color: #111827;
+  background: #e0e0e0;
+  color: #000;
   text-decoration: none;
 }
 
 .status-badge {
-  color: white;
+  color: #fff;
 }
 
-.status-active { background: #059669; }
-.status-completed { background: #3b82f6; }
-.status-pending { background: #f59e0b; }
+.status-active { background: #000; }
+.status-completed { background: #555; }
+.status-pending { background: #888; }
 
 .project-date {
-  color: #6b7280;
+  color: #666;
   font-size: 0.875rem;
 }
 

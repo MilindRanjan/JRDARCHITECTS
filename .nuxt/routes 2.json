@@ -3,24 +3,28 @@
     "name": "about",
     "path": "/about",
     "component": "/Users/milindranjan/Desktop/Work/JRDARCHITECTS/pages/about.vue",
-    "chunkName": "pages/about"
+    "chunkName": "pages/about",
+    "_name": "_3eb6f53c"
   },
   {
     "name": "contact",
     "path": "/contact",
     "component": "/Users/milindranjan/Desktop/Work/JRDARCHITECTS/pages/contact.vue",
-    "chunkName": "pages/contact"
+    "chunkName": "pages/contact",
+    "_name": "_4c158935"
   },
   {
     "name": "projects",
     "path": "/projects",
     "component": "/Users/milindranjan/Desktop/Work/JRDARCHITECTS/pages/projects.vue",
-    "chunkName": "pages/projects"
+    "chunkName": "pages/projects",
+    "_name": "_261c8b35"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/Users/milindranjan/Desktop/Work/JRDARCHITECTS/pages/index.vue",
-    "chunkName": "pages/index"
+    "chunkName": "pages/index",
+    "_name": "_005c6027"
   }
 ]

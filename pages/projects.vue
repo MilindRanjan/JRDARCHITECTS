@@ -1,68 +1,72 @@
 <template>
-  <div>
-    <!-- Header -->
+  <div class="min-h-screen bg-white">
     <Header 
       :categories="categories" 
       @filter-category="filterProjects"
     />
     
-    <!-- Filter Section -->
-    <div class="container mx-auto px-4 mt-20"> <!-- Added margin-top -->
-      <div class="flex flex-wrap justify-center gap-3 mb-12">
+    <div class="container mx-auto px-4 mt-24 max-w-7xl">
+      <div class="text-center mb-12">
+  <h1 class="text-5xl font-normal text-gray-900 mb-4">Our Projects</h1>
+</div>
+
+      <div class="flex flex-wrap justify-center gap-4 mb-16">
         <button
-          v-for="category in categories"
-          :key="category"
-          @click="filterProjects(category)"
-          :class="[
-            'px-6 py-2 rounded-full transition-all duration-300',
-            selectedCategory === category
-              ? 'bg-black text-white shadow-lg'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          ]"
-        >
-          {{ category }}
-        </button>
+  v-for="category in categories"
+  :key="category"
+  @click="filterProjects(category)"
+  :class="[
+    'px-6 py-2.5 rounded-full transition-all duration-300 text-sm font-normal',
+    selectedCategory === category
+      ? 'bg-black text-white shadow-md transform scale-105'
+      : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-sm'
+  ]"
+>
+  {{ category }}
+</button>
       </div>
 
-      <!-- Projects Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-24">
         <div
           v-for="project in filteredProjects"
           :key="project.id"
-          class="group cursor-pointer overflow-hidden border-0 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-white rounded-lg"
+          class="group relative cursor-pointer overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
           @click="viewProjectDetails(project)"
         >
-          <div class="relative aspect-video overflow-hidden">
+          <div class="relative aspect-[4/3] overflow-hidden">
             <img
-              :src="project.image"
-              :alt="project.name"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            :src="project.mainImage"
+    :alt="project.name"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </div>
-          <div class="p-6">
-            <div class="flex items-start justify-between">
-              <h3 class="text-xl font-semibold text-gray-900">
-                {{ project.name }}
-              </h3>
-              <span class="inline-block px-3 py-1 text-xs font-medium bg-black text-white rounded-full">
-                {{ project.category }}
-              </span>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <p class="text-sm font-medium">View Project</p>
+              </div>
             </div>
-            <p class="mt-3 text-gray-600 text-sm">
-              {{ project.description }}
-            </p>
           </div>
+
+          <div class="p-6">
+  <div class="flex items-start justify-between mb-3">
+    <h3 class="text-lg font-normal text-gray-900 group-hover:text-black">
+      {{ project.name }}
+    </h3>
+    <span class="inline-block px-3 py-1 text-xs font-light bg-black text-white rounded-full">
+      {{ project.category }}
+    </span>
+  </div>
+  <p class="text-gray-500 text-sm leading-relaxed font-light">
+    {{ project.description }}
+  </p>
+</div>
         </div>
       </div>
     </div>
 
-    <!-- Project Modal -->
     <ProjectModal 
-    :project="selectedProject"
-    :show="showModal"
-    @close="showModal = false"
-
+      :project="selectedProject"
+      :show="showModal"
+      @close="showModal = false"
     />
   </div>
 </template>
@@ -70,27 +74,6 @@
 <script>
 import ProjectModal from '../components/ProjectModal.vue';
 import { ref } from 'vue';
-
-
-const selectedProject = ref(null);
-
-const showModal = ref(false);
-const handleImageError = (project) => {
-  project.image = ''; // Clear image if it fails to load
-  console.error(`Failed to load image for ${project.name}`);
-};
-
-const openModal = (project) => {
-  selectedProject.value = project; // Show modal with project details
-  showModal.value = true; // Show modal
-  document.body.style.overflow = 'hidden'; // Prevent background scrolling
-};
-
-const closeModal = () => {
-  selectedProject.value = null; // Hide modal
-  showModal.value = false; // Hide modal
-  document.body.style.overflow = ''; // Re-enable background scrolling
-};
 
 export default {
   components: {
@@ -113,63 +96,102 @@ export default {
         {
           id: 1,
           name: 'South Elevation',
-          image: 'Projects/south elevation1.jpg',
+          mainImage: 'Projects/south elevation1.jpg',
+          additionalImages: [
+            'Projects/south elevation1.jpg',
+            'Projects/south elevation1.jpg',
+            'Projects/south elevation1.jpg'
+          ],
           description: 'Contemporary architectural design with sustainable elements',
           category: 'RESIDENTIAL',
         },
         {
           id: 2,
           name: 'Modern Living',
-          image: 'Projects/20140720_163258(2).jpg',
+          mainImage: 'Projects/20140720_163258(2).jpg',
+          additionalImages: [
+            'Projects/20140720_163258(2).jpg',
+            'Projects/20140720_163258(2).jpg',
+            'Projects/20140720_163258(2).jpg'
+          ],
           description: 'Luxurious residential complex with modern amenities',
           category: 'COMMERCIAL',
         },
         {
           id: 3,
           name: 'Urban Design',
-          image: 'Projects/ek-bihari3.jpg',
+          mainImage: 'Projects/ek-bihari3.jpg',
+          additionalImages: [
+            'Projects/ek-bihari3.jpg',
+            'Projects/ek-bihari3.jpg',
+            'Projects/ek-bihari3.jpg'
+          ],
           description: 'Urban architectural marvel',
           category: 'INSTITUTIONAL',
         },
         {
           id: 4,
           name: 'Front Pergola',
-          image: 'Projects/front pergola 28 10 24(4).jpg',
+          mainImage: 'Projects/front pergola 28 10 24(4).jpg',
+          additionalImages: [
+            'Projects/ek-bihari3.jpg',
+            'Projects/rear view5.JPG',
+            'Projects/yarpur_view (8).jpg'
+          ],
           description: 'Elegant outdoor living space',
           category: 'INTERIORS',
         },
         {
           id: 5,
           name: 'Rear View',
-          image: 'Projects/rear view5.JPG',
+          mainImage: 'Projects/rear view5.JPG',
+          additionalImages: [
+            'Projects/rear view5.JPG',
+            'Projects/rear view5.JPG',
+            'Projects/rear view5.JPG'
+          ],
           description: 'Stunning rear facade design',
           category: 'LANDSCAPE',
         },
         {
           id: 6,
           name: 'Modern Facade',
-          image: 'Projects/f1(6).jpg',
+          mainImage: 'Projects/f1(6).jpg',
+          additionalImages: [
+            'Projects/f1(6).jpg',
+            'Projects/f1(6).jpg',
+            'Projects/f1(6).jpg'
+          ],
           description: 'Contemporary facade treatment',
           category: 'INTERIORS',
         },
         {
           id: 7,
           name: 'Nursing Home',
-          image: 'Projects/View nursing home TRIM copy7.jpg',
+          mainImage: 'Projects/View nursing home TRIM copy7.jpg',
+          additionalImages: [
+            'Projects/View nursing home TRIM copy7.jpg',
+            'Projects/View nursing home TRIM copy7.jpg',
+            'Projects/View nursing home TRIM copy7.jpg'
+          ],
           description: 'Healthcare facility design',
           category: 'INSTITUTIONAL',
         },
         {
           id: 8,
           name: 'Yarpur View',
-          image: 'Projects/yarpur_view (8).jpg',
+          mainImage: 'Projects/yarpur_view (8).jpg',
+          additionalImages: [
+            'Projects/yarpur_view (8).jpg',
+            'Projects/yarpur_view (8).jpg',
+            'Projects/yarpur_view (8).jpg'
+          ],
           description: 'Panoramic residential project',
           category: 'RESIDENTIAL',
         },
-      ]
+        ]
     }
   },
-
   computed: {
     filteredProjects() {
       return this.selectedCategory === 'All'
@@ -189,21 +211,35 @@ export default {
     },
   },
   methods: {
-    filterProjects(category) {
-      this.selectedCategory = category;
-    },
-    scrollToProjects() {
-      // Smooth scroll to the projects grid
+  filterProjects(category) {
+    this.selectedCategory = category;
+  },
+  scrollToProjects() {
+    // Only run on client-side
+    if (process.client) {
       const projectsSection = document.querySelector('.container');
       if (projectsSection) {
         projectsSection.scrollIntoView({ behavior: 'smooth' });
       }
-    },
-    viewProjectDetails(project) {
-      this.selectedProject = project;
-      this.showModal = true;
+    }
+  },
+  viewProjectDetails(project) {
+    this.selectedProject = project;
+    this.showModal = true;
+  },
+},
+watch: {
+  '$route.query.category': {
+    immediate: true,
+    handler(newCategory) {
+      this.filterProjects(newCategory || 'All');
+      // Only scroll after component is mounted
+      this.$nextTick(() => {
+        this.scrollToProjects();
+      });
     },
   },
+},
 };
 </script>
 
@@ -247,5 +283,14 @@ export default {
     break-inside: avoid;
     page-break-inside: avoid;
   }
+}
+
+/* Additional Global Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
 }
 </style>

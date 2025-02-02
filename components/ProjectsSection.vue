@@ -10,12 +10,12 @@
         @click="openModal(project)"
       >
         <div class="image-wrapper">
-          <div v-if="!project.image" class="image-placeholder">
+          <div v-if="!project.mainImage" class="image-placeholder">
             <span>{{ project.name }}</span>
           </div>
           
           <img
-            :src="project.image"
+            :src="project.mainImage"
             :alt="project.name"
             class="project-image"
             @error="handleImageError(project)"
@@ -49,74 +49,111 @@ const projects = ref([
   {
     id: 1,
     name: 'South Elevation',
-    image: 'Projects/south elevation1.jpg',
+    mainImage: 'Projects/south elevation1.jpg',
+    additionalImages: [
+      'Projects/south elevation1.jpg',
+      'Projects/south elevation1.jpg'
+    ],
     description: 'Contemporary architectural design with sustainable elements',
-    details: 'A flagship project showcasing modern architectural principles with emphasis on sustainability and functionality.'
+    category: 'COMMERCIAL',
   },
   {
     id: 2,
     name: 'Modern Living',
-    image: 'Projects/20140720_163258(2).jpg',
+    mainImage: 'Projects/20140720_163258(2).jpg',
+    additionalImages: [
+      'Projects/20140720_163258(2).jpg',
+      'Projects/20140720_163258(2).jpg'
+    ],
     description: 'Luxurious residential complex with modern amenities',
-    details: 'Spacious living spaces designed with comfort and elegance in mind.'
+    category: 'COMMERCIAL',
   },
   {
     id: 3,
     name: 'Urban Design',
-    image: 'Projects/ek-bihari3.jpg',
+    mainImage: 'Projects/ek-bihari3.jpg',
+    additionalImages: [
+      'Projects/ek-bihari3.jpg',
+      'Projects/ek-bihari3.jpg'
+    ],
     description: 'Urban architectural marvel',
-    details: 'Innovative urban design that blends with the cityscape.'
+    category: 'INSTITUTIONAL',
   },
   {
     id: 4,
     name: 'Front Pergola',
-    image: 'Projects/front pergola 28 10 24(4).jpg',
+    mainImage: 'Projects/front pergola 28 10 24(4).jpg',
+    additionalImages: [
+      'Projects/front pergola 28 10 24(4).jpg',
+      'Projects/front pergola 28 10 24(4).jpg'
+    ],
     description: 'Elegant outdoor living space',
-    details: 'Custom-designed pergola that creates a seamless indoor-outdoor transition.'
+    category: 'INTERIORS',
   },
   {
     id: 5,
     name: 'Rear View',
-    image: 'Projects/rear view5.JPG',
+    mainImage: 'Projects/rear view5.JPG',
+    additionalImages: [
+      'Projects/rear view5.JPG',
+      'Projects/rear view5.JPG'
+    ],
     description: 'Stunning rear facade design',
-    details: 'Carefully crafted rear elevation that maximizes natural light and views.'
+    category: 'INTERIORS',
   },
   {
     id: 6,
     name: 'Modern Facade',
-    image: 'Projects/f1(6).jpg',
+    mainImage: 'Projects/f1(6).jpg',
+    additionalImages: [
+      'Projects/f1(6).jpg',
+      'Projects/f1(6).jpg'
+    ],
     description: 'Contemporary facade treatment',
-    details: 'Bold and modern facade design that makes a statement.'
+    category: 'COMMERCIAL',
   },
   {
     id: 7,
     name: 'Nursing Home',
-    image: 'Projects/View nursing home TRIM copy7.jpg',
+    mainImage: 'Projects/View nursing home TRIM copy7.jpg',
+    additionalImages: [
+      'Projects/View nursing home TRIM copy7.jpg',
+      'Projects/View nursing home TRIM copy7.jpg'
+    ],
     description: 'Healthcare facility design',
-    details: 'Purpose-built healthcare facility with focus on patient comfort.'
+    category: 'INSTITUTIONAL',
   },
   {
     id: 8,
     name: 'Yarpur View',
-    image: 'Projects/yarpur_view (8).jpg',
+    mainImage: 'Projects/yarpur_view (8).jpg',
+    additionalImages: [
+      'Projects/yarpur_view (8).jpg',
+      'Projects/yarpur_view (8).jpg'
+    ],
     description: 'Panoramic residential project',
-    details: 'Residential complex with emphasis on views and natural ventilation.'
+    category: 'RESIDENTIAL',
   }
 ]);
 
 
 const handleImageError = (project) => {
-  project.image = ''; // Clear image if it fails to load
+  project.mainImage = ''; // Clear image if it fails to load
   console.error(`Failed to load image for ${project.name}`);
 };
 
 const openModal = (project) => {
-  selectedProject.value = project; // Show modal with project details
-  showModal.value = true; // Show modal
-  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  // Combine main image with additional images for the modal view
+  selectedProject.value = {
+    ...project,
+    images: [project.mainImage, ...(project.additionalImages || [])].filter(Boolean)
+  };
+  showModal.value = true;
+  document.body.style.overflow = 'hidden';
 };
 
 const showModal = ref(false);
+
 const closeModal = () => {
   selectedProject.value = null; // Hide modal
   showModal.value = false; // Hide modal
