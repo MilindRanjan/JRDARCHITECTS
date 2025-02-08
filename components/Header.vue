@@ -93,7 +93,7 @@ export default {
         { name: 'Home', path: '/' },
         { name: 'Projects', path: '/projects', hasDropdown: true },
         { name: 'About Us', path: '/about' },
-        { name: 'Contact Me', path: '/contact' }
+        { name: 'Contact Us', path: '/contact' }
       ]
     };
   },

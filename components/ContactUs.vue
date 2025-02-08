@@ -1,178 +1,333 @@
 <template>
-    <section class="contact-section">
-      <div class="contact-container">
-        <h1 class="section-title">Contact Us</h1>
-        
-        <div class="contact-wrapper">
-          <!-- Contact Information -->
-          <div class="contact-info">
+  <section class="contact-section">
+    <div class="contact-container">
+      <!-- Section Title -->
+      <h1 class="section-title">
+        <span class="title-text">Contact Us</span>
+        <span class="title-line"></span>
+      </h1>
+
+      <!-- Contact Content -->
+      <div class="contact-content">
+        <!-- Left Side: Contact Form -->
+        <div class="contact-form">
+          <h2>Get in Touch</h2>
+          <form @submit.prevent="handleSubmit">
+            <div class="form-group">
+              <input type="text" placeholder="Your Name" required />
+            </div>
+            <div class="form-group">
+              <input type="email" placeholder="Your Email" required />
+            </div>
+            <div class="form-group">
+              <textarea placeholder="Your Message" rows="5" required></textarea>
+            </div>
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
+
+        <!-- Right Side: Info Sections -->
+        <div class="contact-details">
+          <!-- Location and Contact Row -->
+          <div class="info-row">
             <div class="info-block">
               <h2>Location</h2>
-              <p>123 Architecture </p>
-              <p>Indrapuri</p>
-              <p>Patna, Bihar</p>
+              <p>Road no 8/8A, Indrapuri,</p>
+              <p>P.O. Keshri Nagar,</p>
+              <p>Patna-800024, Bihar</p>
             </div>
-  
             <div class="info-block">
               <h2>Contact</h2>
-              <p>+91 123456789</p>
-              <div class="social-links">
-                <a href="https://linkedin.com/company/jrd-architects" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                <a href="https://wa.me/15551234567" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-              </div>
-            </div>
-  
-            <div class="info-block">
-              <h2>Hours</h2>
-              <p>Monday - Friday</p>
-              <p>9:00 AM - 9:00 PM</p>
+              <p>+91 8709413556</p>
+              <p>+91 9431623579</p>
             </div>
           </div>
-  
-          <!-- Quick Navigation -->
-          <div class="quick-nav">
-            <h2>Navigation</h2>
-            <nav>
-              <a href='/'>Home</a>
-              <a href='/projects'>Projects</a>
-              <a href="/about">About Us</a>
-            </nav>
+
+          <!-- Hours and Nav Links Row -->
+          <div class="info-row">
+            <div class="info-block">
+              <h2>Hours</h2>
+              <p>Everyday</p>
+              <p>9:00 AM - 9:00 PM</p>
+            </div>
+            <div class="info-block">
+              <h2>Quick Links</h2>
+              <nav>
+                <a href="/">Home</a>
+                <a href="/projects">Projects</a>
+                <a href="/about">About Us</a>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Social Media Buttons -->
+          <div class="social-buttons">
+            <a 
+              href="https://www.linkedin.com/company/jrd-architects/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="social-button linkedin"
+            >
+              <span>LinkedIn</span>
+            </a>
+            <a 
+              href="https://wa.me/918709413556"
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="social-button whatsapp"
+            >
+              <span>WhatsApp</span>
+            </a>
           </div>
         </div>
       </div>
-    </section>
-  </template>
-  
-  <script>
-  export default {
-    name: 'ContactSection'
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  name: 'ContactSection',
+  methods: {
+    handleSubmit() {
+      alert('Your message has been sent!');
+    },
+  },
+};
+</script>
+
+<style scoped>
+.contact-section {
+  padding: 120px 24px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section Title */
+.section-title {
+  text-align: center;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.title-text {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  display: inline-block;
+}
+
+.title-line {
+  display: block;
+  width: 100px;
+  height: 4px;
+  background-color: #000000;
+  margin: 16px auto 0;
+  animation: lineGrow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes lineGrow {
+  0% { transform: scaleX(0.5); }
+  100% { transform: scaleX(1); }
+}
+
+/* Contact Content Layout */
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+/* Contact Form */
+.contact-form {
+  background-color: #f9f9f9;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333333;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #000000;
+  outline: none;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+button[type="submit"] {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #333333;
+}
+
+/* Contact Details */
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.info-block {
+  flex: 1;
+  padding: 20px;
+  border-left: 2px solid #000000;
+  transition: transform 0.3s ease;
+}
+
+.info-block:hover {
+  transform: translateX(10px);
+}
+
+.info-block h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.info-block p {
+  font-size: 1rem;
+  color: #333333;
+  margin: 4px 0;
+}
+
+.info-block nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-block nav a {
+  color: #333333;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.info-block nav a:hover {
+  color: #000000;
+}
+
+/* Social Media Buttons */
+.social-buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.social-button {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 30px;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.social-button.linkedin {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.social-button.whatsapp {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.social-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.social-button.linkedin:hover {
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.social-button.whatsapp:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-content {
+    grid-template-columns: 1fr;
   }
-  </script>
-  
-  <style scoped>
-  .contact-container h1{
-    text-align: center;
-    font-size: 2.5rem;
-    color: #333;
-    position: relative;
-  }
-  .contact-section {
-    padding: 120px 24px;
-    background-color: #ffffff;
-  }
-  
-  .contact-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .section-title {
-    font-size: 32px;
-    font-weight: 300;
-    letter-spacing: -0.5px;
-    color: #000000;
-    margin-bottom: 80px;
-    text-align: center;
-    margin-top: -110px;
-  }
-  
-  .contact-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-  }
-  
-  .contact-info {
-    display: flex;
+
+  .info-row {
     flex-direction: column;
-    gap: 48px;
+    gap: 20px;
   }
-  
-  .info-block {
-    border-left: 1px solid #000000;
-    padding-left: 24px;
+
+  .section-title .title-text {
+    font-size: 2rem;
   }
-  
-  .info-block h2 {
-    font-size: 18px;
-    font-weight: 500;
-    color: #000000;
-    margin-bottom: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+
+  .title-line {
+    width: 80px;
   }
-  
-  .info-block p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #333333;
-    margin: 4px 0;
-  }
-  
-  .social-links {
-    margin-top: 16px;
-  }
-  
-  .social-links a {
-    display: inline-block;
-    color: #000000;
-    text-decoration: none;
-    margin-right: 24px;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: opacity 0.3s ease;
-  }
-  
-  .social-links a:hover {
-    opacity: 0.7;
-  }
-  
-  .quick-nav {
-    border-left: 1px solid #000000;
-    padding-left: 24px;
-  }
-  
-  .quick-nav h2 {
-    font-size: 18px;
-    font-weight: 500;
-    color: #000000;
-    margin-bottom: 24px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  
-  .quick-nav nav {
-    display: flex;
+
+  .social-buttons {
     flex-direction: column;
-    gap: 16px;
   }
-  
-  .quick-nav a {
-    color: #333333;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s ease;
-  }
-  
-  .quick-nav a:hover {
-    color: #000000;
-  }
-  
-  @media (max-width: 768px) {
-    .contact-section {
-      padding: 80px 24px;
-    }
-  
-    .contact-wrapper {
-      grid-template-columns: 1fr;
-      gap: 48px;
-    }
-  
-    .section-title {
-      margin-bottom: 40px;
-      font-size: 28px;
-      margin-top: -80px;
-    }
-  }
-  </style>
+}
+</style>
