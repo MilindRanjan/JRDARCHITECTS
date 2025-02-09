@@ -62,13 +62,13 @@
         </div>
       </div>
     </div>
+    <Footer />
 
     <ProjectModal 
       :project="selectedProject"
       :show="showModal"
       @close="showModal = false"
     />
-    <Footer />
   </div>
 </template>
 
