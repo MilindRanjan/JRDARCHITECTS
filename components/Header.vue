@@ -2,15 +2,15 @@
   <header :class="{ 'mobile-open': isMenuOpen }">
     <!-- Logo and hamburger sections -->
     <div class="logo-container">
-  <nuxt-link to="/" aria-label="Go to Home">
-    <img src="/logo.jpeg" alt="Company Logo" class="logo" />
-  </nuxt-link>
-</div>
+      <nuxt-link to="/" aria-label="Go to Home">
+        <img src="/logo.jpeg" alt="Company Logo" class="logo" />
+      </nuxt-link>
+    </div>
 
-    <button 
-      class="hamburger" 
-      @click="toggleMenu" 
-      :aria-expanded="isMenuOpen" 
+    <button
+      class="hamburger"
+      @click="toggleMenu"
+      :aria-expanded="isMenuOpen"
       aria-label="Toggle navigation menu"
     >
       <span class="hamburger-line"></span>
@@ -20,39 +20,47 @@
 
     <nav :class="{ 'nav-open': isMenuOpen }">
       <ul>
-        <li v-for="(item, index) in menuItems" 
-            :key="index"
-            :class="{ 'has-dropdown': item.hasDropdown }"
-            @mouseenter="handleMouseEnter(index)"
-            @mouseleave="handleMouseLeave"
+        <li
+          v-for="(item, index) in menuItems"
+          :key="index"
+          :class="{ 'has-dropdown': item.hasDropdown }"
+          @mouseenter="handleMouseEnter(index)"
+          @mouseleave="handleMouseLeave"
         >
-          <nuxt-link 
+          <nuxt-link
             :to="item.path"
             @click="item.hasDropdown && isMobile ? toggleDropdown(index) : closeMenu"
-            :class="{ 'active': $route.path === item.path }"
+            :class="{ active: $route.path === item.path }"
           >
             {{ item.name }}
             <span v-if="item.hasDropdown" class="dropdown-arrow">
-              <svg 
-                width="10" 
-                height="6" 
-                viewBox="0 0 10 6" 
-                fill="none" 
+              <svg
+                width="10"
+                height="6"
+                viewBox="0 0 10 6"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                :class="{ 'rotated': activeDropdown === index || hoveredIndex === index }"
+                :class="{ rotated: activeDropdown === index || hoveredIndex === index }"
               >
-                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path
+                  d="M1 1L5 5L9 1"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </span>
           </nuxt-link>
           <!-- Dropdown for Projects -->
           <transition name="fade">
-            <ul v-show="item.hasDropdown && (activeDropdown === index || hoveredIndex === index)" 
-                class="dropdown"
-                :class="{ 'dropdown-mobile': isMobile }"
+            <ul
+              v-show="item.hasDropdown && (activeDropdown === index || hoveredIndex === index)"
+              class="dropdown"
+              :class="{ 'dropdown-mobile': isMobile }"
             >
-              <li 
-                v-for="category in defaultCategories" 
+              <li
+                v-for="category in defaultCategories"
                 :key="category"
                 @click.stop="filterCategory(category)"
                 class="dropdown-item"
@@ -65,11 +73,7 @@
       </ul>
     </nav>
 
-    <div 
-      v-if="isMenuOpen" 
-      class="mobile-overlay"
-      @click="closeMenu"
-    ></div>
+    <div v-if="isMenuOpen" class="mobile-overlay" @click="closeMenu"></div>
   </header>
 </template>
 
@@ -78,26 +82,33 @@ export default {
   props: {
     categories: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
-  
+
   data() {
     return {
       isMenuOpen: false,
       activeDropdown: null,
       hoveredIndex: null,
       isMobile: false,
-      defaultCategories: ['All', 'RESIDENTIAL', 'COMMERCIAL', 'INSTITUTIONAL', 'INTERIORS', 'LANDSCAPE'], // Updated categories
+      defaultCategories: [
+        'All',
+        'RESIDENTIAL',
+        'COMMERCIAL',
+        'INSTITUTIONAL',
+        'INTERIORS',
+        'LANDSCAPE',
+      ],
       menuItems: [
         { name: 'Home', path: '/' },
         { name: 'Projects', path: '/projects', hasDropdown: true },
         { name: 'About Us', path: '/about' },
-        { name: 'Contact Us', path: '/contact' }
-      ]
+        { name: 'Contact Us', path: '/contact' },
+      ],
     };
   },
-  
+
   watch: {
     categories: {
       handler(newCategories) {
@@ -105,8 +116,8 @@ export default {
           this.defaultCategories = newCategories;
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
 
   methods: {
@@ -114,13 +125,13 @@ export default {
       this.isMenuOpen = !this.isMenuOpen;
       document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
     },
-    
+
     closeMenu() {
       this.isMenuOpen = false;
       this.activeDropdown = null;
       document.body.style.overflow = '';
     },
-    
+
     toggleDropdown(index) {
       if (this.isMobile) {
         this.activeDropdown = this.activeDropdown === index ? null : index;
@@ -138,22 +149,21 @@ export default {
         this.hoveredIndex = null;
       }
     },
-    filterCategory(category) {
-  this.$emit('filter-category', category);
-  this.closeMenu();
 
-  // Navigate to the projects page and pass the selected category
-  this.$router.push({ path: '/projects', query: { category } });
-},
+    filterCategory(category) {
+      this.$emit('filter-category', category);
+      this.closeMenu();
+      this.$router.push({ path: '/projects', query: { category } });
+    },
 
     checkMobile() {
       this.isMobile = window.innerWidth <= 768;
-    }
+    },
   },
 
   mounted() {
     this.checkMobile();
-    
+
     window.addEventListener('resize', () => {
       this.checkMobile();
       if (!this.isMobile && this.isMenuOpen) {
@@ -174,80 +184,12 @@ export default {
     window.removeEventListener('resize', this.checkMobile);
     window.removeEventListener('keydown', this.closeMenu);
     document.body.style.overflow = '';
-  }
+  },
 };
 </script>
 
 <style scoped>
-/* Updated Dropdown Styling */
-.dropdown-arrow {
-  display: inline-flex;
-  align-items: center;
-  margin-left: 4px;
-  transition: transform 0.2s ease;
-}
-
-.dropdown-arrow svg {
-  transition: transform 0.2s ease;
-}
-
-.dropdown-arrow svg.rotated {
-  transform: rotate(180deg);
-}
-
-.dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 8px; /* Maintain rounded corners */
-  list-style: none;
-  padding: 0; /* Remove padding around the dropdown */
-  margin: 0; /* Ensure no margin around the dropdown */
-  min-width: 150px; /* Minimum width for dropdown */
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-}
-
-.dropdown-item {
-  display: block;
-  width: 100%; /* Ensure full width */
-  padding: 8px 12px; /* Padding for each item */
-  text-align: left;
-  font-size: 14px; /* Font size */
-  color: #333333;
-  cursor: pointer;
-  transition: background-color 0.2s ease; /* Smooth background color transition */
-  border-bottom: 1px solid #eee; /* Divider between items */
-  box-sizing: border-box; /* Include padding in width */
-}
-
-.dropdown-item:last-child {
-  border-bottom: none; /* Remove border for the last item */
-}
-
-.dropdown-item:hover {
-  background-color: #f8f9fa; /* Hover color */
-  color: #000; /* Text color on hover */
-  padding-left: 12px; /* Add padding to the left for hover effect */
-}
-
-/* Ensure the dropdown items align properly */
-.dropdown {
-  left: 0; /* Align to the left */
-  right: auto; /* Prevent overflow */
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-  transform: translateY(-10px); /* Slightly reduced translation */
-}
+/* General Styles */
 header {
   display: flex;
   justify-content: space-between;
@@ -261,16 +203,15 @@ header {
   right: 0;
   z-index: 1000;
   height: 70px;
-  pointer-events: auto; /* Ensure header pointer-events aren't causing issues */
 }
 
 .logo-container {
-  flex-grow: 0; /* Prevent it from growing */
+  flex-grow: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  max-height: 50px; /* Match the logo height */
-  max-width: 50px; /* Add a fixed width */
+  max-height: 50px;
+  max-width: 50px;
 }
 
 .logo {
@@ -326,35 +267,65 @@ nav a.active + li::after {
   width: 100%;
 }
 
-.hamburger {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  z-index: 1001;
+/* Dropdown Styles */
+.dropdown-arrow {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  transition: transform 0.2s ease;
 }
 
-.hamburger-line {
-  display: block;
-  width: 25px;
-  height: 2px;
-  background-color: #000;
-  margin: 5px 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+.dropdown-arrow svg {
+  transition: transform 0.2s ease;
 }
 
-.mobile-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
+.dropdown-arrow svg.rotated {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  list-style: none;
+  padding: 8px 0; /* Added padding to contain hover effects */
+  margin: 0;
+  min-width: 180px; /* Increased width for better spacing */
+  display: flex;
+  overflow: hidden; /* Ensure hover effects stay within the dropdown */
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 16px; /* Increased padding for better spacing */
+  text-align: left;
+  flex: auto;
+  font-size: 14px;
+  color: #333333;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-bottom: 1px solid #eee;
+  box-sizing: border-box;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #000;
+  padding-left: 20px; /* Smooth hover effect */
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+/* Mobile Styles */
 @media (max-width: 768px) {
   .hamburger {
     display: block;
@@ -409,6 +380,7 @@ nav a.active + li::after {
   .mobile-open .mobile-overlay {
     display: block;
   }
+
   .dropdown {
     position: static;
     transform: none;
@@ -417,10 +389,6 @@ nav a.active + li::after {
     background: #f8f9fa;
     border-radius: 0;
     width: 100%;
-  }
-
-  .dropdown::before {
-    display: none;
   }
 
   .dropdown-item {

@@ -68,6 +68,7 @@
       :show="showModal"
       @close="showModal = false"
     />
+    <Footer />
   </div>
 </template>
 

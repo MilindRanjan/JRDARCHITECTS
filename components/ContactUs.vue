@@ -14,13 +14,28 @@
           <h2>Get in Touch</h2>
           <form @submit.prevent="handleSubmit">
             <div class="form-group">
-              <input type="text" placeholder="Your Name" required />
+              <input 
+                v-model="formData.name"
+                type="text" 
+                placeholder="Your Name" 
+                required 
+              />
             </div>
             <div class="form-group">
-              <input type="email" placeholder="Your Email" required />
+              <input 
+                v-model="formData.email"
+                type="email" 
+                placeholder="Your Email" 
+                required 
+              />
             </div>
             <div class="form-group">
-              <textarea placeholder="Your Message" rows="5" required></textarea>
+              <textarea 
+                v-model="formData.message"
+                placeholder="Your Message" 
+                rows="5" 
+                required
+              ></textarea>
             </div>
             <button type="submit">Send Message</button>
           </form>
@@ -32,8 +47,8 @@
           <div class="info-row">
             <div class="info-block">
               <h2>Location</h2>
-              <p>Road no 8/8A, Indrapuri,</p>
-              <p>P.O. Keshri Nagar,</p>
+              <p>Road no 8/8A, Indrapuri</p>
+              <p>P.O. Keshri Nagar</p>
               <p>Patna-800024, Bihar</p>
             </div>
             <div class="info-block">
@@ -68,14 +83,16 @@
               rel="noopener noreferrer"
               class="social-button linkedin"
             >
+              <img src="@/static/linkedin.svg" alt="LinkedIn" class="social-icon" />
               <span>LinkedIn</span>
             </a>
             <a 
-              href="https://wa.me/918709413556"
+              href="https://wa.me/8709413556" 
               target="_blank" 
               rel="noopener noreferrer"
               class="social-button whatsapp"
             >
+              <img src="@/static/whatsapp.svg" alt="WhatsApp" class="social-icon" />
               <span>WhatsApp</span>
             </a>
           </div>
@@ -85,14 +102,39 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'ContactSection',
-  methods: {
-    handleSubmit() {
-      alert('Your message has been sent!');
-    },
-  },
+<script setup>
+import { reactive } from 'vue';
+import emailjs from 'emailjs-com';
+import Header from '~/components/Header.vue';
+
+const formData = reactive({
+  name: '',
+  email: '',
+  message: '',
+});
+
+const handleSubmit = async () => {
+  try {
+    const serviceID = "service_1v20ook";
+    const templateID = "template_xmavmga";
+    const userID = "FrrVOmajsxXNPXg3a";
+
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+    };
+
+    await emailjs.send(serviceID, templateID, templateParams, userID);
+    alert("Message sent successfully!");
+    // Reset form
+    formData.name = '';
+    formData.email = '';
+    formData.message = '';
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Failed to send message. Please try again.");
+  }
 };
 </script>
 
@@ -272,6 +314,7 @@ button[type="submit"]:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px; /* Space between icon and text */
   padding: 15px 30px;
   border: 2px solid #000000;
   border-radius: 8px;
@@ -280,8 +323,23 @@ button[type="submit"]:hover {
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: all 0.3s ease;
+  border-radius: 100px;
 }
 
+.social-icon {
+  width: 24px;
+  height: 24px;
+  /* For LinkedIn icon when button has white text */
+  filter: brightness(0) invert(1); /* This makes the icon white */
+}
+
+.social-button.linkedin .social-icon {
+  filter: brightness(0) invert(1); /* Only apply to LinkedIn */
+}
+
+.social-button.whatsapp .social-icon {
+  filter: none; /* Remove inversion for WhatsApp */
+}
 .social-button.linkedin {
   background-color: #000000;
   color: #ffffff;
