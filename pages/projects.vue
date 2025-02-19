@@ -1,78 +1,117 @@
 <template>
   <div class="min-h-screen bg-white flex flex-col">
-    <Header 
-      :categories="categories" 
-      @filter-category="filterProjects"
-    />
+    <Header />
     
-    <div class="container mx-auto px-4 mt-32 max-w-7xl flex-grow">
-      <div class="text-center mb-12">
-        <h1 class="section-title">
-      <span class="title-text">Our Projects</span>
-      <span class="title-line"></span>
-    </h1>
-      </div>
-
-      <div class="flex flex-wrap justify-center gap-4 mb-16">
+    <!-- Categories Navigation - Wider width -->
+    <div class="fixed left-8 top-1/2 transform -translate-y-1/2 z-40 w-48">
+      <div class="flex flex-col space-y-4">
         <button
           v-for="category in categories"
           :key="category"
           @click="filterProjects(category)"
           :class="[
-            'px-6 py-2.5 rounded-full transition-all duration-300 text-sm font-normal',
+            'px-8 py-3 text-sm tracking-[0.2em] transition-all duration-500 relative overflow-hidden group w-full',
             selectedCategory === category
-              ? 'bg-black text-white shadow-md transform scale-105'
-              : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-sm'
+              ? 'text-white'
+              : 'text-black hover:text-white'
           ]"
         >
-          {{ category }}
+          <!-- Background layer -->
+          <div 
+            :class="[
+              'absolute inset-0 transition-all duration-500',
+              selectedCategory === category
+                ? 'bg-black'
+                : 'bg-black w-0 group-hover:w-full'
+            ]"
+          ></div>
+          <!-- Text layer -->
+          <span class="relative z-10">{{ category }}</span>
+          <!-- Line indicator -->
+          <div 
+            :class="[
+              'absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-black transition-all duration-300',
+              selectedCategory === category ? 'h-full' : 'group-hover:h-full'
+            ]"
+          ></div>
         </button>
       </div>
+    </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 mt-32 max-w-[1920px] flex-grow">
+      <div class="text-center mb-16">
+        <h1 class="section-title">
+          <span class="title-text">Our Projects</span>
+          <span class="title-line"></span>
+        </h1>
+      </div>
+
+      <!-- Enhanced Projects Grid with proper spacing -->
+      <TransitionGroup
+        name="projects"
+        tag="div"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 pl-56"
+      >
         <div
           v-for="project in filteredProjects"
           :key="project.id"
-          class="group relative cursor-pointer overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+          class="group relative"
           @click="viewProjectDetails(project)"
         >
-          <div class="relative aspect-[4/3] overflow-hidden">
-            <img
-              :src="project.mainImage"
-              :alt="project.name"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <p class="text-sm font-medium">View Project</p>
+          <!-- Project Card -->
+          <div class="relative aspect-[4/5] overflow-hidden cursor-pointer rounded-sm">
+            <!-- Background Image with Gradient -->
+            <div class="absolute inset-0 bg-black/10">
+              <img
+                :src="project.mainImage"
+                :alt="project.name"
+                class="w-full h-full object-cover transition-all duration-1000 ease-out transform group-hover:scale-110"
+              />
+            </div>
+
+            <!-- Hover Overlay with Gradient -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500">
+              <div class="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out">
+                <p class="text-white/90 text-sm leading-relaxed mb-6 font-light">
+                  {{ project.description }}
+                </p>
+                <div class="flex items-center space-x-3">
+                  <span class="w-10 h-[0.5px] bg-white/70"></span>
+                  <span class="text-white/70 text-xs tracking-[0.3em] uppercase">Explore</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project Info -->
+            <div class="absolute top-0 left-0 right-0 p-8">
+              <div class="space-y-3 transform group-hover:-translate-y-1 transition-transform duration-500">
+                <h3 class="text-white text-xl font-light tracking-wide">
+                  {{ project.name }}
+                </h3>
+                <div class="flex items-center space-x-4">
+                  <span class="inline-block px-4 py-1 text-[10px] tracking-[0.2em] border border-white/30 text-white/70 uppercase">
+                    {{ project.category }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="p-6">
-            <div class="flex items-start justify-between mb-3">
-              <h3 class="text-lg font-normal text-gray-900 group-hover:text-black">
-                {{ project.name }}
-              </h3>
-              <span class="inline-block px-3 py-1 text-xs font-light bg-black text-white rounded-full">
-                {{ project.category }}
-              </span>
-            </div>
-            <p class="text-gray-500 text-sm leading-relaxed font-light">
-              {{ project.description }}
-            </p>
-          </div>
+          <!-- Bottom Shadow -->
+          <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         </div>
-      </div>
+      </TransitionGroup>
     </div>
 
-    <Footer class="mt-auto" />
-
+    <!-- Project Modal -->
     <ProjectModal 
-      :project="selectedProject"
       :show="showModal"
-      @close="showModal = false"
+      :project="selectedProject"
+      @close="closeModal"
     />
+
+    <Footer class="mt-auto" />
   </div>
 </template>
 
@@ -284,6 +323,9 @@ export default {
       this.selectedProject = project;
       this.showModal = true;
     },
+    closeModal() {
+      this.showModal = false;
+    },
   },
   watch: {
     '$route.query.category': {
@@ -329,8 +371,9 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
 .section-title {
-  margin-top: 60px;
+  margin-top: auto;
   text-align: center;
   margin-bottom: 80px;
   position: relative;
@@ -389,12 +432,100 @@ html {
   flex: 1;
   padding-bottom: 2rem;
   margin-top: 80px;
+  width: 100%;
 }
 
-/* Responsive adjustments */
+.grid {
+  width: calc(100% - 14rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+  
+  .grid {
+    width: calc(100% - 12rem);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .container {
     margin-top: 60px;
+    padding: 0 1rem;
+  }
+  
+  .grid {
+    width: 100%;
+    padding-left: 1rem;
+  }
+  
+  .fixed.left-8 {
+    position: static;
+    width: 100%;
+    transform: none;
+    margin: 1rem 0 2rem;
+  }
+  
+  .fixed.left-8 .flex-col {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+  }
+
+  .title-text {
+    font-size: 2rem;
+  }
+}
+
+/* Enhanced Grid Transitions */
+.projects-move {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.projects-enter-active,
+.projects-leave-active {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.projects-enter-from,
+.projects-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Hover Effects */
+.group:hover .project-image {
+  filter: brightness(1.1);
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .container {
+    margin-top: 60px;
+    padding: 0 1rem;
+  }
+  
+  .fixed.left-8 {
+    position: static;
+    transform: none;
+    margin: 1rem 0 2rem;
+  }
+  
+  .fixed.left-8 .flex-col {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+  }
+
+  .title-text {
+    font-size: 2rem;
   }
 }
 </style>

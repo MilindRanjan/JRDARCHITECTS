@@ -1,87 +1,136 @@
 <template>
-  <div class="modal-overlay" @click.self="$emit('close')" v-if="show">
-    <div class="modal" :class="{ 'modal-open': show }">
-      <!-- Header Section -->
-      <div class="modal-header">
-        <h2 class="title">{{ project.title || project.name }}</h2>
-        <button class="close-button" @click="$emit('close')" aria-label="Close modal">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6L6 18M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
+  <div 
+    class="fixed inset-0 z-50 bg-white pt-24"
+    v-if="show"
+    @keydown.esc="$emit('close')"
+    tabindex="-1"
+  >
+    <!-- Close Button -->
+    <button 
+      @click="$emit('close')"
+      class="absolute top-32 right-8 z-50 group p-4 hover:rotate-90 transition-all duration-500"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" class="stroke-black/70 group-hover:stroke-black">
+        <path d="M18 6L6 18M6 6l12 12" stroke-width="1.5"/>
+      </svg>
+    </button>
 
-      <!-- Image Gallery Section -->
-      <div class="gallery-container">
-        <div class="image-wrapper">
-          <img 
-            :src="currentImage" 
-            :alt="project.title || project.name"
-            @load="handleImageLoad"
-            :class="{ 'image-loaded': imageLoaded }"
-            ref="currentImage"
+    <!-- Main Content -->
+    <div class="flex h-[calc(100vh-6rem)]">
+      <!-- Image Gallery -->
+      <div class="relative flex-1 bg-white">
+        <div class="relative w-full h-full flex items-center justify-center">
+          <TransitionGroup 
+            name="slide" 
+            tag="div" 
+            class="relative w-full h-full"
           >
-          <div class="image-skeleton" v-if="!imageLoaded"></div>
-          
-          <!-- Image Navigation -->
-          <button 
-            v-if="hasMultipleImages" 
-            class="gallery-nav prev" 
-            @click="previousImage"
-            :disabled="currentImageIndex === 0"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 18l-6-6 6-6"/>
-            </svg>
-          </button>
-          <button 
-            v-if="hasMultipleImages" 
-            class="gallery-nav next" 
-            @click="nextImage"
-            :disabled="currentImageIndex === normalizedImages.length - 1"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 18l6-6-6-6"/>
-            </svg>
-          </button>
-        </div>
-        
-        <!-- Thumbnail Navigation -->
-        <div v-if="hasMultipleImages" class="thumbnail-container">
-          <button 
-            v-for="(image, index) in normalizedImages" 
-            :key="index"
-            class="thumbnail"
-            :class="{ active: currentImageIndex === index }"
-            @click="setCurrentImage(index)"
-          >
-            <img :src="image" :alt="`Thumbnail ${index + 1}`">
-          </button>
-        </div>
-      </div>
+            <img
+              :key="currentImage"
+              :src="currentImage"
+              :alt="project.title || project.name"
+              class="w-full h-full object-contain"
+              @load="handleImageLoad"
+            >
+          </TransitionGroup>
 
-      <!-- Content Section -->
-      <div class="modal-content">
-        <div class="description" v-html="formattedDescription"></div>
-        <div class="metadata">
-          <div class="badges">
-            <NuxtLink 
-              v-if="project.category"
-              :to="`/projects?category=${encodeURIComponent(project.category)}`"
-              class="badge category-badge"
-            >
-              {{ project.category }}
-            </NuxtLink>
-            <span 
-              v-if="project.status" 
-              class="badge status-badge"
-              :class="statusClass"
-            >
-              {{ project.status }}
-            </span>
+          <!-- Loading State -->
+          <div 
+            v-if="!imageLoaded" 
+            class="absolute inset-0 bg-white flex items-center justify-center"
+          >
+            <div class="loading-spinner"></div>
           </div>
-          <div v-if="project.date" class="project-date">
+
+          <!-- Navigation Controls -->
+          <div 
+            v-if="hasMultipleImages" 
+            class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-12"
+          >
+            <button 
+              @click="previousImage"
+              :disabled="currentImageIndex === 0"
+              class="nav-button group"
+              :class="{ 'opacity-30 cursor-not-allowed': currentImageIndex === 0 }"
+            >
+              <svg width="32" height="32" viewBox="0 0 24 24" class="stroke-black/70 group-hover:stroke-black">
+                <path d="M15 18l-6-6 6-6" stroke-width="1.5"/>
+              </svg>
+            </button>
+            
+            <button 
+              @click="nextImage"
+              :disabled="currentImageIndex === normalizedImages.length - 1"
+              class="nav-button group"
+              :class="{ 'opacity-30 cursor-not-allowed': currentImageIndex === normalizedImages.length - 1 }"
+            >
+              <svg width="32" height="32" viewBox="0 0 24 24" class="stroke-black/70 group-hover:stroke-black">
+                <path d="M9 18l6-6-6-6" stroke-width="1.5"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Image Counter -->
+          <div 
+            v-if="hasMultipleImages"
+            class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center"
+          >
+            <div class="text-black/60 text-sm tracking-wider mb-4">
+              {{ currentImageIndex + 1 }} / {{ normalizedImages.length }}
+            </div>
+            <div class="flex space-x-2">
+              <button
+                v-for="(_, index) in normalizedImages"
+                :key="index"
+                @click="setCurrentImage(index)"
+                class="w-12 h-1 transition-all duration-300"
+                :class="currentImageIndex === index ? 'bg-black' : 'bg-black/30 hover:bg-black/50'"
+              ></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Details -->
+      <div 
+        class="w-[500px] bg-white h-full overflow-y-auto border-l border-gray-100"
+        :class="{ 'details-panel-enter-active': show }"
+      >
+        <div class="p-12">
+          <h2 class="text-2xl font-light tracking-wide text-black mb-2">
+            {{ project.title || project.name }}
+          </h2>
+          <div class="text-sm tracking-wider text-black/60 mb-8">
             {{ formatDate(project.date) }}
+          </div>
+
+          <div class="prose prose-lg">
+            <div 
+              v-html="formattedDescription"
+              class="text-gray-600 leading-relaxed font-light"
+            ></div>
+          </div>
+
+          <div class="mt-12 pt-8 border-t border-gray-100">
+            <h3 class="text-sm uppercase tracking-wider text-black/60 mb-4">
+              Explore Similar Projects
+            </h3>
+            <div class="flex flex-wrap gap-3">
+              <button 
+                v-if="project.category"
+                @click="handleCategoryClick(project.category)"
+                class="category-tag"
+              >
+                {{ project.category }}
+              </button>
+              <span 
+                v-if="project.status"
+                class="status-tag"
+                :class="statusClass"
+              >
+                {{ project.status }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -94,23 +143,23 @@ export default {
   name: 'ProjectModal',
   props: {
     project: {
-    type: Object,
-    required: true,
-    default: () => ({
-      title: '',
-      name: '',
-      mainImage: '',
-      additionalImages: [],
-      description: '',
-      category: '',
-      status: '',
-      date: null
-    })
-  },
-  show: {
-    type: Boolean,
-    default: false
-  }
+      type: Object,
+      required: true,
+      default: () => ({
+        title: '',
+        name: '',
+        mainImage: '',
+        additionalImages: [],
+        description: '',
+        category: '',
+        status: '',
+        date: null
+      })
+    },
+    show: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -118,49 +167,45 @@ export default {
       currentImageIndex: 0
     }
   },
-    computed: {
-  normalizedImages() {
-    if (!this.project) return [];
-    
-    // Combine mainImage and additionalImages into a single array
-    const images = [
-      this.project.mainImage,
-      ...(this.project.additionalImages || [])
-    ].filter(Boolean); // Remove any null/undefined values
-    
-    console.log('Combined images:', images); // Debug log
-    return images;
-  },
-  currentImage() {
-    return this.normalizedImages[this.currentImageIndex];
-  },
-  hasMultipleImages() {
-    return this.normalizedImages.length > 1;
-  },
+  computed: {
+    normalizedImages() {
+      if (!this.project) return [];
+      const images = [
+        this.project.mainImage,
+        ...(this.project.additionalImages || [])
+      ].filter(Boolean);
+      return images;
+    },
+    currentImage() {
+      return this.normalizedImages[this.currentImageIndex];
+    },
+    hasMultipleImages() {
+      return this.normalizedImages.length > 1;
+    },
     formattedDescription() {
       return this.project.description
         .split('\n')
         .filter(para => para.trim())
         .map(para => `<p>${para}</p>`)
-        .join('')
+        .join('');
     },
     statusClass() {
-      const status = this.project.status?.toLowerCase()
+      const status = this.project.status?.toLowerCase();
       return {
         'status-active': status === 'active',
         'status-completed': status === 'completed',
         'status-pending': status === 'pending'
-      }
+      };
     }
   },
   watch: {
     show(newVal) {
       if (newVal) {
-        document.body.style.overflow = 'hidden'
-        this.currentImageIndex = 0
+        document.body.style.overflow = 'hidden';
+        this.currentImageIndex = 0;
       } else {
-        document.body.style.overflow = 'auto'
-        this.imageLoaded = false
+        document.body.style.overflow = 'auto';
+        this.imageLoaded = false;
       }
     }
   },
@@ -214,249 +259,97 @@ export default {
         day: 'numeric'
       })
     },
+    handleCategoryClick(category) {
+      this.$emit('close');
+      setTimeout(() => {
+        this.$router.push({
+          path: '/projects',
+          query: { category }
+        });
+      }, 100);
+    }
   },
 }
 </script>
 
 <style scoped>
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-  animation: fadeIn 0.3s ease-out;
+.nav-button {
+  @apply p-4 transition-all duration-300 hover:scale-110 bg-white/90 rounded-full shadow-lg;
 }
 
-.modal {
-  background: #fff;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 900px;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-  transform: translateY(30px);
+.category-tag {
+  @apply px-4 py-2 text-sm tracking-wider bg-black text-white hover:bg-gray-900 transition-colors;
+}
+
+.status-tag {
+  @apply px-4 py-2 text-sm tracking-wider text-white;
+}
+
+.status-active { @apply bg-black; }
+.status-completed { @apply bg-gray-700; }
+.status-pending { @apply bg-gray-500; }
+
+.loading-spinner {
+  @apply w-8 h-8 border-2 border-black/20 border-t-black/90 rounded-full animate-spin;
+}
+
+/* Transitions */
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-enter-from {
   opacity: 0;
-  transition: all 0.3s ease-out;
+  transform: translateX(30px);
 }
 
-.modal-open {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #000;
-  margin: 0;
-}
-
-.gallery-container {
-  background: #f5f5f5;
-  padding: 1.5rem;
-}
-
-.image-wrapper {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  max-height: 500px;
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.image-wrapper img {
-  max-width: 100%;
-  max-height: 500px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+.slide-leave-to {
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transform: translateX(-30px);
 }
 
-.image-loaded {
-  opacity: 1 !important;
+.details-panel-enter-active {
+  animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.image-skeleton {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-.gallery-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 2;
-}
-
-.gallery-nav:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.prev {
-  left: 1rem;
-}
-
-.next {
-  right: 1rem;
-}
-
-.thumbnail-container {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
-  padding: 0.5rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.thumbnail {
-  width: 80px;
-  height: 60px;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  overflow: hidden;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: #fff;
-}
-
-.thumbnail.active {
-  border-color: #000;
-}
-
-.thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 1;
-}
-
-.modal-content {
-  padding: 1.5rem;
-}
-
-.description {
-  color: #333;
-  line-height: 1.7;
-  font-size: 1.125rem;
-  margin-bottom: 2rem;
-}
-
-.metadata {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.badges {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.badge {
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.category-badge {
-  background: #e0e0e0;
-  color: #000;
-  text-decoration: none;
-}
-
-.status-badge {
-  color: #fff;
-}
-
-.status-active { background: #000; }
-.status-completed { background: #555; }
-.status-pending { background: #888; }
-
-.project-date {
-  color: #666;
-  font-size: 0.875rem;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-@media (max-width: 768px) {
-  .modal {
-    width: 95%;
-    margin: 1rem;
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
   }
-
-  .modal-header {
-    padding: 1.25rem 1.5rem;
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
+}
 
-  .gallery-container {
-    padding: 1rem;
-  }
+/* Prose Customization */
+.prose :deep(p) {
+  margin-bottom: 1.5em;
+  font-weight: 300;
+}
 
-  .image-wrapper {
-    max-height: 400px;
-  }
+.prose :deep(p:last-child) {
+  margin-bottom: 0;
+}
 
-  .modal-content {
-    padding: 1.5rem;
-  }
+/* Custom Scrollbar */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #E5E7EB transparent;
+}
 
-  .metadata {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.overflow-y-auto::-webkit-scrollbar {
+  width: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: #E5E7EB;
+  border-radius: 2px;
 }
 </style>

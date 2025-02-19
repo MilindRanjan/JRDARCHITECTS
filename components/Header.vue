@@ -94,11 +94,12 @@ export default {
       isMobile: false,
       defaultCategories: [
         'All',
-        'RESIDENTIAL',
+        'HOUSING',
         'COMMERCIAL',
         'INSTITUTIONAL',
-        'INTERIORS',
         'LANDSCAPE',
+        'LIASONING',
+        'NURSING HOME',
       ],
       menuItems: [
         { name: 'Home', path: '/' },
