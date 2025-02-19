@@ -1,91 +1,297 @@
 <template>
-    <div>
+  <div class="w-full min-h-screen bg-white">
+    <div class="max-w-7xl mx-auto px-4 py-16">
       <h1 class="section-title">
       <span class="title-text">Prizes</span>
       <span class="title-line"></span>
     </h1>
-      <div class="prizes-container">
-        <div class="prizes-section">
-          <div v-for="(prize, index) in prizes" 
-               :key="index" 
-               class="prize-item" 
-               @click="openModal(index)"
-               :class="{ 'prize-hover': hover === index }"
-               @mouseenter="hover = index" 
-               @mouseleave="hover = null">
-            <div class="trophy-wrapper">
-              <img src="/cup.svg" :alt="prize.title" class="trophy-icon">
+
+      <!-- Prize Sections -->
+      <div class="space-y-32">
+        <div v-for="(prize, prizeIndex) in prizes" :key="prize.year" 
+             class="prize-section"
+             :class="{'md:flex-row-reverse': prizeIndex % 2 === 1}"
+        >
+          <!-- Text Content -->
+          <div class="flex flex-col lg:flex-row gap-12 items-start">
+            <div class="lg:w-1/3 space-y-8" :style="{ position: 'sticky', top: '100px' }">
+              <div class="text-7xl font-bold text-black/5 mb-4">
+                {{ prize.year }}
+              </div>
+              <h2 class="text-3xl font-semibold text-black mb-4">
+                {{ prize.title }}
+              </h2>
+              <p class="text-gray-600 leading-relaxed mb-8">
+                {{ prize.description }}
+              </p>
+              
+              <!-- Navigation for current prize's images -->
+              <div class="flex items-center gap-4">
+                <button 
+                  @click="prevImage(prizeIndex)"
+                  class="p-2 border border-black/10 rounded-full hover:bg-black hover:text-white transition-colors"
+                  :disabled="activeImageIndexes[prizeIndex] === 0"
+                >
+                  <Icon name="lucide:chevron-left" class="w-6 h-6" />
+                </button>
+                <span class="text-sm text-gray-500">
+                  {{ activeImageIndexes[prizeIndex] + 1 }} / {{ prize.images.length }}
+                </span>
+                <button 
+                  @click="nextImage(prizeIndex)"
+                  class="p-2 border border-black/10 rounded-full hover:bg-black hover:text-white transition-colors"
+                  :disabled="activeImageIndexes[prizeIndex] === prize.images.length - 1"
+                >
+                  <Icon name="lucide:chevron-right" class="w-6 h-6" />
+                </button>
+              </div>
             </div>
-            <div class="year-label">{{ prize.year }}</div>
-            <p class="prize-description">{{ prize.description }}</p>
+
+            <!-- Image Gallery -->
+            <div class="lg:w-2/3">
+              <div class="relative overflow-hidden rounded-xl">
+                <div
+                  ref="galleryTrack"
+                  class="flex transition-transform duration-500 ease-out"
+                  :style="{ transform: `translateX(-${activeImageIndexes[prizeIndex] * 100}%)` }"
+                  @touchstart="handleTouchStart($event, prizeIndex)"
+                  @touchmove="handleTouchMove($event, prizeIndex)"
+                  @touchend="handleTouchEnd(prizeIndex)"
+                  @mousedown="handleMouseDown($event, prizeIndex)"
+                  @mousemove="handleMouseMove($event, prizeIndex)"
+                  @mouseup="handleMouseUp"
+                  @mouseleave="handleMouseUp"
+                >
+                  <div
+                    v-for="(image, imageIndex) in prize.images"
+                    :key="imageIndex"
+                    class="flex-shrink-0 w-full"
+                  >
+                    <div class="relative group cursor-pointer" @click="openLightbox(prizeIndex, imageIndex)">
+                      <img
+                        :src="image"
+                        :alt="`${prize.title} - Image ${imageIndex + 1}`"
+                        class="w-full aspect-[4/3] object-cover rounded-lg shadow-lg"
+                      />
+                      <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <Icon name="lucide:maximize" class="w-8 h-8 text-white" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Thumbnail Navigation -->
+                <div class="mt-4 flex gap-2 overflow-x-auto pb-2">
+                  <button
+                    v-for="(image, thumbIndex) in prize.images"
+                    :key="thumbIndex"
+                    @click="setActiveImage(prizeIndex, thumbIndex)"
+                    class="flex-shrink-0 w-20 h-20 rounded-md overflow-hidden transition-all duration-300"
+                    :class="{'ring-2 ring-black': activeImageIndexes[prizeIndex] === thumbIndex}"
+                  >
+                    <img
+                      :src="image"
+                      :alt="`Thumbnail ${thumbIndex + 1}`"
+                      class="w-full h-full object-cover"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-  
-      <!-- Certificate Modal -->
-      <div v-if="selectedPrize !== null" class="modal-overlay" @click="closeModal">
-        <div class="modal-content" @click.stop>
-          <button class="close-button" @click="closeModal">&times;</button>
-          <h2>{{ prizes[selectedPrize].description }}</h2>
-          <div class="certificate-content">
-            <img :src="prizes[selectedPrize].certificateImage" alt="Certificate" class="certificate-image">
-            <div class="certificate-details">
-              <p><strong>Awarded:</strong> {{ prizes[selectedPrize].year }}</p>
-              <p><strong>Project:</strong> {{ prizes[selectedPrize].description }}</p>
-              <p><strong>Recognition:</strong> {{ prizes[selectedPrize].recognition }}</p>
-            </div>
-          </div>
+
+      <!-- Lightbox -->
+      <div v-if="lightbox.show" 
+           class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
+           @click="closeLightbox"
+      >
+        <div class="relative max-w-7xl max-h-screen p-4">
+          <img
+            :src="prizes[lightbox.prizeIndex].images[lightbox.imageIndex]"
+            :alt="prizes[lightbox.prizeIndex].title"
+            class="max-w-full max-h-[90vh] object-contain"
+            @click.stop
+          />
+          <button 
+            class="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
+            @click="closeLightbox"
+          >
+            <Icon name="lucide:x" class="w-8 h-8" />
+          </button>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        hover: null,
-        selectedPrize: null,
-        prizes: [
-          {
-            year: "In 2010",
-            description: "Bihar state guest house",
-            recognition: "Excellence in Architectural Design",
-            certificateImage: "/certificate.webp"
-          },
-          {
-            year: "In 2015",
-            description: "Seevusagur Ramgulam Chowk",
-            recognition: "Outstanding Urban Development",
-            certificateImage: "/certificate.webp"
-          },
-          {
-            year: "In 2019",
-            description: "Shri Krishna Nagar Apartment Competition",
-            recognition: "Best Residential Complex Design",
-            certificateImage: "/certificate.webp"
-          }
-        ]
-      }
-    },
-    methods: {
-      openModal(index) {
-        this.selectedPrize = index;
-        document.body.style.overflow = 'hidden';
-      },
-      closeModal() {
-        this.selectedPrize = null;
-        document.body.style.overflow = 'auto';
-      }
-    }
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive, onUnmounted } from 'vue'
+
+const prizes = ref([
+  {
+    year: "2010",
+    title: "Bihar State Guest House",
+    description: "Excellence in Architectural Design for the innovative approach to sustainable state architecture, combining traditional elements with modern functionality.",
+    images: [
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing1.jpg",
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing2.jpg",
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing3.jpg",
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing4.jpg"
+    ]
+  },
+  {
+    year: "2015",
+    title: "Seevusagur Ramgulam Chowk",
+    description: "Outstanding Urban Development achievement for transforming public spaces into vibrant community centers while preserving cultural heritage.",
+    images: [
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing1.jpg",
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing2.jpg",
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing3.jpg"
+    ]
+  },
+  {
+    year: "2019",
+    title: "Shri Krishna Nagar",
+    description: "Best Residential Complex Design award for creating sustainable, community-focused living spaces that redefine modern urban housing.",
+    images: [
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing1.jpg",
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing2.jpg",
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing3.jpg",
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing4.jpg",
+      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing5.jpg"
+    ]
   }
-  </script>
+])
+
+// Track active image for each prize section
+const activeImageIndexes = ref(prizes.value.map(() => 0))
+
+// Touch and mouse tracking
+const touchStart = ref({ x: 0, y: 0 })
+const isDragging = ref(false)
+const startX = ref(0)
+const currentPrizeIndex = ref(null)
+
+// Lightbox state
+const lightbox = reactive({
+  show: false,
+  prizeIndex: 0,
+  imageIndex: 0
+})
+
+// Touch handlers
+const handleTouchStart = (e, prizeIndex) => {
+  touchStart.value = {
+    x: e.touches[0].clientX,
+    y: e.touches[0].clientY
+  }
+  currentPrizeIndex.value = prizeIndex
+}
+
+const handleTouchMove = (e, prizeIndex) => {
+  if (!touchStart.value) return
+
+  const xDiff = touchStart.value.x - e.touches[0].clientX
   
-  <style scoped>
+  if (Math.abs(xDiff) > 50) { // threshold for swipe
+    if (xDiff > 0) {
+      nextImage(prizeIndex)
+    } else {
+      prevImage(prizeIndex)
+    }
+    touchStart.value = null
+  }
+}
+
+const handleTouchEnd = () => {
+  touchStart.value = null
+  currentPrizeIndex.value = null
+}
+
+// Mouse handlers
+const handleMouseDown = (e, prizeIndex) => {
+  isDragging.value = true
+  startX.value = e.clientX
+  currentPrizeIndex.value = prizeIndex
+}
+
+const handleMouseMove = (e, prizeIndex) => {
+  if (!isDragging.value) return
+
+  const xDiff = startX.value - e.clientX
+  
+  if (Math.abs(xDiff) > 50) { // threshold for swipe
+    if (xDiff > 0) {
+      nextImage(prizeIndex)
+    } else {
+      prevImage(prizeIndex)
+    }
+    isDragging.value = false
+  }
+}
+
+const handleMouseUp = () => {
+  isDragging.value = false
+  currentPrizeIndex.value = null
+}
+
+const nextImage = (prizeIndex) => {
+  if (activeImageIndexes.value[prizeIndex] < prizes.value[prizeIndex].images.length - 1) {
+    activeImageIndexes.value = [...activeImageIndexes.value]
+    activeImageIndexes.value[prizeIndex]++
+  }
+}
+
+const prevImage = (prizeIndex) => {
+  if (activeImageIndexes.value[prizeIndex] > 0) {
+    activeImageIndexes.value = [...activeImageIndexes.value]
+    activeImageIndexes.value[prizeIndex]--
+  }
+}
+
+const setActiveImage = (prizeIndex, imageIndex) => {
+  activeImageIndexes.value = [...activeImageIndexes.value]
+  activeImageIndexes.value[prizeIndex] = imageIndex
+}
+
+const openLightbox = (prizeIndex, imageIndex) => {
+  lightbox.prizeIndex = prizeIndex
+  lightbox.imageIndex = imageIndex
+  lightbox.show = true
+  document.body.style.overflow = 'hidden'
+}
+
+const closeLightbox = () => {
+  lightbox.show = false
+  document.body.style.overflow = 'auto'
+}
+
+// Clean up on component unmount
+onUnmounted(() => {
+  document.body.style.overflow = 'auto'
+})
+</script>
+
+<style scoped>
+.prize-section {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .section-title {
   text-align: center;
   margin-bottom: 80px;
   position: relative;
+  margin-top: -270px;
 }
 
 .title-text {
@@ -110,194 +316,25 @@
   0% { transform: scaleX(0.5); }
   100% { transform: scaleX(1); }
 }
-  
-  .prizes-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    justify-content: center;
-    padding: 2rem;
-    background: linear-gradient(to bottom, #f8f9fa, #ffffff);
-  }
-  
-  .prizes-section {
-    display: flex;
-    justify-content: center;
-    gap: 4rem;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .prize-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 300px;
-    padding: 2rem;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    background: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    user-select: none;
-  }
-  
-  .prize-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  .trophy-wrapper {
-    position: relative;
-    margin-bottom: 1.5rem;
-  }
-  
-  .trophy-icon {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 1rem;
-    transition: transform 0.3s ease;
-  }
-  
-  .prize-hover .trophy-icon {
-    transform: scale(1.05);
-  }
-  
-  .year-label {
-    font-size: 1.2rem;
-    color: #2d3748;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-  
-  .prize-description {
-    font-size: 1.1rem;
-    color: #4a5568;
-    line-height: 1.4;
-    margin: 0;
-    font-weight: 500;
-  }
-  
-  /* Modal Styles */
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.75);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    animation: fadeIn 0.3s ease forwards;
-  }
-  
-  .modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    max-width: 800px;
-    width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    transform: translateY(20px);
-    opacity: 0;
-    animation: slideUp 0.3s ease forwards;
-  }
-  
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes slideUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .close-button {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #4a5568;
-    padding: 0.5rem;
-    line-height: 1;
-    transition: transform 0.2s ease;
-  }
-  
-  .close-button:hover {
-    transform: scale(1.1);
-  }
-  
-  .certificate-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-top: 1rem;
-  }
-  
-  .certificate-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .certificate-details {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
-  }
-  
-  .certificate-details p {
-    margin: 0.5rem 0;
-    color: #4a5568;
-  }
-  @media (max-width: 768px) {
-  /* Add space between sections */
-  .section-title{
-    margin-bottom: auto;
+
+/* Stagger the animations */
+.prize-section:nth-child(1) { animation-delay: 0.2s; }
+.prize-section:nth-child(2) { animation-delay: 0.4s; }
+.prize-section:nth-child(3) { animation-delay: 0.6s; }
+
+.contact-section {
+  padding: 40px 24px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .section-title {
     margin-top: auto;
   }
-  .prizes-container {
-    margin-top: 2.5rem; /* Ensure sufficient spacing from the previous section */
-    padding: 1.5rem;
-  }
-
-  /* Adjust modal content for smaller screens */
-  .modal-content {
-    width: 95%; /* Fit within mobile screen */
-    max-height: 80vh; /* Prevent it from being too tall */
-    padding: 1rem; /* Reduce padding for better fit */
-    overflow-y: auto; /* Allow scrolling if content overflows */
-  }
-
-  /* Adjust prize items layout for smaller screens */
-  .prizes-section {
-    gap: 2rem;
-  }
-
-  .prize-item {
-    width: 100%; /* Stretch items to fit screen width */
-    max-width: 280px; /* Ensure reasonable size */
-  }
-
-  /* Ensure the modal overlay covers the entire screen */
-  .modal-overlay {
-    z-index: 1000;
-  }
 }
-  </style>
+</style>
