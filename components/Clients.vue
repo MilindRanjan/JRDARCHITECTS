@@ -76,6 +76,11 @@
   margin: 16px auto 0;
   animation: lineGrow 1.5s ease-in-out infinite alternate;
 }
+@keyframes lineGrow {
+  0% { transform: scaleX(0.5); }
+  100% { transform: scaleX(1); }
+}
+
   .clients-section {
     padding: 6rem 2rem;
     background-color: #ffffff;
