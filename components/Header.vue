@@ -2,21 +2,20 @@
   <header :class="{ 'mobile-open': isMenuOpen }">
     <!-- Logo and hamburger sections -->
     <div class="logo-container">
-      <nuxt-link to="/" aria-label="Go to Home">
-        <img src="/logo.jpeg" alt="Company Logo" class="logo" />
-      </nuxt-link>
-    </div>
+        <nuxt-link to="/" aria-label="Go to Home">
+          <img src="/logo.jpeg" alt="Company Logo" class="logo" />
+        </nuxt-link>
+      </div>
 
     <button
-      class="hamburger"
-      @click="toggleMenu"
-      :aria-expanded="isMenuOpen"
-      aria-label="Toggle navigation menu"
-    >
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-    </button>
+        class="md:hidden w-8 h-8 flex flex-col justify-center items-center"
+        @click="toggleMenu"
+        aria-label="Toggle Menu"
+      >
+        <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+        <span class="block w-6 h-0.5 bg-black mb-1.5"></span>
+        <span class="block w-6 h-0.5 bg-black"></span>
+      </button>
 
     <nav :class="{ 'nav-open': isMenuOpen }">
       <ul>
@@ -123,7 +122,6 @@ export default {
   methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
-      document.body.style.overflow = this.isMenuOpen ? 'hidden' : '';
     },
 
     closeMenu() {

@@ -32,7 +32,9 @@
                   class="p-2 border border-black/10 rounded-full hover:bg-black hover:text-white transition-colors"
                   :disabled="activeImageIndexes[prizeIndex] === 0"
                 >
-                  <Icon name="lucide:chevron-left" class="w-6 h-6" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
                 </button>
                 <span class="text-sm text-gray-500">
                   {{ activeImageIndexes[prizeIndex] + 1 }} / {{ prize.images.length }}
@@ -42,7 +44,9 @@
                   class="p-2 border border-black/10 rounded-full hover:bg-black hover:text-white transition-colors"
                   :disabled="activeImageIndexes[prizeIndex] === prize.images.length - 1"
                 >
-                  <Icon name="lucide:chevron-right" class="w-6 h-6" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
                 </button>
               </div>
             </div>
@@ -74,7 +78,9 @@
                         class="w-full aspect-[4/3] object-cover rounded-lg shadow-lg"
                       />
                       <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <Icon name="lucide:maximize" class="w-8 h-8 text-white" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-white">
+                          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path>
+                        </svg>
                       </div>
                     </div>
                   </div>
@@ -118,7 +124,10 @@
             class="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
             @click="closeLightbox"
           >
-            <Icon name="lucide:x" class="w-8 h-8" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
           </button>
         </div>
       </div>
