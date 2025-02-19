@@ -87,14 +87,14 @@
               <span>LinkedIn</span>
             </a>
             <a 
-              href="https://wa.me/8709413556" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="social-button whatsapp"
-            >
-              <img src="@/static/whatsapp.svg" alt="WhatsApp" class="social-icon" />
-              <span>WhatsApp</span>
-            </a>
+  href="https://wa.me/+918709413556" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  class="social-button whatsapp"
+>
+  <img src="@/static/whatsapp.svg" alt="WhatsApp" class="social-icon" />
+  <span>WhatsApp</span>
+</a>
           </div>
         </div>
       </div>
