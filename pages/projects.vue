@@ -1,32 +1,35 @@
 <template>
-  <div class="min-h-screen bg-white">
+  <div class="min-h-screen bg-white flex flex-col">
     <Header 
       :categories="categories" 
       @filter-category="filterProjects"
     />
     
-    <div class="container mx-auto px-4 mt-24 max-w-7xl">
+    <div class="container mx-auto px-4 mt-32 max-w-7xl flex-grow">
       <div class="text-center mb-12">
-  <h1 class="text-5xl font-normal text-gray-900 mb-4">Our Projects</h1>
-</div>
+        <h1 class="section-title">
+      <span class="title-text">Our Projects</span>
+      <span class="title-line"></span>
+    </h1>
+      </div>
 
       <div class="flex flex-wrap justify-center gap-4 mb-16">
         <button
-  v-for="category in categories"
-  :key="category"
-  @click="filterProjects(category)"
-  :class="[
-    'px-6 py-2.5 rounded-full transition-all duration-300 text-sm font-normal',
-    selectedCategory === category
-      ? 'bg-black text-white shadow-md transform scale-105'
-      : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-sm'
-  ]"
->
-  {{ category }}
-</button>
+          v-for="category in categories"
+          :key="category"
+          @click="filterProjects(category)"
+          :class="[
+            'px-6 py-2.5 rounded-full transition-all duration-300 text-sm font-normal',
+            selectedCategory === category
+              ? 'bg-black text-white shadow-md transform scale-105'
+              : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-sm'
+          ]"
+        >
+          {{ category }}
+        </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-24">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
         <div
           v-for="project in filteredProjects"
           :key="project.id"
@@ -35,8 +38,8 @@
         >
           <div class="relative aspect-[4/3] overflow-hidden">
             <img
-            :src="project.mainImage"
-    :alt="project.name"
+              :src="project.mainImage"
+              :alt="project.name"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -47,22 +50,23 @@
           </div>
 
           <div class="p-6">
-  <div class="flex items-start justify-between mb-3">
-    <h3 class="text-lg font-normal text-gray-900 group-hover:text-black">
-      {{ project.name }}
-    </h3>
-    <span class="inline-block px-3 py-1 text-xs font-light bg-black text-white rounded-full">
-      {{ project.category }}
-    </span>
-  </div>
-  <p class="text-gray-500 text-sm leading-relaxed font-light">
-    {{ project.description }}
-  </p>
-</div>
+            <div class="flex items-start justify-between mb-3">
+              <h3 class="text-lg font-normal text-gray-900 group-hover:text-black">
+                {{ project.name }}
+              </h3>
+              <span class="inline-block px-3 py-1 text-xs font-light bg-black text-white rounded-full">
+                {{ project.category }}
+              </span>
+            </div>
+            <p class="text-gray-500 text-sm leading-relaxed font-light">
+              {{ project.description }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
-    <Footer />
+
+    <Footer class="mt-auto" />
 
     <ProjectModal 
       :project="selectedProject"
@@ -115,16 +119,16 @@ export default {
         {
           id: 2,
           name: 'Sadakat Ashram',
-    mainImage: 'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/1.jpg',
-    additionalImages: [
-      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/2.jpg',
-      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/3.jpg',
-      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/4.jpg',
-      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/5.jpg',
-      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/6.jpg',
-      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/7.jpg',
-      'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/8.jpg',
-      ],
+          mainImage: 'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/1.jpg',
+          additionalImages: [
+            'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/2.jpg',
+            'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/3.jpg',
+            'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/4.jpg',
+            'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/5.jpg',
+            'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/6.jpg',
+            'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/7.jpg',
+            'Projects/INSTITUTIONAL/Sadaqat Ashram, Kurji, Patna/8.jpg',
+          ],
           description: 'Luxurious residential complex with modern amenities',
           category: 'INSTITUTIONAL',
         },
@@ -141,22 +145,22 @@ export default {
           category: 'LANDSCAPE',
         },
         {
-    id: 4,
-    name: 'Mixed use Project Madhubani',
-    mainImage: 'Projects/COMMERCIAL/Mixed Use Project, Madhubani 1.jpg',
-    additionalImages: [
-      'Projects/COMMERCIAL/Mixed Use Project, Madhubani.jpg',
-    ],
-    description: 'Elegant outdoor living space',
-    category: 'COMMERCIAL',
-  },
+          id: 4,
+          name: 'Mixed use Project Madhubani',
+          mainImage: 'Projects/COMMERCIAL/Mixed Use Project, Madhubani 1.jpg',
+          additionalImages: [
+            'Projects/COMMERCIAL/Mixed Use Project, Madhubani.jpg',
+          ],
+          description: 'Elegant outdoor living space',
+          category: 'COMMERCIAL',
+        },
         {
           id: 5,
           name: 'VISWA',
-    mainImage: 'Projects/rear view5.JPG',
-    description: 'Stunning rear facade design',
-    category: 'INSTITUTIONAL',
-  },
+          mainImage: 'Projects/rear view5.JPG',
+          description: 'Stunning rear facade design',
+          category: 'INSTITUTIONAL',
+        },
         {
           id: 6,
           name: 'Sports Complex',
@@ -185,8 +189,8 @@ export default {
             'Projects/NURSING HOMES/4.jpg',
             'Projects/NURSING HOMES/5.jpg',
           ],
-    description: 'Healthcare facility design',
-      category: 'NURSING HOME',
+          description: 'Healthcare facility design',
+          category: 'NURSING HOME',
         },
         {
           id: 8,
@@ -202,7 +206,6 @@ export default {
           description: 'Stunning rear facade design',
           category: 'LIASONING',
         },
-
         {
           id: 9,
           name: 'ZP',
@@ -243,7 +246,7 @@ export default {
           description: 'Stunning rear facade design',
           category: 'LIASONING',
         },
-        ]
+      ]
     }
   },
   computed: {
@@ -265,35 +268,35 @@ export default {
     },
   },
   methods: {
-  filterProjects(category) {
-    this.selectedCategory = category;
-  },
-  scrollToProjects() {
-    // Only run on client-side
-    if (process.client) {
-      const projectsSection = document.querySelector('.container');
-      if (projectsSection) {
-        projectsSection.scrollIntoView({ behavior: 'smooth' });
+    filterProjects(category) {
+      this.selectedCategory = category;
+    },
+    scrollToProjects() {
+      // Only run on client-side
+      if (process.client) {
+        const projectsSection = document.querySelector('.container');
+        if (projectsSection) {
+          projectsSection.scrollIntoView({ behavior: 'smooth' });
+        }
       }
-    }
-  },
-  viewProjectDetails(project) {
-    this.selectedProject = project;
-    this.showModal = true;
-  },
-},
-watch: {
-  '$route.query.category': {
-    immediate: true,
-    handler(newCategory) {
-      this.filterProjects(newCategory || 'All');
-      // Only scroll after component is mounted
-      this.$nextTick(() => {
-        this.scrollToProjects();
-      });
+    },
+    viewProjectDetails(project) {
+      this.selectedProject = project;
+      this.showModal = true;
     },
   },
-},
+  watch: {
+    '$route.query.category': {
+      immediate: true,
+      handler(newCategory) {
+        this.filterProjects(newCategory || 'All');
+        // Only scroll after component is mounted
+        this.$nextTick(() => {
+          this.scrollToProjects();
+        });
+      },
+    },
+  },
 };
 </script>
 
@@ -326,6 +329,35 @@ watch: {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.section-title {
+  margin-top: 60px;
+  text-align: center;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.title-text {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  display: inline-block;
+}
+
+.title-line {
+  display: block;
+  width: 100px;
+  height: 4px;
+  background-color: #000000;
+  margin: 16px auto 0;
+  animation: lineGrow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes lineGrow {
+  0% { transform: scaleX(0.5); }
+  100% { transform: scaleX(1); }
+}
 
 /* Print Styles */
 @media print {
@@ -346,5 +378,23 @@ html {
 
 .modal-backdrop {
   background-color: rgba(0, 0, 0, 0.75);
+}
+
+.min-h-screen {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+  padding-bottom: 2rem;
+  margin-top: 80px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .container {
+    margin-top: 60px;
+  }
 }
 </style>

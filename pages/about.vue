@@ -4,7 +4,7 @@
     <Header />
     
     <!-- Hero Section -->
-    <div class="relative h-[80vh] overflow-hidden">
+    <div class="relative h-[80vh] overflow-hidden projects-section">
       <!-- Background Pattern -->
       <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
       
@@ -228,5 +228,21 @@ html {
 img {
   max-width: 100%;
   height: auto;
+}
+
+.projects-section {
+  margin-top: 80px; /* Add margin to push content below header */
+}
+
+/* Hero Section adjustment */
+.relative.h-[80vh] {
+  margin-top: 80px; /* Add margin to push hero section below header */
+}
+
+/* For mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .relative.h-[80vh] {
+    margin-top: 60px; /* Slightly less margin on mobile if needed */
+  }
 }
 </style>
