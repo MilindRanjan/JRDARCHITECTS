@@ -1,6 +1,9 @@
 <template>
     <div>
-      <h1 class="prizes-title">Prizes</h1>
+      <h1 class="section-title">
+      <span class="title-text">Prizes</span>
+      <span class="title-line"></span>
+    </h1>
       <div class="prizes-container">
         <div class="prizes-section">
           <div v-for="(prize, index) in prizes" 
@@ -79,16 +82,34 @@
   </script>
   
   <style scoped>
+.section-title {
+  text-align: center;
+  margin-bottom: 80px;
+  position: relative;
+}
 
-  .prizes-title {
-    text-align: center;
-    margin-top: -300px;
-    font-size: 2.5rem;
-    color: #333;
-    position: relative;
-    font-weight: normal;
-    margin-bottom: 3rem;
-  }
+.title-text {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  display: inline-block;
+}
+
+.title-line {
+  display: block;
+  width: 100px;
+  height: 4px;
+  background-color: #000000;
+  margin: 16px auto 0;
+  animation: lineGrow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes lineGrow {
+  0% { transform: scaleX(0.5); }
+  100% { transform: scaleX(1); }
+}
   
   .prizes-container {
     display: flex;
@@ -247,7 +268,7 @@
   }
   @media (max-width: 768px) {
   /* Add space between sections */
-  .prizes-title{
+  .section-title{
     margin-bottom: auto;
     margin-top: auto;
   }

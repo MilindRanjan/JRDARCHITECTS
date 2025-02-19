@@ -1,7 +1,9 @@
 <template>
     <div class="clients-section">
-        <h1 class="title mb-20">Our Proud Clients</h1>
-
+      <h1 class="section-title">
+      <span class="title-text">Our Proud Clients</span>
+      <span class="title-line"></span>
+    </h1>
       <div class="clients-grid">
         <!-- First Row -->
         <div class="row first-row">
@@ -51,6 +53,29 @@
   </script>
   
   <style scoped>
+  .section-title {
+  text-align: center;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.title-text {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  display: inline-block;
+}
+
+.title-line {
+  display: block;
+  width: 100px;
+  height: 4px;
+  background-color: #000000;
+  margin: 16px auto 0;
+  animation: lineGrow 1.5s ease-in-out infinite alternate;
+}
   .clients-section {
     padding: 6rem 2rem;
     background-color: #ffffff;

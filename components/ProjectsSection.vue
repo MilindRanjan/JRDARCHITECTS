@@ -1,6 +1,9 @@
 <template>
   <section class="projects-section">
-    <h1 class="projects-heading text-center">Our Projects</h1>
+    <h1 class="section-title">
+      <span class="title-text">Our Projects</span>
+      <span class="title-line"></span>
+    </h1>
     
     <div class="gallery-container">
       <div
@@ -170,13 +173,33 @@ const closeModal = () => {
 
 }
 
-.projects-heading {
+.section-title {
   text-align: center;
-  margin-bottom: 5rem;
-  font-size: 2.5rem;
-  font-weight: normal;
-  color: #1a1a1a;
-  letter-spacing: -0.5px;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.title-text {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  display: inline-block;
+}
+
+.title-line {
+  display: block;
+  width: 100px;
+  height: 4px;
+  background-color: #000000;
+  margin: 16px auto 0;
+  animation: lineGrow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes lineGrow {
+  0% { transform: scaleX(0.5); }
+  100% { transform: scaleX(1); }
 }
 
 .gallery-container {
@@ -371,7 +394,7 @@ const closeModal = () => {
     padding: 1.5rem 0; /* Space around the section */
     overflow: hidden; /* Prevent content spillover */
   }
-  .projects-heading{
+  .section-title {
     margin-bottom: 2rem;
   }
 
