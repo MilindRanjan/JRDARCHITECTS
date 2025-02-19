@@ -21,8 +21,11 @@
   
     <!-- Achievements Timeline -->
     <section class="achievements">
-      <h2>Achievements Timeline</h2>
-      <div class="timeline-container">
+  <h2 class="section-title">
+    <span class="title-text">Achievement Timeline</span>
+    <span class="title-line"></span>
+  </h2>
+  <div class="timeline-container">
         <div class="timeline-item" v-for="achievement in achievements" :key="achievement.year">
           <div class="timeline-content">
             <div class="timeline-body">
@@ -123,23 +126,31 @@ export default {
   background-color: #fafafa;
 }
 
-.achievements h2 {
+.section-title {
   text-align: center;
-  margin-bottom: 50px;
-  font-size: 2.5rem;
-  color: #333;
+  margin-bottom: 80px;
   position: relative;
 }
 
-.achievements h2:after {
-  content: '';
-  position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background-color: #333;
+.title-text {
+  font-size: 2.5rem;
+  font-weight: 70;
+  color: #000000;
+  letter-spacing: 4px;
+}
+
+.title-line {
+  display: block;
+  width: 100px;
+  height: 4px;
+  background-color: #000000;
+  margin: 16px auto 0;
+  animation: lineGrow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes lineGrow {
+  0% { transform: scaleX(0.5); }
+  100% { transform: scaleX(1); }
 }
 
 .timeline-container {
@@ -269,4 +280,5 @@ export default {
     text-align: left;
   }
 }
+</style>
 </style>

@@ -103,8 +103,7 @@ export default {
       menuItems: [
         { name: 'Home', path: '/' },
         { name: 'Projects', path: '/projects', hasDropdown: true },
-        { name: 'About Us', path: '/about' },
-        { name: 'Contact Us', path: '/contact' },
+        { name: 'About', path: '/about' },
       ],
     };
   },

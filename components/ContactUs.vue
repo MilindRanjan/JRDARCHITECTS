@@ -329,20 +329,28 @@ button[type="submit"]:hover {
 .social-icon {
   width: 24px;
   height: 24px;
-  /* For LinkedIn icon when button has white text */
-  filter: brightness(0) invert(1); /* This makes the icon white */
 }
 
-.social-button.linkedin .social-icon {
-  filter: brightness(0) invert(1); /* Only apply to LinkedIn */
-}
-
-.social-button.whatsapp .social-icon {
-  filter: none; /* Remove inversion for WhatsApp */
-}
 .social-button.linkedin {
   background-color: #000000;
   color: #ffffff;
+}
+
+.social-button.linkedin .social-icon {
+  filter: brightness(0) invert(1); /* Makes LinkedIn icon white */
+}
+
+.social-button.linkedin:hover {
+  background-color: #ffffff;
+  border-color: #000000;
+  color: #000000;
+}
+
+.social-button.linkedin:hover .social-icon {
+  filter: brightness(0); /* Makes LinkedIn icon black on hover */
+}
+.social-button.whatsapp:hover .social-icon {
+  filter: brightness(0) invert(1); /* Makes WhatsApp icon white on hover */
 }
 
 .social-button.whatsapp {
@@ -350,19 +358,14 @@ button[type="submit"]:hover {
   color: #000000;
 }
 
-.social-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.social-button.linkedin:hover {
-  background-color: #333333;
-  border-color: #333333;
-}
-
 .social-button.whatsapp:hover {
   background-color: #000000;
   color: #ffffff;
+}
+
+.social-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive Design */
