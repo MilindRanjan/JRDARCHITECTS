@@ -150,7 +150,6 @@ const prizes = ref([
       "/Projects/COMPETITIONS/BIPARD, GAYA/4.jpg",
       "/Projects/COMPETITIONS/BIPARD, GAYA/5.jpg",
       "/Projects/COMPETITIONS/BIPARD, GAYA/6.png",
-      "/Projects/COMPETITIONS/BIPARD, GAYA/7.png",
     ]
   },
   {
