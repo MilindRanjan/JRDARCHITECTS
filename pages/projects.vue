@@ -40,12 +40,7 @@
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 mt-32 max-w-[1920px] flex-grow">
-      <div class="text-center mb-16">
-        <h1 class="section-title">
-          <span class="title-text">Our Projects</span>
-          <span class="title-line"></span>
-        </h1>
-      </div>
+
 
       <!-- Enhanced Projects Grid with proper spacing -->
       <TransitionGroup
@@ -111,6 +106,8 @@
       @close="closeModal"
     />
 
+    <FloatingContactButton />
+
     <Footer class="mt-auto" />
   </div>
 </template>
@@ -118,10 +115,12 @@
 <script>
 import ProjectModal from '../components/ProjectModal.vue';
 import { ref } from 'vue';
+import FloatingContactButton from '~/components/FloatingContactButton.vue';
 
 export default {
   components: {
     ProjectModal,
+    FloatingContactButton,
   },
   data() {
     return {

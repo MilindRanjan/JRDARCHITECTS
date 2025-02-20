@@ -8,6 +8,7 @@ You can directly use them in pages and other components without the need to impo
 
 - `<Clients>` | `<clients>` (components/Clients.vue)
 - `<ContactUs>` | `<contact-us>` (components/ContactUs.vue)
+- `<FloatingContactButton>` | `<floating-contact-button>` (components/FloatingContactButton.vue)
 - `<Footer>` | `<footer>` (components/Footer.vue)
 - `<Header>` | `<header>` (components/Header.vue)
 - `<Prizes>` | `<prizes>` (components/Prizes.vue)

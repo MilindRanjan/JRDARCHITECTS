@@ -146,12 +146,14 @@
       </div>
     </section>
     <Footer />
+    <FloatingContactButton />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import Header from '~/components/Header.vue';
+import FloatingContactButton from '~/components/FloatingContactButton.vue';
 
 const education = [
   { year: '2022', degree: 'PhD in Architecture' },

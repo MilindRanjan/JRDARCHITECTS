@@ -5,6 +5,9 @@
   "ContactUs": {
     "description": "Auto imported from components/ContactUs.vue"
   },
+  "FloatingContactButton": {
+    "description": "Auto imported from components/FloatingContactButton.vue"
+  },
   "Footer": {
     "description": "Auto imported from components/Footer.vue"
   },
