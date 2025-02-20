@@ -51,11 +51,15 @@ const selectedProject = ref(null);
 const projects = ref([
   {
     id: 1,
-    name: 'South Elevation',
-    mainImage: 'Projects/south elevation1.jpg',
+    name: 'BIPARD',
+    mainImage: 'Projects/COMPETITIONS/BIPARD, GAYA/1.jpg',
     additionalImages: [
-      'Projects/south elevation1.jpg',
-      'Projects/south elevation1.jpg'
+      'Projects/COMPETITIONS/BIPARD, GAYA/2.jpg',
+      'Projects/COMPETITIONS/BIPARD, GAYA/3.png',
+      'Projects/COMPETITIONS/BIPARD, GAYA/4.jpg',
+      'Projects/COMPETITIONS/BIPARD, GAYA/5.jpg',
+      'Projects/COMPETITIONS/BIPARD, GAYA/6.png',
+      'Projects/COMPETITIONS/BIPARD, GAYA/7.png',
     ],
     description: 'Contemporary architectural design with sustainable elements',
     category: 'COMMERCIAL',

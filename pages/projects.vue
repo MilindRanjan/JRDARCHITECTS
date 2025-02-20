@@ -247,12 +247,11 @@ export default {
         },
         {
           id: 9,
-          name: 'ZP',
-          mainImage: 'Projects/COMMERCIAL/ZP.jpg',
+          name: 'Zila Parishad, Begusarai',
+          mainImage: 'Projects/COMMERCIAL/zp begu3.jpg',
           additionalImages: [
-            'Projects/COMMERCIAL/ZP2.jpg',
-            'Projects/COMMERCIAL/ZP11.jpg',
-            'Projects/COMMERCIAL/zp beg.jpg',
+            'Projects/COMMERCIAL/zp begu5.jpg',
+            'Projects/COMMERCIAL/zp beg.JPG',
           ],
           description: 'Elegant outdoor living space',
           category: 'COMMERCIAL',

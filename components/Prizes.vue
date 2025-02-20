@@ -141,35 +141,36 @@ import { ref, reactive, onUnmounted } from 'vue'
 const prizes = ref([
   {
     year: "2010",
-    title: "Bihar State Guest House",
+    title: "Bipard, Gaya",
     description: "Excellence in Architectural Design for the innovative approach to sustainable state architecture, combining traditional elements with modern functionality.",
     images: [
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing1.jpg",
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing2.jpg",
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing3.jpg",
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing4.jpg"
+      "/Projects/COMPETITIONS/BIPARD, GAYA/1.jpg",
+      "/Projects/COMPETITIONS/BIPARD, GAYA/2.jpg",
+      "/Projects/COMPETITIONS/BIPARD, GAYA/3.png",
+      "/Projects/COMPETITIONS/BIPARD, GAYA/4.jpg",
+      "/Projects/COMPETITIONS/BIPARD, GAYA/5.jpg",
+      "/Projects/COMPETITIONS/BIPARD, GAYA/6.png",
+      "/Projects/COMPETITIONS/BIPARD, GAYA/7.png",
     ]
   },
   {
     year: "2015",
-    title: "Seevusagur Ramgulam Chowk",
+    title: "State Guest House, Patna",
     description: "Outstanding Urban Development achievement for transforming public spaces into vibrant community centers while preserving cultural heritage.",
     images: [
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing1.jpg",
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing2.jpg",
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing3.jpg"
+      "/Projects/COMPETITIONS/Desh Ratna Marg/1.jpg",
+      "/Projects/COMPETITIONS/Desh Ratna Marg/2.jpg",
+      "/Projects/COMPETITIONS/Desh Ratna Marg/3.jpg",
+      "/Projects/COMPETITIONS/Desh Ratna Marg/4.jpg",
     ]
   },
   {
     year: "2019",
-    title: "Shri Krishna Nagar",
+    title: "Bal Bhawan",
     description: "Best Residential Complex Design award for creating sustainable, community-focused living spaces that redefine modern urban housing.",
     images: [
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing1.jpg",
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing2.jpg",
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing3.jpg",
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing4.jpg",
-      "/Projects/HOUSING/Maa Tara Housing, Patna/Maa Tara Housing5.jpg"
+      'Projects/COMPETITIONS/Bal Bhawan Patna/1.jpg',
+      'Projects/COMPETITIONS/Bal Bhawan Patna/2.jpg',
     ]
   }
 ])
