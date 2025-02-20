@@ -192,7 +192,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 2.5rem;
+  padding: 0.75rem 2rem;
   background: #ffffff;
   position: fixed;
   top: 0;
@@ -209,17 +209,21 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-height: 60px;
-  max-width: 60px;
+  height: 60px;
+  width: auto;
+  position: relative;
+  overflow: visible;
 }
 
 .logo {
   height: 60px;
+  width: auto;
+  object-fit: contain;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .logo:hover {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 
 nav ul {
@@ -377,6 +381,14 @@ nav li:hover .dropdown {
     border-radius: 0;
     font-size: 1rem;
     text-align: left;
+  }
+
+  .logo-container {
+    height: 50px;
+  }
+
+  .logo {
+    height: 50px;
   }
 }
 
