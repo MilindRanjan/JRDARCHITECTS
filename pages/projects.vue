@@ -55,46 +55,46 @@
           @click="viewProjectDetails(project)"
         >
           <!-- Project Card -->
-          <div class="relative aspect-[4/5] overflow-hidden cursor-pointer rounded-sm">
+          <div class="project-card">
             <!-- Background Image with Gradient -->
-            <div class="absolute inset-0 bg-black/10">
+            <div class="project-image-container">
               <img
                 :src="project.mainImage"
                 :alt="project.name"
-                class="w-full h-full object-cover transition-all duration-1000 ease-out transform group-hover:scale-110"
+                class="project-image"
               />
             </div>
 
-            <!-- Hover Overlay with Gradient -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500">
-              <div class="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out">
-                <p class="text-white/90 text-sm leading-relaxed mb-6 font-light">
-                  {{ project.description }}
-                </p>
-                <div class="flex items-center space-x-3">
-                  <span class="w-10 h-[0.5px] bg-white/70"></span>
-                  <span class="text-white/70 text-xs tracking-[0.3em] uppercase">Explore</span>
-                </div>
-              </div>
-            </div>
-
             <!-- Project Info -->
-            <div class="absolute top-0 left-0 right-0 p-8">
-              <div class="space-y-3 transform group-hover:-translate-y-1 transition-transform duration-500">
-                <h3 class="text-white text-xl font-light tracking-wide">
+            <div class="project-info">
+              <div class="space-y-3 transform transition-transform duration-500">
+                <h3 class="project-title">
                   {{ project.name }}
                 </h3>
                 <div class="flex items-center space-x-4">
-                  <span class="inline-block px-4 py-1 text-[10px] tracking-[0.2em] border border-white/30 text-white/70 uppercase">
+                  <span class="project-category">
                     {{ project.category }}
                   </span>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Bottom Shadow -->
-          <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <!-- Description Overlay -->
+            <div class="project-description">
+              <div class="description-content">
+                <p class="description-text">
+                  {{ project.description }}
+                </p>
+                <div class="explore-indicator">
+                  <span class="explore-line"></span>
+                  <span class="explore-text">Explore</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Shadow -->
+            <div class="bottom-shadow"></div>
+          </div>
         </div>
       </TransitionGroup>
     </div>
@@ -482,48 +482,95 @@ html {
 
 /* Enhanced Grid Transitions */
 .projects-move {
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 800ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .projects-enter-active,
 .projects-leave-active {
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .projects-enter-from,
 .projects-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(2rem);
 }
 
-/* Hover Effects */
+/* Enhanced Project Card Hover Effects */
+.project-card {
+  @apply relative aspect-[4/5] overflow-hidden cursor-pointer rounded-sm;
+}
+
+/* Background Image and Overlay */
+.project-image-container {
+  @apply absolute inset-0 bg-black/10 transition-all duration-500;
+}
+
+.project-image {
+  @apply w-full h-full object-cover transition-all duration-500 ease-out transform;
+}
+
+/* Hover effect for image */
 .group:hover .project-image {
-  filter: brightness(1.1);
+  @apply scale-110 brightness-[0.65] blur-[2px]; /* Dimmed and slight blur on hover */
 }
 
-/* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
-  .container {
-    margin-top: 60px;
-    padding: 0 1rem;
-  }
-  
-  .fixed.left-8 {
-    position: static;
-    transform: none;
-    margin: 1rem 0 2rem;
-  }
-  
-  .fixed.left-8 .flex-col {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0 1rem;
-  }
+/* Project Info Styles */
+.project-info {
+  @apply absolute top-0 left-0 right-0 p-8;
+}
 
-  .title-text {
-    font-size: 2rem;
-  }
+.project-title {
+  @apply text-white/90 text-xl font-light tracking-wide transition-all duration-500;
+}
+
+.project-category {
+  @apply inline-block px-4 py-1 text-[10px] tracking-[0.2em] border border-white/30 
+         text-white/70 uppercase transition-all duration-500;
+}
+
+/* Enhanced hover effects for text */
+.group:hover .project-title {
+  @apply text-white transform -translate-y-1 scale-105;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.group:hover .project-category {
+  @apply text-white border-white/80 bg-black/20 backdrop-blur-sm;
+}
+
+/* Description Overlay */
+.project-description {
+  @apply absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent 
+         opacity-0 group-hover:opacity-100 transition-all duration-500;
+}
+
+.description-content {
+  @apply absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 
+         group-hover:translate-y-0 transition-all duration-500 ease-out;
+}
+
+.description-text {
+  @apply text-white/90 text-sm leading-relaxed mb-6 font-light opacity-0 
+         group-hover:opacity-100 transition-all duration-500 delay-100;
+}
+
+.explore-indicator {
+  @apply flex items-center space-x-3 opacity-0 group-hover:opacity-100 
+         transition-all duration-500 delay-200;
+}
+
+.explore-line {
+  @apply w-10 h-[0.5px] bg-white/70;
+}
+
+.explore-text {
+  @apply text-white/70 text-xs tracking-[0.3em] uppercase;
+}
+
+/* Bottom Shadow Enhancement */
+.bottom-shadow {
+  @apply absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/20 to-transparent 
+         opacity-0 group-hover:opacity-100 transition-opacity duration-500;
 }
 </style>
