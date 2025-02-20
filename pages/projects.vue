@@ -510,9 +510,9 @@ html {
   @apply w-full h-full object-cover transition-all duration-500 ease-out transform;
 }
 
-/* Hover effect for image */
+/* Hover effect for image - removed blur, kept dim */
 .group:hover .project-image {
-  @apply scale-110 brightness-[0.65] blur-[2px]; /* Dimmed and slight blur on hover */
+  @apply scale-110 brightness-[0.75]; /* Adjusted brightness for subtle dim */
 }
 
 /* Project Info Styles */
@@ -536,7 +536,7 @@ html {
 }
 
 .group:hover .project-category {
-  @apply text-white border-white/80 bg-black/20 backdrop-blur-sm;
+  @apply text-white border-white/80;
 }
 
 /* Description Overlay */
