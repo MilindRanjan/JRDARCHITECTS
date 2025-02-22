@@ -12,16 +12,17 @@
       <div class="relative max-w-7xl mx-auto h-full flex items-center px-4">
         <div class="grid grid-cols-12 gap-8 items-center w-full">
           <!-- Text Content -->
-          <div class="col-span-7 space-y-6">
-            <div class="space-y-2">
-              <h4 class="text-lg text-gray-600 tracking-wider">FOUNDER & PRINCIPAL ARCHITECT</h4>
-              <h1 class="text-6xl font-bold text-gray-900 leading-tight">
-                Dr. Venkatesh
-                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600">
-                  Raman
-                </span>
-              </h1>
-            </div>
+          <div class="col-span-7 space-y-8">
+  <div class="space-y-3">
+    <h4 class="text-base uppercase tracking-[0.2em] text-black/60">Founder & Principal Architect</h4>
+    <h1 class="text-7xl font-light text-black leading-tight">
+      Dr. Venkatesh
+      <span class="block mt-2 relative">
+        Raman
+        <div class="absolute -bottom-4 left-0 w-24 h-[2px] bg-black/80"></div>
+      </span>
+    </h1>
+  </div>
             
             <p class="text-xl text-gray-700 leading-relaxed max-w-2xl">
               Transforming architectural visions into reality with over two decades of expertise in
@@ -74,14 +75,35 @@
     </div>
 
     <!-- Education Timeline -->
-    <section class="py-12 bg-white">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="flex items-center space-x-8">
-          <div v-for="(edu, index) in education" :key="index"
-               class="flex-1 group">
-            <div class="p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-300">
-              <div class="text-xl font-bold text-gray-900">{{ edu.degree }}</div>
-              <div class="text-gray-600">{{ edu.year }}</div>
+    <section class="py-24 bg-white border-t border-black/5">
+      <div class="max-w-7xl mx-auto px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-20">
+          <h2 class="text-2xl font-light tracking-[0.2em] text-black/80 mb-4">EDUCATIONAL BACKGROUND</h2>
+          <div class="w-24 h-px bg-black/20 mx-auto"></div>
+        </div>
+    
+        <!-- Education Cards -->
+        <div class="grid grid-cols-3 gap-8">
+          <div v-for="(edu, index) in education" :key="index" class="group relative">
+            <div class="p-8 bg-white border border-black/10 h-[200px] flex flex-col justify-between
+                        transition-all duration-500 hover:border-black
+                        shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
+              <!-- Year -->
+              <div class="text-5xl font-light text-black/20
+                          group-hover:text-black/40 transition-colors duration-500">
+                {{ edu.year }}
+              </div>
+              
+              <!-- Degree -->
+              <div class="relative">
+                <div class="h-px w-12 bg-black/20 mb-4
+                           group-hover:w-16 transition-all duration-500"></div>
+                <h3 class="text-lg text-black/70 font-light leading-relaxed 
+                           group-hover:text-black transition-colors duration-500">
+                  {{ edu.degree }}
+                </h3>
+              </div>
             </div>
           </div>
         </div>
@@ -89,62 +111,141 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-20 bg-gray-50">
+    <section id="experience" class="py-32 bg-white relative overflow-hidden">
+      <!-- Background Elements -->
+      <div class="absolute inset-0 bg-grid-pattern opacity-[0.03]"></div>
+      
       <div class="max-w-7xl mx-auto px-4">
-        <h2 class="text-4xl font-bold text-gray-900 mb-12">Professional Journey</h2>
-        
-        <!-- 3D Timeline -->
+        <!-- Section Header -->
+        <div class="text-center mb-24">
+          <h2 class="text-2xl font-light tracking-[0.2em] text-black/80 mb-4">PROFESSIONAL JOURNEY</h2>
+          <div class="w-24 h-px bg-black/20 mx-auto"></div>
+        </div>
+    
+        <!-- Timeline Experience -->
         <div class="relative">
-          <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-gray-200 via-gray-400 to-gray-200"></div>
-          
-          <div class="space-y-24">
+          <!-- Center Line -->
+          <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-black/10"></div>
+    
+          <div class="space-y-32">
             <div v-for="(exp, index) in experience" :key="index"
                  class="relative group">
               <!-- Experience Card -->
               <div :class="`flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`">
-                <div class="w-5/12 transform hover:scale-105 transition-all duration-300">
-                  <div class="bg-white rounded-xl shadow-xl p-8 relative">
+                <div class="w-5/12 transform hover:translate-y-[-5px] transition-all duration-500">
+                  <!-- Main Card -->
+                  <div class="bg-white p-10 border border-black/5 relative
+                              shadow-[0_20px_50px_rgba(0,0,0,0.08)] group-hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)]
+                              transition-all duration-500">
                     <!-- Company Info -->
-                    <div class="mb-6">
-                      <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ exp.company }}</h3>
-                      <div class="flex justify-between items-center">
-                        <span class="text-lg text-gray-600">{{ exp.role }}</span>
-                        <span class="px-4 py-1 bg-gray-100 rounded-full text-sm text-gray-700">
-                          {{ exp.period }}
-                        </span>
+                    <div class="mb-8">
+                      <span class="text-sm tracking-[0.2em] text-black/40 uppercase block mb-2">
+                        {{ exp.period }}
+                      </span>
+                      <h3 class="text-3xl font-light text-black mb-3">{{ exp.company }}</h3>
+                      <div class="inline-block px-4 py-1 border border-black/20 text-sm tracking-wider text-black/70">
+                        {{ exp.role }}
                       </div>
                     </div>
-
-                    <!-- Animated Project List -->
-                    <div class="space-y-3">
+    
+                    <!-- Enhanced Project List -->
+                    <div class="space-y-4">
                       <div v-for="(project, pIndex) in exp.projects" 
                            :key="pIndex"
-                           class="transform transition-all duration-300 hover:translate-x-2">
-                        <div class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100">
-                          <div class="w-2 h-2 bg-gray-400 rounded-full mr-3"></div>
-                          <span class="text-gray-700">{{ project }}</span>
+                           class="group/item">
+                        <div class="flex items-center p-4 hover:bg-black/[0.02] rounded-sm
+                                  transform transition-all duration-300 hover:translate-x-2">
+                          <!-- Project Marker -->
+                          <div class="relative">
+                            <div class="w-1.5 h-1.5 bg-black/40 group-hover/item:bg-black 
+                                      transition-colors duration-300 mr-4"></div>
+                            <div class="absolute -inset-2 border border-black/5 rounded-full scale-0 opacity-0
+                                      group-hover/item:scale-100 group-hover/item:opacity-100 transition-all duration-300"></div>
+                          </div>
+                          <!-- Project Text -->
+                          <span class="text-black/70 group-hover/item:text-black transition-colors duration-300">
+                            {{ project }}
+                          </span>
                         </div>
                       </div>
                     </div>
-
-                    <!-- Achievement Indicators -->
+    
+                    <!-- Achievement Badge -->
                     <div v-if="exp.achievements" 
-                         class="absolute -right-4 -top-4 w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
-                      <span class="text-sm font-bold text-gray-900">{{ exp.achievements }}★</span>
+                         class="absolute -right-4 -top-4 w-16 h-16 bg-black text-white
+                                flex items-center justify-center transform rotate-12
+                                group-hover:rotate-0 transition-all duration-500">
+                      <span class="text-sm tracking-wider">{{ exp.achievements }}★</span>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <!-- Timeline Node -->
+    
+              <!-- Enhanced Timeline Node -->
               <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <div class="w-6 h-6 bg-white rounded-full border-4 border-gray-400 group-hover:border-gray-900 transition-colors duration-300"></div>
+                <div class="relative">
+                  <!-- Inner Circle -->
+                  <div class="w-3 h-3 bg-black rounded-full relative z-10"></div>
+                  <!-- Outer Circle -->
+                  <div class="absolute -inset-2 border-2 border-black/20 rounded-full
+                             transform scale-0 opacity-0 group-hover:scale-100 
+                             group-hover:opacity-100 transition-all duration-500"></div>
+                  <!-- Year Label -->
+                  <div class="absolute top-8 left-1/2 transform -translate-x-1/2 
+                             text-sm text-black/60 whitespace-nowrap">
+                    {{ exp.period }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Decorative Elements -->
+    <section>
+      <div class="absolute top-0 left-0 w-64 h-64 bg-black/[0.02] rounded-full 
+                  transform -translate-x-1/2 -translate-y-1/2"></div>
+      <div class="absolute bottom-0 right-0 w-96 h-96 bg-black/[0.02] rounded-full 
+                  transform translate-x-1/2 translate-y-1/2"></div>
+    </section>
+
+
+  <style scoped>
+  /* Add these new styles */
+  .experience-card {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .timeline-node {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  /* Enhanced Responsive Design */
+  @media screen and (max-width: 768px) {
+    .experience-section {
+      padding: 4rem 1rem;
+    }
+  
+    .timeline-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  
+    .experience-card {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  </style>
     <Footer />
     <FloatingContactButton />
   </div>
@@ -155,11 +256,11 @@ import { ref } from 'vue';
 import Header from '~/components/Header.vue';
 import FloatingContactButton from '~/components/FloatingContactButton.vue';
 
-const education = [
+const education = ref([
   { year: '2022', degree: 'PhD in Architecture' },
   { year: '2015', degree: 'Master in Urban & Regional Planning' },
   { year: '1991', degree: 'Bachelor of Architecture' }
-];
+]);
 
 const experience = [
   {

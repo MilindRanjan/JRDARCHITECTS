@@ -4,7 +4,15 @@
     
     <!-- Categories Navigation - Wider width -->
     <div class="fixed left-8 top-1/2 transform -translate-y-1/2 z-40 w-48">
-      <div class="flex flex-col space-y-4">
+      <!-- Animated Projects Heading -->
+      <div class="projects-heading-container">
+        <h1 class="projects-heading">
+          <span class="heading-text">Our Projects</span>
+          <span class="heading-line"></span>
+        </h1>
+      </div>
+
+      <div class="flex flex-col space-y-4 mt-8">
         <button
           v-for="category in categories"
           :key="category"
@@ -46,7 +54,7 @@
       <TransitionGroup
         name="projects"
         tag="div"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 pl-56"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 pl-56 mt-16"
       >
         <div
           v-for="project in filteredProjects"
@@ -572,5 +580,56 @@ html {
 .bottom-shadow {
   @apply absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/20 to-transparent 
          opacity-0 group-hover:opacity-100 transition-opacity duration-500;
+}
+
+/* Animated Projects Heading Styles */
+.projects-heading-container {
+  @apply w-full relative;
+  margin-bottom: 3rem;
+}
+
+.projects-heading {
+  @apply flex flex-col items-start;
+}
+
+.heading-text {
+  @apply text-2xl font-light tracking-wider text-black/80 mb-2 relative;
+  animation: fadeSlideIn 1s ease-out forwards;
+}
+
+.heading-line {
+  @apply block h-[1px] bg-black/30 w-0;
+  animation: lineExpand 1s ease-out 0.3s forwards;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lineExpand {
+  from {
+    width: 0;
+  }
+  to {
+    width: 40px;
+  }
+}
+
+/* Add to existing media queries */
+@media screen and (max-width: 768px) {
+  .projects-heading-container {
+    @apply static w-full text-center mb-6;
+  }
+
+  .projects-heading {
+    @apply items-center;
+  }
 }
 </style>

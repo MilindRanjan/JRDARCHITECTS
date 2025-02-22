@@ -75,7 +75,8 @@
                       <img
                         :src="image"
                         :alt="`${prize.title} - Image ${imageIndex + 1}`"
-                        class="w-full aspect-[4/3] object-cover rounded-lg shadow-lg"
+                        class="w-full h-auto object-contain rounded-lg shadow-lg"
+                        style="min-height: 400px; background: #f5f5f5;"
                       />
                       <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-white">
@@ -87,19 +88,21 @@
                 </div>
 
                 <!-- Thumbnail Navigation -->
-                <div class="mt-4 flex gap-2 overflow-x-auto pb-2">
+                <div class="mt-6 flex gap-2 overflow-x-auto pb-2">
                   <button
                     v-for="(image, thumbIndex) in prize.images"
                     :key="thumbIndex"
                     @click="setActiveImage(prizeIndex, thumbIndex)"
-                    class="flex-shrink-0 w-20 h-20 rounded-md overflow-hidden transition-all duration-300"
-                    :class="{'ring-2 ring-black': activeImageIndexes[prizeIndex] === thumbIndex}"
+                    class="flex-shrink-0 w-40 h-23.5 rounded-md transition-all duration-300 p-0.5"
+                    :class="{'bg-black': activeImageIndexes[prizeIndex] === thumbIndex}"
                   >
-                    <img
-                      :src="image"
-                      :alt="`Thumbnail ${thumbIndex + 1}`"
-                      class="w-full h-full object-cover"
-                    />
+                    <div class="w-full h-full bg-[#f5f5f5] flex items-center justify-center rounded-md overflow-hidden">
+                      <img
+                        :src="image"
+                        :alt="`Thumbnail ${thumbIndex + 1}`"
+                        class="w-full h-full object-contain"
+                      />
+                    </div>
                   </button>
                 </div>
               </div>

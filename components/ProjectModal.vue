@@ -152,28 +152,71 @@
           <!-- Navigation Controls -->
           <div 
             v-if="hasMultipleImages" 
-            class="absolute inset-x-4 md:inset-x-0 top-1/2 -translate-y-1/2 flex justify-between md:px-6"
+            class="absolute inset-x-4 md:inset-x-8 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none"
           >
             <button 
               @click="previousImage"
-              class="p-3 rounded-full bg-white/90 shadow-lg backdrop-blur-sm hover:bg-white transition-all duration-300 transform hover:scale-110"
+              :disabled="currentImageIndex === 0"
+              class="p-4 rounded-full bg-white/95 shadow-xl backdrop-blur-md hover:bg-white 
+                     transition-all duration-300 transform hover:scale-105 active:scale-95
+                     disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100
+                     pointer-events-auto group"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 12H5M11 18l-6-6 6-6"/>
+              <svg width="24" height="24" viewBox="0 0 24 24" class="stroke-black/70 group-hover:stroke-black transition-colors">
+                <path d="M19 12H5M11 18l-6-6 6-6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             
             <button 
               @click="nextImage"
-              class="p-3 rounded-full bg-white/90 shadow-lg backdrop-blur-sm hover:bg-white transition-all duration-300 transform hover:scale-110"
+              :disabled="currentImageIndex === normalizedImages.length - 1"
+              class="p-4 rounded-full bg-white/95 shadow-xl backdrop-blur-md hover:bg-white 
+                     transition-all duration-300 transform hover:scale-105 active:scale-95
+                     disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100
+                     pointer-events-auto group"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M13 18l6-6-6-6"/>
+              <svg width="24" height="24" viewBox="0 0 24 24" class="stroke-black/70 group-hover:stroke-black transition-colors">
+                <path d="M5 12h14M13 18l6-6-6-6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
           </div>
 
-          <!-- Image Counter -->
+          <!-- Update the category tag styles -->
+          <style scoped>
+          .category-tag {
+            @apply px-6 py-2.5 text-sm tracking-wider bg-black text-white/90 
+                   hover:text-white transition-all duration-300 rounded-full
+                   hover:bg-black/90 hover:shadow-lg hover:scale-105
+                   active:scale-100 font-light uppercase;
+          }
+          
+          /* Add new hover effect for navigation buttons */
+          .nav-button {
+            @apply p-4 transition-all duration-300 hover:scale-105 active:scale-95
+                   bg-white/95 rounded-full shadow-xl backdrop-blur-md;
+          }
+          
+          /* Enhanced button hover states */
+          button:focus {
+            @apply outline-none ring-2 ring-black/10 ring-offset-2;
+          }
+          
+          /* Smooth image transitions */
+          .slide-enter-active,
+          .slide-leave-active {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          
+          .slide-enter-from {
+            opacity: 0;
+            transform: translateX(40px);
+          }
+          
+          .slide-leave-to {
+            opacity: 0;
+            transform: translateX(-40px);
+          }
+          </style>
           <div 
             v-if="hasMultipleImages"
             class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center"
@@ -398,7 +441,12 @@ export default {
   opacity: 0;
   transform: translateX(30px);
 }
-
+.category-tag {
+  @apply px-6 py-2.5 text-sm tracking-wider bg-black text-white/90 
+         hover:text-white transition-all duration-300 rounded-full
+         hover:bg-black/90 hover:shadow-lg hover:scale-105
+         active:scale-100 font-light uppercase;
+}
 .slide-leave-to {
   opacity: 0;
   transform: translateX(-30px);
