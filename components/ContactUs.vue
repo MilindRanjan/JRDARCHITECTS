@@ -12,32 +12,64 @@
         <!-- Left Side: Contact Form -->
         <div class="contact-form">
           <h2>Get in Touch</h2>
-          <form @submit.prevent="handleSubmit">
-            <div class="form-group">
-              <input 
+          <form @submit.prevent="handleSubmit" class="p-4 space-y-4">
+            <div class="relative">
+              <img 
+                src="/icons/user-icon.svg" 
+                alt="User Icon" 
+                class="absolute left-3 top-3 w-5 h-5 text-gray-400" 
+              />
+              <input
                 v-model="formData.name"
-                type="text" 
-                placeholder="Your Name" 
-                required 
-              />
-            </div>
-            <div class="form-group">
-              <input 
-                v-model="formData.email"
-                type="email" 
-                placeholder="Your Email" 
-                required 
-              />
-            </div>
-            <div class="form-group">
-              <textarea 
-                v-model="formData.message"
-                placeholder="Your Message" 
-                rows="5" 
+                type="text"
+                placeholder="Your Name"
+                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 
+                       focus:ring-black focus:border-transparent outline-none transition-all duration-200"
                 required
-              ></textarea>
+              />
             </div>
-            <button type="submit">Send Message</button>
+            <div class="relative">
+              <img 
+                src="/icons/account-icon.svg" 
+                alt="Account Icon" 
+                class="absolute left-3 top-3 w-5 h-5 text-gray-400" 
+              />
+              <input
+                v-model="formData.email"
+                type="email"
+                placeholder="Your Email"
+                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 
+                       focus:ring-black focus:border-transparent outline-none transition-all duration-200"
+                required
+              />
+            </div>
+            <div class="relative">
+              <img 
+                src="/icons/message-text-icon.svg" 
+                alt="Message Text Icon" 
+                class="absolute left-3 top-3 w-5 h-5 text-gray-400" 
+              />
+              <textarea
+                v-model="formData.message"
+                placeholder="Your Message"
+                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 
+                       focus:ring-black focus:border-transparent outline-none transition-all duration-200 
+                       min-h-[120px] resize-none"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 
+                     transition-colors duration-200 flex items-center justify-center gap-2"
+            >
+              <img 
+                src="/icons/send-icon.svg" 
+                alt="Send Icon" 
+                class="w-5 h-5" 
+              />
+              <span>Send Message</span>
+            </button>
           </form>
         </div>
 
@@ -207,7 +239,6 @@ const handleSubmit = async () => {
 .form-group {
   margin-bottom: 20px;
 }
-
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -218,7 +249,6 @@ const handleSubmit = async () => {
   color: #333333;
   transition: border-color 0.3s ease;
 }
-
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: #000000;
@@ -228,7 +258,6 @@ const handleSubmit = async () => {
 .form-group textarea {
   resize: vertical;
 }
-
 button[type="submit"] {
   background-color: #000000;
   color: #ffffff;
@@ -245,7 +274,6 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #333333;
 }
-
 /* Contact Details */
 .contact-details {
   display: flex;
