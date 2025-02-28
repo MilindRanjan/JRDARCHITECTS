@@ -9,10 +9,15 @@
         <h1 class="company-name">JRD Architects</h1>
       </div>
     </transition>
+    
 
     <!-- Main Components -->
     <Header v-if="fadeOut" />
-    <Home v-if="fadeOut" />
+    <ProjectSlideshow v-if="fadeOut" />
+    
+    <!-- Add the slideshow here -->
+    <Home />
+    
     <ProjectsSection />
     <Prizes />
     <Clients />
@@ -32,6 +37,7 @@ import Achievements from '../components/Prizes.vue';
 import Prizes from '../components/Prizes.vue';
 import Footer from '../components/Footer.vue';
 import FloatingContactButton from '~/components/FloatingContactButton.vue';
+import ProjectSlideshow from '~/components/ProjectSlideshow.vue';
 
 const fadeOut = ref(false);
 const showContactForm = ref(false);

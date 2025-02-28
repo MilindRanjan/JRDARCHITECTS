@@ -5,6 +5,7 @@ export { default as Footer } from '../../components/Footer.vue'
 export { default as Header } from '../../components/Header.vue'
 export { default as Prizes } from '../../components/Prizes.vue'
 export { default as ProjectModal } from '../../components/ProjectModal.vue'
+export { default as ProjectSlideshow } from '../../components/ProjectSlideshow.vue'
 export { default as ProjectsSection } from '../../components/ProjectsSection.vue'
 export { default as Home } from '../../components/home.vue'
 

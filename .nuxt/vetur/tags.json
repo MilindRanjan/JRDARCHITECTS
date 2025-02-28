@@ -20,6 +20,9 @@
   "ProjectModal": {
     "description": "Auto imported from components/ProjectModal.vue"
   },
+  "ProjectSlideshow": {
+    "description": "Auto imported from components/ProjectSlideshow.vue"
+  },
   "ProjectsSection": {
     "description": "Auto imported from components/ProjectsSection.vue"
   },

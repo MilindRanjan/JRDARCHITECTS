@@ -13,5 +13,6 @@ You can directly use them in pages and other components without the need to impo
 - `<Header>` | `<header>` (components/Header.vue)
 - `<Prizes>` | `<prizes>` (components/Prizes.vue)
 - `<ProjectModal>` | `<project-modal>` (components/ProjectModal.vue)
+- `<ProjectSlideshow>` | `<project-slideshow>` (components/ProjectSlideshow.vue)
 - `<ProjectsSection>` | `<projects-section>` (components/ProjectsSection.vue)
 - `<Home>` | `<home>` (components/home.vue)
