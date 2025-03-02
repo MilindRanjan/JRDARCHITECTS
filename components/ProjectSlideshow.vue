@@ -11,60 +11,109 @@
       
       <!-- Main Slideshow -->
       <div class="relative h-[80vh] overflow-hidden">
-        <!-- Slides with Preloading -->
-        <div class="h-full">
-          <div class="h-full">
-            <div 
-              v-for="(slide, index) in slides" 
-              :key="slide.id"
-              :class="{'hidden': currentSlide !== index, 'block': currentSlide === index}"
-              class="absolute inset-0 w-full h-full transition-opacity duration-1000"
-              :style="{ opacity: currentSlide === index ? 1 : 0 }"
-            >
-              <!-- Two-column layout for image and content -->
-              <div class="relative w-full h-full flex flex-col md:flex-row">
-                <!-- Image Container with Adaptive Display -->
-                <div class="relative w-full md:w-3/4 h-3/4 md:h-full overflow-hidden">
-                  <div class="w-full h-full bg-black flex items-center justify-center">
-                    <img 
-                      :src="`/${slide.mainImage}`" 
-                      :alt="slide.name"
-                      class="w-full h-full object-cover transition-all duration-7000 ease-out"
-                      :class="{'scale-105': currentSlide === index, 'opacity-0': !imageLoaded[index], 'opacity-100': imageLoaded[index]}"
-                      @load="onImageLoad(index)"
-                    />
+        <!-- Main Slides with Clean Fade Transitions -->
+<div 
+  v-for="(slide, index) in slides" 
+  :key="slide.id"
+  class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out"
+  :style="{ 
+    opacity: currentSlide === index ? 1 : 0,
+    // Remove the visibility property that causes abrupt changes
+    zIndex: currentSlide === index ? 2 : 1
+  }"
+>
+          <!-- Two-column layout for image and content -->
+          <div class="relative w-full h-full flex flex-col md:flex-row">
+            <!-- Image Container with Simple Fade Effect -->
+            <div class="relative w-full md:w-3/4 h-3/4 md:h-full overflow-hidden">
+              <div class="w-full h-full bg-black flex items-center justify-center">
+                <img 
+  :src="`/${slide.mainImage}`" 
+  :alt="slide.name"
+  class="w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
+  :style="{
+    opacity: currentSlide === index ? 1 : 0
+  }"
+  @load="onImageLoad(index)"
+/>
+              </div>
+              <!-- Simple Gradient Overlay -->
+              <div 
+                class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent md:bg-gradient-to-r md:from-transparent md:via-black/20 md:to-black/90 transition-opacity duration-1000"
+                :class="{
+                  'opacity-100': currentSlide === index,
+                  'opacity-0': currentSlide !== index
+                }"
+              ></div>
+            </div>
+            
+            <!-- Content Container with Staggered Animations -->
+            <div class="absolute md:relative bottom-0 left-0 right-0 md:bottom-auto md:left-auto md:right-auto p-8 md:p-12 text-white md:w-1/4 md:h-full bg-black/80 md:bg-black flex items-end md:items-center">
+              <div class="w-full">
+                <!-- Staggered Animation Container -->
+                <div class="space-y-6">
+                  <!-- Project Title with Reveal Animation -->
+                  <div class="overflow-hidden">
+                    <h2 
+                      class="text-3xl md:text-4xl font-light tracking-wide transform transition-all duration-1000 ease-out"
+                      :class="{
+                        'translate-y-0 opacity-100': currentSlide === index,
+                        'translate-y-full opacity-0': currentSlide !== index
+                      }"
+                      :style="{
+                        transitionDelay: currentSlide === index ? '300ms' : '0ms'
+                      }"
+                    >
+                      {{ slide.name }}
+                    </h2>
                   </div>
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent md:bg-gradient-to-r md:from-transparent md:via-black/20 md:to-black/90"></div>
-                </div>
-                
-                <!-- Content Container - Positioned on the right for desktop, below for mobile -->
-                <div class="absolute md:relative bottom-0 left-0 right-0 md:bottom-auto md:left-auto md:right-auto p-8 md:p-12 text-white md:w-1/4 md:h-full bg-black/80 md:bg-black flex items-end md:items-center">
-                  <div class="w-full">
-                    <div class="transform transition-all duration-1000 ease-out"
-                         :class="[currentSlide === index ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0']">
-                      <div class="overflow-hidden mb-3">
-                        <h2 class="text-3xl md:text-4xl font-light tracking-wide transform transition-all duration-1000 delay-300 ease-out"
-                            :class="[currentSlide === index ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0']">
-                          {{ slide.name }}
-                        </h2>
-                      </div>
-                      <div class="w-16 h-px bg-white mb-6 transform transition-all duration-700 delay-500 origin-left ease-out"
-                           :class="[currentSlide === index ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0']"></div>
-                      <p class="text-white/80 mb-8 transform transition-all duration-1000 delay-700 ease-out"
-                         :class="[currentSlide === index ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0']">
-                        {{ slide.description }}
-                      </p>
-                      <div class="flex items-center gap-6 transform transition-all duration-1000 delay-900 ease-out"
-                           :class="[currentSlide === index ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0']">
-                        <button @click="viewProject(slide)" 
-                                class="group px-8 py-3 bg-white text-black hover:bg-black border border-transparent hover:border-white hover:text-white transition-all duration-500 tracking-wider text-sm relative overflow-hidden">
-                          <span class="relative z-10">View Project</span>
-                          <span class="absolute inset-0 bg-black transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></span>
-                        </button>
-                        <div class="text-sm tracking-widest text-white/70">
-                          <span class="mr-2 text-xs">●</span>{{ slide.location }}
-                        </div>
-                      </div>
+                  
+                  <!-- Animated Divider Line -->
+                  <div 
+                    class="w-16 h-px bg-white transform transition-all duration-700 origin-left ease-out"
+                    :class="{
+                      'scale-x-100 opacity-100': currentSlide === index,
+                      'scale-x-0 opacity-0': currentSlide !== index
+                    }"
+                    :style="{
+                      transitionDelay: currentSlide === index ? '500ms' : '0ms'
+                    }"
+                  ></div>
+                  
+                  <!-- Project Description with Fade-up Animation -->
+                  <p 
+                    class="text-white/80 transform transition-all duration-1000 ease-out"
+                    :class="{
+                      'translate-y-0 opacity-100': currentSlide === index,
+                      'translate-y-8 opacity-0': currentSlide !== index
+                    }"
+                    :style="{
+                      transitionDelay: currentSlide === index ? '700ms' : '0ms'
+                    }"
+                  >
+                    {{ slide.description }}
+                  </p>
+                  
+                  <!-- Action Buttons with Delayed Appearance -->
+                  <div 
+                    class="flex items-center gap-6 transform transition-all duration-1000 ease-out"
+                    :class="{
+                      'translate-y-0 opacity-100': currentSlide === index,
+                      'translate-y-8 opacity-0': currentSlide !== index
+                    }"
+                    :style="{
+                      transitionDelay: currentSlide === index ? '900ms' : '0ms'
+                    }"
+                  >
+                    <button 
+                      @click="viewProject(slide)" 
+                      class="group px-8 py-3 bg-white text-black hover:bg-black border border-transparent hover:border-white hover:text-white transition-all duration-500 tracking-wider text-sm relative overflow-hidden"
+                    >
+                      <span class="relative z-10">View Project</span>
+                      <span class="absolute inset-0 bg-black transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></span>
+                    </button>
+                    <div class="text-sm tracking-widest text-white/70">
+                      <span class="mr-2 text-xs">●</span>{{ slide.location }}
                     </div>
                   </div>
                 </div>
@@ -123,7 +172,7 @@
               <div class="relative h-1 w-10 bg-white/20 overflow-hidden rounded-full transition-all duration-300"
                    :class="{ 'w-16 bg-white/40': currentSlide === index }">
                 <div v-if="currentSlide === index && autoplayEnabled" 
-                     class="absolute inset-0 h-full bg-white rounded-full transition-all duration-100 ease-linear" 
+                     class="absolute inset-0 h-full bg-white rounded-full" 
                      :style="{ width: `${progressPercentage}%` }"></div>
               </div>
             </div>
@@ -146,8 +195,8 @@
 
     <!-- Project Modal -->
     <ProjectModal 
+      :isVisible="isModalVisible" 
       :project="selectedProject" 
-      :show="showModal" 
       @close="closeModal" 
     />
   </section>
@@ -165,21 +214,20 @@ export default {
   setup() {
     // Sample data - replace with your actual project data
     const slides = [
-      {
+    {
         id: 1,
         name: 'BIPARD',
-        mainImage: 'Projects/COMPETITIONS/BIPARD, GAYA/1.jpg',
-        additionalImages: [
-          'Projects/COMPETITIONS/BIPARD, GAYA/2.jpg',
-          'Projects/COMPETITIONS/BIPARD, GAYA/3.png',
-          'Projects/COMPETITIONS/BIPARD, GAYA/4.jpg',
-          'Projects/COMPETITIONS/BIPARD, GAYA/5.jpg',
-          'Projects/COMPETITIONS/BIPARD, GAYA/6.png',
-          'Projects/COMPETITIONS/BIPARD, GAYA/7.png',
-        ],
-        description: 'Contemporary architectural design with sustainable elements',
-        location: 'Gaya, Bihar',
-        category: 'COMMERCIAL',
+    mainImage: 'Projects/COMPETITIONS/BIPARD, GAYA/1.jpg',
+    additionalImages: [
+      'Projects/COMPETITIONS/BIPARD, GAYA/2.jpg',
+      'Projects/COMPETITIONS/BIPARD, GAYA/3.png',
+      'Projects/COMPETITIONS/BIPARD, GAYA/4.jpg',
+      'Projects/COMPETITIONS/BIPARD, GAYA/5.jpg',
+      'Projects/COMPETITIONS/BIPARD, GAYA/6.png',
+      'Projects/COMPETITIONS/BIPARD, GAYA/7.png',
+    ],
+    description: 'Contemporary architectural design with sustainable elements',
+    category: 'COMMERCIAL',
       },
       {
         id: 2,
@@ -199,19 +247,18 @@ export default {
 
     // Modal state
     const selectedProject = ref(null);
-    const showModal = ref(false);
+    const isModalVisible = ref(false);
 
     // Slideshow state
     const currentSlide = ref(0);
     const previousSlide = ref(0);
     const scrollOpacity = ref(1);
     const autoplayEnabled = ref(true);
-    const slideInterval = ref(6000); // 6 seconds per slide for better UX
+    const slideInterval = ref(4000); // 4 seconds per slide
     const progressPercentage = ref(0);
     const touchStartX = ref(0);
     const touchEndX = ref(0);
-    const isTransitioning = ref(false);
-    const imageLoaded = ref({});
+    const isPreloadingActive = ref(true);
     let timerInterval;
     let progressInterval;
 
@@ -220,6 +267,8 @@ export default {
 
     // Modal functions
     const viewProject = (slide) => {
+      console.log('Opening modal for project:', slide); 
+      
       // First ensure the slide data is properly structured
       selectedProject.value = {
         ...slide,
@@ -235,14 +284,14 @@ export default {
       clearInterval(timerInterval);
       clearInterval(progressInterval);
       
-      // Show the modal with a slight delay to ensure state is updated
+      // Important: Force update and then show the modal
       setTimeout(() => {
-        showModal.value = true;
-      }, 50);
+        isModalVisible.value = true;
+      }, 0);
     };
 
     const closeModal = () => {
-      showModal.value = false;
+      isModalVisible.value = false;
       
       // Resume autoplay when modal is closed
       if (autoplayEnabled.value) {
@@ -252,12 +301,10 @@ export default {
 
     // Touch handling for mobile users
     const handleTouchStart = (e) => {
-      if (isTransitioning.value) return;
       touchStartX.value = e.touches[0].clientX;
     };
 
     const handleTouchEnd = (e) => {
-      if (isTransitioning.value) return;
       touchEndX.value = e.changedTouches[0].clientX;
       handleSwipe();
     };
@@ -271,20 +318,16 @@ export default {
       }
     };
 
-    // Enhanced image preloading with tracking
+    // Image preloading
     const preloadImages = () => {
       slides.forEach((slide, index) => {
-        // Set initial loaded state
-        imageLoaded.value[index] = false;
-        
-        // Preload main images
         const img = new Image();
         img.src = `/${slide.mainImage}`;
         img.onload = () => {
-          imageLoaded.value[index] = true;
+          slides[index].loaded = true;
         };
         
-        // Preload additional images for modal
+        // Also preload additionalImages for modal
         if (slide.additionalImages && slide.additionalImages.length > 0) {
           slide.additionalImages.forEach(imgSrc => {
             const additionalImg = new Image();
@@ -295,64 +338,50 @@ export default {
     };
 
     const onImageLoad = (index) => {
-      imageLoaded.value[index] = true;
+      slides[index].loaded = true;
     };
-
     const nextSlide = () => {
-      if (isTransitioning.value) return;
-      isTransitioning.value = true;
-      
-      previousSlide.value = currentSlide.value;
-      slideDirection.value = 'next';
-      
-      // Change slide with proper transition
-      setTimeout(() => {
-        currentSlide.value = (currentSlide.value + 1) % slides.length;
-        resetTimers();
-        
-        // Reset transition lock after animation completes
-        setTimeout(() => {
-          isTransitioning.value = false;
-        }, 1000); // Match this with your transition duration
-      }, 50);
-    };
+  previousSlide.value = currentSlide.value;
+  slideDirection.value = 'next';
+  
+  // Simplified transition - just update the slide index
+  currentSlide.value = (currentSlide.value + 1) % slides.length;
+  resetTimers();
+};
 
-    const prevSlide = () => {
-      if (isTransitioning.value) return;
-      isTransitioning.value = true;
-      
-      previousSlide.value = currentSlide.value;
-      slideDirection.value = 'prev';
-      
-      // Change slide with proper transition
-      setTimeout(() => {
-        currentSlide.value = (currentSlide.value - 1 + slides.length) % slides.length;
-        resetTimers();
-        
-        // Reset transition lock after animation completes
-        setTimeout(() => {
-          isTransitioning.value = false;
-        }, 1000); // Match this with your transition duration
-      }, 50);
-    };
+const prevSlide = () => {
+  previousSlide.value = currentSlide.value;
+  slideDirection.value = 'prev';
+  
+  // Simplified transition - just update the slide index
+  currentSlide.value = (currentSlide.value - 1 + slides.length) % slides.length;
+  resetTimers();
+};
 
     const goToSlide = (index) => {
-      if (index === currentSlide.value || isTransitioning.value) return;
-      isTransitioning.value = true;
-      
+      if (index === currentSlide.value) return;
       previousSlide.value = currentSlide.value;
       slideDirection.value = index > currentSlide.value ? 'next' : 'prev';
       
-      // Change slide with smooth transition
+      // Add fade-out effect
+      const slidesElements = document.querySelectorAll('.slideshow-container img');
+      if (slidesElements[currentSlide.value]) {
+        slidesElements[currentSlide.value].style.opacity = '0';
+      }
+      
+      // Change slide after short delay
       setTimeout(() => {
         currentSlide.value = index;
-        resetTimers();
         
-        // Reset transition lock after animation completes
+        // Fade in the new slide
         setTimeout(() => {
-          isTransitioning.value = false;
-        }, 1000); // Match this with your transition duration
-      }, 50);
+          if (slidesElements[currentSlide.value]) {
+            slidesElements[currentSlide.value].style.opacity = '1';
+          }
+        }, 50);
+        
+        resetTimers();
+      }, 300);
     };
 
     const toggleAutoplay = () => {
@@ -367,21 +396,17 @@ export default {
 
     const startAutoplay = () => {
       if (autoplayEnabled.value) {
-        // Clear any existing intervals first to prevent overlap
-        clearInterval(timerInterval);
-        clearInterval(progressInterval);
-        
         timerInterval = setInterval(() => {
           nextSlide();
         }, slideInterval.value);
         
-        // Reset and start progress bar
+        // Progress bar
         progressPercentage.value = 0;
         const step = 16; // Update every 16ms for smoother animation
         progressInterval = setInterval(() => {
           progressPercentage.value += (step / slideInterval.value) * 100;
           if (progressPercentage.value >= 100) {
-            progressPercentage.value = 0;
+            progressPercentage.value = 100;
           }
         }, step);
       }
@@ -391,56 +416,46 @@ export default {
       clearInterval(timerInterval);
       clearInterval(progressInterval);
       progressPercentage.value = 0;
-      if (autoplayEnabled.value && !showModal.value) {
+      if (autoplayEnabled.value && !isModalVisible.value) {
         startAutoplay();
       }
     };
 
-    // Enhanced scroll handler with smoother easing
+    // Enhanced scroll handler with easing
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       const fadeStart = 0;
       const fadeEnd = window.innerHeight * 0.4;
       const opacity = 1 - Math.min(Math.max((scrollPosition - fadeStart) / (fadeEnd - fadeStart), 0), 1);
-      
-      // Apply with requestAnimationFrame for smoother performance
-      requestAnimationFrame(() => {
-        scrollOpacity.value = opacity;
-      });
+      scrollOpacity.value = opacity;
     };
 
     // Keyboard navigation
     const handleKeyDown = (e) => {
-      if (showModal.value || isTransitioning.value) return; // Don't handle when modal is open or during transition
+      if (isModalVisible.value) return; // Don't handle slideshow keys when modal is open
       
       if (e.key === 'ArrowRight') {
         nextSlide();
       } else if (e.key === 'ArrowLeft') {
         prevSlide();
-      } else if (e.key === 'Escape' && showModal.value) {
-        closeModal();
       }
     };
 
-    // Preload next slides when current slide changes
+    // Ensure modal component is properly registered
+    const checkComponents = () => {
+      if (!ProjectModal) {
+        console.error('ProjectModal component is not properly imported');
+      }
+    };
+
+    // Preload next slide when current slide changes
     watch(currentSlide, (newVal) => {
-      // Preload next slide
       const nextIndex = (newVal + 1) % slides.length;
-      if (!imageLoaded.value[nextIndex]) {
+      if (!slides[nextIndex].loaded) {
         const img = new Image();
         img.src = `/${slides[nextIndex].mainImage}`;
         img.onload = () => {
-          imageLoaded.value[nextIndex] = true;
-        };
-      }
-      
-      // Also preload previous slide for better back navigation
-      const prevIndex = (newVal - 1 + slides.length) % slides.length;
-      if (!imageLoaded.value[prevIndex]) {
-        const img = new Image();
-        img.src = `/${slides[prevIndex].mainImage}`;
-        img.onload = () => {
-          imageLoaded.value[prevIndex] = true;
+          slides[nextIndex].loaded = true;
         };
       }
     });
@@ -459,19 +474,26 @@ export default {
     };
 
     onMounted(() => {
+      checkComponents();
       preloadImages();
       startAutoplay();
-      
-      // Use passive event listeners for better performance
-      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('scroll', handleScroll);
       window.addEventListener('keydown', handleKeyDown);
-      window.addEventListener('touchstart', handleTouchStart, { passive: true });
+      window.addEventListener('touchstart', handleTouchStart);
       window.addEventListener('touchend', handleTouchEnd);
       
-      // Set initial slide to visible
+      // Make sure all images start with opacity 1
       setTimeout(() => {
-        imageLoaded.value[0] = true;
-      }, 100);
+        const slidesElements = document.querySelectorAll('.slideshow-container img');
+        slidesElements.forEach(img => {
+          img.style.opacity = '1';
+        });
+      }, 300);
+      
+      // Disable preloading after initial load
+      setTimeout(() => {
+        isPreloadingActive.value = false;
+      }, 2000);
     });
 
     onUnmounted(() => {
@@ -491,9 +513,8 @@ export default {
       autoplayEnabled,
       progressPercentage,
       slideDirection,
-      imageLoaded,
       selectedProject,
-      showModal,
+      isModalVisible,
       onImageLoad,
       nextSlide,
       prevSlide,
@@ -520,50 +541,23 @@ export default {
   transition: opacity 0.5s ease;
 }
 
-/* Improved image transition effects */
+/* Clean, simple image transitions */
 img {
-  transition: opacity 1s ease, transform 7s ease-out;
+  transition: opacity 1000ms ease-in-out;
 }
 
-/* Custom fade transition for slides */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* Custom animations for text elements */
-@keyframes fadeUpIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-/* Button hover effects with smoother transitions */
+/* Button hover effects */
 button svg {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button:hover svg {
   transform: scale(1.1);
+}
+
+/* Optimize transitions with hardware acceleration */
+.transform {
+  will-change: transform, opacity;
 }
 
 /* Custom scrollbar for the slideshow */
