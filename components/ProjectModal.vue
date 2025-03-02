@@ -5,6 +5,7 @@
     @keydown.esc="$emit('close')"
     tabindex="-1"
   >
+  
     <!-- Close Button -->
     <button 
       @click="$emit('close')"
@@ -180,43 +181,6 @@
               </svg>
             </button>
           </div>
-
-          <!-- Update the category tag styles -->
-          <style scoped>
-          .category-tag {
-            @apply px-6 py-2.5 text-sm tracking-wider bg-black text-white/90 
-                   hover:text-white transition-all duration-300 rounded-full
-                   hover:bg-black/90 hover:shadow-lg hover:scale-105
-                   active:scale-100 font-light uppercase;
-          }
-          
-          /* Add new hover effect for navigation buttons */
-          .nav-button {
-            @apply p-4 transition-all duration-300 hover:scale-105 active:scale-95
-                   bg-white/95 rounded-full shadow-xl backdrop-blur-md;
-          }
-          
-          /* Enhanced button hover states */
-          button:focus {
-            @apply outline-none ring-2 ring-black/10 ring-offset-2;
-          }
-          
-          /* Smooth image transitions */
-          .slide-enter-active,
-          .slide-leave-active {
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-          }
-          
-          .slide-enter-from {
-            opacity: 0;
-            transform: translateX(40px);
-          }
-          
-          .slide-leave-to {
-            opacity: 0;
-            transform: translateX(-40px);
-          }
-          </style>
           <div 
             v-if="hasMultipleImages"
             class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center"
@@ -285,6 +249,8 @@
 </template>
 
 <script>
+import Header from './Header.vue';
+
 export default {
   name: 'ProjectModal',
   props: {
@@ -296,6 +262,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  components: {
+    Header
   },
   data() {
     return {
