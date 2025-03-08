@@ -1,23 +1,24 @@
 <template>
-  
   <div>
     <!-- Welcome Overlay -->
     <transition name="fade">
       <div v-if="!fadeOut" class="welcome-overlay" @click="fadeOutOverlay">
-        <!-- Ensure entire div is clickable by moving @click here -->
-        <img src="/logo.jpeg" alt="Company Logo" class="logo">
-        <h1 class="company-name">JRD Architects</h1>
+        <div class="welcome-content">
+          <img src="/logo.jpeg" alt="JRD Architects Logo" class="logo">
+          <div class="company-name-container">
+            <h1 class="company-name">JRD Architects</h1>
+          </div>
+          <div class="click-instruction-container">
+            <div class="click-instruction">Click anywhere to continue</div>
+          </div>
+        </div>
       </div>
     </transition>
-    
 
     <!-- Main Components -->
     <Header v-if="fadeOut" />
     <ProjectSlideshow v-if="fadeOut" />
-    
-    <!-- Add the slideshow here -->
     <Home />
-    
     <ProjectsSection />
     <Prizes />
     <Clients />
@@ -28,29 +29,16 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
-import emailjs from 'emailjs-com';
+import { ref, onMounted } from 'vue';
 import Header from '~/components/Header.vue';
 import Home from '~/components/home.vue';
 import ProjectsSection from '~/components/ProjectsSection.vue';
-import Achievements from '../components/Prizes.vue';
 import Prizes from '../components/Prizes.vue';
 import Footer from '../components/Footer.vue';
 import FloatingContactButton from '~/components/FloatingContactButton.vue';
 import ProjectSlideshow from '~/components/ProjectSlideshow.vue';
 
 const fadeOut = ref(false);
-const showContactForm = ref(false);
-
-const formData = reactive({
-  name: '',
-  email: '',
-  message: '',
-});
-
-const toggleContactForm = () => {
-  showContactForm.value = !showContactForm.value;
-};
 
 const fadeOutOverlay = () => {
   fadeOut.value = true;
@@ -62,189 +50,166 @@ const checkWelcomeOverlay = () => {
     fadeOut.value = true;
   }
 };
-
-const handleSubmit = async () => {
-  try {
-    const serviceID = "service_1v20ook";
-    const templateID = "template_xmavmga";
-    const userID = "FrrVOmajsxXNPXg3a";
-
-    const templateParams = {
-      name: formData.name,
-      email: formData.email,
-      message: formData.message,
-    };
-
-    await emailjs.send(serviceID, templateID, templateParams, userID);
-    alert("Message sent successfully!");
-    formData.name = '';
-    formData.email = '';
-    formData.message = '';
-    toggleContactForm();
-  } catch (error) {
-    console.error("Error:", error);
-    alert("Failed to send message. Please try again.");
-  }
-};
-
 onMounted(() => {
   checkWelcomeOverlay();
 });
-
 </script>
 
 <style scoped>
-/* Welcome Overlay Styles */
-
 .welcome-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
-  background-color: #FFF;
+  height: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.welcome-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  cursor: pointer;
-  opacity: 1;
-  transform: scale(1);
-  transition: none;
+  position: relative;
 }
+
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 16px;
+  animation: pulse 2s infinite alternate;
+  filter: grayscale(100%);
+}
+
+.company-name-container {
+  position: relative;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.company-name {
+  font-size: 36px;
+  font-weight: 700;
+  color: black;
+  letter-spacing: 3px;
+  animation: fadeInUp 1s ease-out;
+  margin-bottom: 8px;
+}
+
+.name-underline {
+  height: 2px;
+  background-color: black;
+  margin: 0 auto;
+  transform-origin: center;
+  animation: lineGrow 1.2s ease-out forwards;
+  opacity: 0.7;
+}
+
+.click-instruction-container {
+  position: absolute;
+  bottom: -80px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.click-instruction {
+  font-size: 14px;
+  color: #777;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 1.5s forwards, float 2s ease-in-out infinite;
+}
+
+.dot-left, .dot-right {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #777;
+  opacity: 0;
+  transform: scale(0);
+  animation: dotFadeAndScale 1.5s ease-out 1.2s forwards;
+}
+
+@keyframes lineGrow {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes dotFadeAndScale {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Rest of your existing styles */
 h2 {
   text-align: center;
   margin-bottom: 50px;
   font-size: 2.5rem;
   color: #333;
   position: relative;
-}
-.logo {
-  width: 30%;
-  max-width: 200px;
-  animation: logo-bounce 1.2s infinite;
-}
-
-.company-name {
-  font-size: 2em;
-  font-weight: bold;
-  margin-top: 20px;
-  animation: fade-in 1s ease-out forwards;
-}
-
-/* Fade Transition */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.fade-enter {
-  opacity: 0;
-  transform: scale(0.95);
-}
-
-.fade-leave-to {
-  opacity: 0;
-  transform: scale(1.05);
-}
-
-/* Animations */
-@keyframes logo-bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Contact Form */
-.contact-form-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1050;
-}
-
-.contact-form {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.contact-form .form-submit {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007BFF;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.contact-form .form-close {
-  margin-top: 10px;
-  width: 100%;
-  padding: 10px;
-  background: #ccc;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* Floating Button Styles */
-.contact-fab {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  background-color: #007BFF;
-  color: white;
-  padding: 15px 20px;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
-}
-.contact-fab:hover {
-  background-color: #0056b3;
-}
-@media (max-width: 768px) {
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.6s ease;
-  }
-  .fade-enter, .fade-leave-to {
-    transform: none;
-  }
 }
 </style>

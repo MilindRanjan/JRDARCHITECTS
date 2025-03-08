@@ -112,9 +112,6 @@
                       <span class="relative z-10">View Project</span>
                       <span class="absolute inset-0 bg-black transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></span>
                     </button>
-                    <div class="text-sm tracking-widest text-white/70">
-                      <span class="mr-2 text-xs">●</span>{{ slide.location }}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -195,7 +192,7 @@
 
     <!-- Project Modal -->
     <ProjectModal 
-      :isVisible="isModalVisible" 
+      :show="isModalVisible" 
       :project="selectedProject" 
       @close="closeModal" 
     />
@@ -224,24 +221,31 @@ export default {
       'Projects/COMPETITIONS/BIPARD, GAYA/4.jpg',
       'Projects/COMPETITIONS/BIPARD, GAYA/5.jpg',
       'Projects/COMPETITIONS/BIPARD, GAYA/6.png',
-      'Projects/COMPETITIONS/BIPARD, GAYA/7.png',
     ],
     description: 'Contemporary architectural design with sustainable elements',
     category: 'COMMERCIAL',
       },
       {
         id: 2,
-        name: 'Project 1',
-        mainImage: 'Projects/COMPETITIONS/Desh Ratna Marg/1.jpg',
-        description: 'Description for project 1',
-        location: 'Location 1',
+        name: "State Guest House, Patna",
+    mainImage: 'Projects/COMPETITIONS/Desh Ratna Marg/1.jpg',
+    additionalImages: [
+      'Projects/COMPETITIONS/Desh Ratna Marg/2.jpg',
+      'Projects/COMPETITIONS/Desh Ratna Marg/3.jpg',
+      'Projects/COMPETITIONS/Desh Ratna Marg/4.jpg',
+    ],
+    description: "Outstanding Urban Development achievement for transforming public spaces into vibrant community centers while preserving cultural heritage.",
+    category: 'COMMERCIAL',
       },
       {
         id: 3,
-        name: 'Project 2',
-        mainImage: 'Projects/COMPETITIONS/Bal Bhawan Patna/1.jpg',
-        description: 'Description for project 2',
-        location: 'Location 2',
+        name: "Bal Bhawan",
+    mainImage: 'Projects/COMPETITIONS/Bal Bhawan Patna/1.jpg',
+    additionalImages: [
+      'Projects/COMPETITIONS/Bal Bhawan Patna/2.jpg',
+    ],
+    description: "Best Residential Complex Design award for creating sustainable, community-focused living spaces that redefine modern urban housing.",
+    category: 'COMMERCIAL',
       }
     ];
 
@@ -254,7 +258,7 @@ export default {
     const previousSlide = ref(0);
     const scrollOpacity = ref(1);
     const autoplayEnabled = ref(true);
-    const slideInterval = ref(4000); // 4 seconds per slide
+    const slideInterval = ref(6000); // 4 seconds per slide
     const progressPercentage = ref(0);
     const touchStartX = ref(0);
     const touchEndX = ref(0);
@@ -267,27 +271,20 @@ export default {
 
     // Modal functions
     const viewProject = (slide) => {
-      console.log('Opening modal for project:', slide); 
-      
-      // First ensure the slide data is properly structured
+      // Structure the project data to match ProjectModal's expected format
       selectedProject.value = {
-        ...slide,
         title: slide.name,
+        name: slide.name,
         mainImage: slide.mainImage,
         additionalImages: slide.additionalImages || [],
-        description: slide.fullDescription || slide.description,
+        description: slide.description,
         category: slide.category || '',
-        date: slide.date || ''
+        date: slide.date || new Date().toISOString(),
+        location: slide.location || ''
       };
       
-      // Pause autoplay when modal is open
-      clearInterval(timerInterval);
-      clearInterval(progressInterval);
-      
-      // Important: Force update and then show the modal
-      setTimeout(() => {
-        isModalVisible.value = true;
-      }, 0);
+      // Show the modal
+      isModalVisible.value = true;
     };
 
     const closeModal = () => {
